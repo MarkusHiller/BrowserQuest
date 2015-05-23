@@ -767,7 +767,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
             });
         
-            this.client.onWelcome(function(id, name, x, y, hp) {
+            this.client.onWelcome(function(id, name, x, y, hp, armor, weapon) {
                 log.info("Received player ID from server : "+ id);
                 self.player.id = id;
                 self.playerId = id;
@@ -776,6 +776,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.player.name = name;
                 self.player.setGridPosition(x, y);
                 self.player.setMaxHitPoints(hp);
+                self.player.setWeaponName(Types.getKindAsString(weapon));
+                self.player.setSpriteName(Types.getKindAsString(armor));
+                self.player.setSprite(self.sprites[self.player.getSpriteName()]);
             
                 self.updateBars();
                 self.resetCamera();

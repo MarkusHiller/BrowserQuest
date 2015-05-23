@@ -111,6 +111,7 @@ module.exports = World = cls.Class.extend({
     
             player.onExit(function() {
                 log.info(player.name + " has left the game.");
+                player.save();
                 self.removePlayer(player);
                 self.decrementPlayerCount();
                 
@@ -202,6 +203,15 @@ module.exports = World = cls.Class.extend({
                 updateCount = 0;
             }
         }, 1000 / this.ups);
+        
+        // Autosave every 10min
+        setInterval(function() {
+            log.debug("Autosave started ...");
+            self.forEachPlayer(function(player) {
+                player.save();
+            });
+            log.debug("Autosave finished.");
+        }, 600000);
         
         log.info(""+this.id+" created (capacity: "+this.maxPlayers+" players).");
     },

@@ -13,6 +13,7 @@ var DB = exports = module.exports = cls.Class.extend({
         this.connection.connect();
         log.info("Database connected ...");
     },
+    
     canPlay: function (name, password, callback) {
         var pwHash = md5(password);
 
@@ -24,6 +25,7 @@ var DB = exports = module.exports = cls.Class.extend({
             }
         });
     },
+    
     tryRegisterUser: function (obj, callback) {
         var pwHash = md5(obj.password);
         var values = {username: obj.username, password: pwHash, email: obj.email};
@@ -33,6 +35,17 @@ var DB = exports = module.exports = cls.Class.extend({
             } else {
                 log.debug('Error while performing Query. ' + err);
                 callback("register_fail");
+            }
+        });
+    },
+    
+    savePlayerData: function(player) {
+        var values = {pos_x: player.x, pos_y: player.y, armor: player.armor, weapon: player.weapon, hp: player.hitPoints};
+        this.connection.query('UPDATE users SET ? WHERE username = "' + player.name + '"', values, function (err, result) {
+            if (!err) {
+                log.debug("Player " + player.name + " saved.");
+            } else {
+                log.debug('Error while performing Query. ' + err);
             }
         });
     }

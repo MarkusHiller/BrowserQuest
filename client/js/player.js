@@ -64,7 +64,7 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
         isMovingToLoot: function() {
             return this.isLootMoving;
         },
-    
+        
         getSpriteName: function() {
             return this.spriteName;
         },

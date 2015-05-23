@@ -57,8 +57,8 @@ module.exports = Player = Character.extend({
                         self.x = result.pos_x;
                         self.y = result.pos_y;
                         self.kind = Types.Entities.WARRIOR;
-                        self.equipArmor(message[3]);
-                        self.equipWeapon(message[4]);
+                        self.equipArmor(result.armor);
+                        self.equipWeapon(result.weapon);
                         self.orientation = Utils.randomOrientation();
                         self.updateHitPoints();
                         self.updatePosition();
@@ -66,7 +66,7 @@ module.exports = Player = Character.extend({
                         self.server.addPlayer(self);
                         self.server.enter_callback(self);
 
-                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints]);
+                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.armor, self.weapon]);
                         self.hasEnteredGame = true;
                         self.isDead = false;
                     } else {
@@ -257,6 +257,9 @@ module.exports = Player = Character.extend({
     },
     canPlay: function (username, password, callback) {
         return this.database.canPlay(username, password, callback);
+    },
+    save: function() {
+        this.database.savePlayerData(this);
     },
     getState: function () {
         var basestate = this._getBaseState(),

@@ -166,10 +166,12 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 name = data[2],
                 x = data[3],
                 y = data[4],
-                hp = data[5];
+                hp = data[5],
+                armor = data[6],
+                weapon = data[7];
         
             if(this.welcome_callback) {
-                this.welcome_callback(id, name, x, y, hp);
+                this.welcome_callback(id, name, x, y, hp, armor, weapon);
             }
         },
     
@@ -467,9 +469,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         sendHello: function(player) {
             this.sendMessage([Types.Messages.HELLO,
                               player.name,
-                              player.password,
-                              Types.getKindFromString(player.getSpriteName()),
-                              Types.getKindFromString(player.getWeaponName())]);
+                              player.password]);
         },
 
         sendMove: function(x, y) {
