@@ -114,10 +114,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
     
         initPlayer: function() {
-            if(this.storage.hasAlreadyPlayed()) {
-                this.player.setSpriteName(this.storage.data.player.armor);
-                this.player.setWeaponName(this.storage.data.player.weapon);
-            }
+//            if(this.storage.hasAlreadyPlayed()) {
+//                this.player.setSpriteName(this.storage.data.player.armor);
+//                this.player.setWeaponName(this.storage.data.player.weapon);
+//            }
         
         	this.player.setSprite(this.sprites[this.player.getSpriteName()]);
         	this.player.idle();
@@ -184,7 +184,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     name: "Angry Rats",
                     desc: "Kill 10 rats",
                     isCompleted: function() {
-                        return self.storage.getRatCount() >= 10;
+                        return false; // self.storage.getRatCount() >= 10;
                     }
                 },
                 SMALL_TALK: {
@@ -222,7 +222,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     name: "Skull Collector",
                     desc: "Kill 10 skeletons",
                     isCompleted: function() {
-                        return self.storage.getSkeletonCount() >= 10;
+                        return false; //self.storage.getSkeletonCount() >= 10;
                     }
                 },
                 NINJA_LOOT: {
@@ -240,7 +240,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     name: "Hunter",
                     desc: "Kill 50 enemies",
                     isCompleted: function() {
-                        return self.storage.getTotalKills() >= 50;
+                        return false; // self.storage.getTotalKills() >= 50;
                     }
                 },
                 STILL_ALIVE: {
@@ -248,7 +248,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     name: "Still Alive",
                     desc: "Revive your character five times",
                     isCompleted: function() {
-                        return self.storage.getTotalRevives() >= 5;
+                        return false;// self.storage.getTotalRevives() >= 5;
                     }
                 },
                 MEATSHIELD: {
@@ -256,7 +256,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     name: "Meatshield",
                     desc: "Take 5,000 points of damage",
                     isCompleted: function() {
-                        return self.storage.getTotalDamageTaken() >= 5000;
+                        return false;// self.storage.getTotalDamageTaken() >= 5000;
                     }
                 },
                 HOT_SPOT: {
@@ -300,9 +300,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         
             this.app.initAchievementList(this.achievements);
         
-            if(this.storage.hasAlreadyPlayed()) {
-                this.app.initUnlockedAchievements(this.storage.data.achievements.unlocked);
-            }
+            //if(this.storage.hasAlreadyPlayed()) {
+            //    this.app.initUnlockedAchievements(this.storage.data.achievements.unlocked);
+            //}
         },
     
         getAchievementById: function(id) {
@@ -789,16 +789,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.tryUnlockingAchievement("STILL_ALIVE");
                 }, 1500);
             
-                if(!self.storage.hasAlreadyPlayed()) {
-                    self.storage.initPlayer(self.player.name);
-                    self.storage.savePlayer(self.renderer.getPlayerImage(),
-                                            self.player.getSpriteName(),
-                                            self.player.getWeaponName());
-                    self.showNotification("Welcome to BrowserQuest!");
-                } else {
-                    self.showNotification("Welcome back to BrowserQuest!");
-                    self.storage.setPlayerName(name);
-                }
+//                if(!self.storage.hasAlreadyPlayed()) {
+//                    self.storage.initPlayer(self.player.name);
+//                    self.storage.savePlayer(self.renderer.getPlayerImage(),
+//                                            self.player.getSpriteName(),
+//                                            self.player.getWeaponName());
+//                    self.showNotification("Welcome to BrowserQuest!");
+//                } else {
+//                    self.showNotification("Welcome back to BrowserQuest!");
+//                    self.storage.setPlayerName(name);
+//                }
         
                 self.player.onStartPathing(function(path) {
                     var i = path.length - 1,
@@ -1055,9 +1055,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
             
                 self.player.onSwitchItem(function() {
-                    self.storage.savePlayer(self.renderer.getPlayerImage(),
-                                            self.player.getArmorName(),
-                                            self.player.getWeaponName());
+//                    self.storage.savePlayer(self.renderer.getPlayerImage(),
+//                                            self.player.getArmorName(),
+//                                            self.player.getWeaponName());
                     if(self.equipment_callback) {
                         self.equipment_callback();
                     }
@@ -1362,16 +1362,16 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         }
                     }
                     
-                    self.storage.incrementTotalKills();
+                    //self.storage.incrementTotalKills();
                     self.tryUnlockingAchievement("HUNTER");
 
                     if(kind === Types.Entities.RAT) {
-                        self.storage.incrementRatCount();
+                        //self.storage.incrementRatCount();
                         self.tryUnlockingAchievement("ANGRY_RATS");
                     }
                     
                     if(kind === Types.Entities.SKELETON || kind === Types.Entities.SKELETON2) {
-                        self.storage.incrementSkeletonCount();
+                        //self.storage.incrementSkeletonCount();
                         self.tryUnlockingAchievement("SKULL_COLLECTOR");
                     }
 
@@ -1397,7 +1397,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             player.hurt();
                             self.infoManager.addDamageInfo(diff, player.x, player.y - 15, "received");
                             //self.audioManager.playSound("hurt");
-                            self.storage.addDamage(-diff);
+                            //self.storage.addDamage(-diff);
                             self.tryUnlockingAchievement("MEATSHIELD");
                             if(self.playerhurt_callback) {
                                 self.playerhurt_callback();
@@ -2246,7 +2246,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.client.enable();
             //this.sendHello(this.player);
         
-            this.storage.incrementRevives();
+            //this.storage.incrementRevives();
             
             if(this.renderer.mobile || this.renderer.tablet) {
                 this.renderer.clearScreen(this.renderer.context);
@@ -2330,7 +2330,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             if(name in this.achievements) {
                 achievement = this.achievements[name];
             
-                if(achievement.isCompleted() && this.storage.unlockAchievement(achievement.id)) {
+                if(achievement.isCompleted()/* && this.storage.unlockAchievement(achievement.id)*/) {
                     if(this.unlock_callback) {
                         this.unlock_callback(achievement.id, achievement.name, achievement.desc);
                         //this.audioManager.playSound("achievement");

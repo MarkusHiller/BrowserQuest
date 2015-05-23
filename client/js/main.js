@@ -102,7 +102,7 @@ define(['jquery', 'app'], function ($, App) {
             });
 
             $('.delete').click(function () {
-                app.storage.clear();
+                //app.storage.clear();
                 app.animateParchment('confirmation', 'createcharacter');
                 $('body').removeClass('returning');
             });
@@ -238,7 +238,7 @@ define(['jquery', 'app'], function ($, App) {
 
             game = new Game(app);
             game.setup('#bubbles', canvas, background, foreground, input);
-            game.setStorage(app.storage);
+            //game.setStorage(app.storage);
             app.setGame(game);
 
             if (app.isDesktop && app.supportsWorkers) {

@@ -10,7 +10,7 @@ define([
                     this.blinkInterval = null;
                     this.isParchmentReady = true;
                     this.ready = false;
-                    this.storage = new Storage();
+                    //this.storage = new Storage();
                     //this.watchNameInputInterval = setInterval(this.toggleButton.bind(this), 100);
                     this.$playButton = $('.play');
                     this.$registerButton = $('.register');
@@ -85,8 +85,8 @@ define([
                     });
                 },
                 start: function (loginData) {
-                    var self = this,
-                            firstTimePlaying = !self.storage.hasAlreadyPlayed();
+                    var self = this;
+                            //firstTimePlaying = !self.storage.hasAlreadyPlayed();
 
                     if (loginData.username && loginData.password && !this.game.started) {
                         var optionsSet = false,
@@ -113,9 +113,9 @@ define([
                         this.center();
                         this.game.run(function () {
                             $('body').addClass('started');
-                            if (firstTimePlaying) {
-                                self.toggleInstructions();
-                            }
+//                            if (firstTimePlaying) {
+//                                self.toggleInstructions();
+//                            }
                         });
                     }
                 },
@@ -292,11 +292,11 @@ define([
 
                     $notif.removeClass().addClass('active achievement' + id);
                     $name.text(name);
-                    if (this.game.storage.getAchievementCount() === 1) {
-                        this.blinkInterval = setInterval(function () {
-                            $button.toggleClass('blink');
-                        }, 500);
-                    }
+//                    if (this.game.storage.getAchievementCount() === 1) {
+//                        this.blinkInterval = setInterval(function () {
+//                            $button.toggleClass('blink');
+//                        }, 500);
+//                    }
                     setTimeout(function () {
                         $notif.removeClass('active');
                         $button.removeClass('blink');
