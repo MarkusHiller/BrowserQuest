@@ -59,7 +59,7 @@ define(function() {
             }
         },
     
-        reset: function() {
+        reset: function() {
             this.lastTime = 0;
             this.currentFrame = { index: 0, x: 0, y: this.row * this.height };
         }

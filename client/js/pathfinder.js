@@ -70,7 +70,7 @@ define(['lib/astar'], function(AStar) {
         /**
          * Removes colliding tiles corresponding to the given entity's position in the pathing grid.
          */
-        ignoreEntity: function(entity) {
+        ignoreEntity: function(entity) {
             if(entity) {
                 this.ignored.push(entity);
             }

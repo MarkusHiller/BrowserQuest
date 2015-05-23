@@ -609,10 +609,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             }
         },
     
-        setServerOptions: function(host, port, username) {
+        setServerOptions: function(host, port, loginData) {
             this.host = host;
             this.port = port;
-            this.username = username;
+            this.loginData = loginData;
         },
     
         loadAudio: function() {
@@ -640,9 +640,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.ready = true;
                     log.debug('All sprites loaded.');
                             
-                    self.loadAudio();
+                    //self.loadAudio();
                     
-                    self.initMusicAreas();
+                    //self.initMusicAreas();
                     self.initAchievements();
                     self.initCursors();
                     self.initAnimations();
@@ -741,7 +741,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.client.onConnected(function() {
                 log.info("Starting client/server handshake");
                 
-                self.player.name = self.username;
+                self.player.name = self.loginData.username;
+                self.player.password = self.loginData.password;
+                
                 self.started = true;
             
                 self.sendHello(self.player);
@@ -778,7 +780,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.updateBars();
                 self.resetCamera();
                 self.updatePlateauMode();
-                self.audioManager.updateMusic();
+                //self.audioManager.updateMusic();
             
                 self.addEntity(self.player);
                 self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
@@ -864,7 +866,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         }
                     });
                 
-                    if((self.player.gridX <= 85 && self.player.gridY <= 179 && self.player.gridY > 178) || (self.player.gridX <= 85 && self.player.gridY <= 266 && self.player.gridY > 265)) {
+                    if((self.player.gridX <= 85 && self.player.gridY <= 179 && self.player.gridY > 178) || (self.player.gridX <= 85 && self.player.gridY <= 266 && self.player.gridY > 265)) {
                         self.tryUnlockingAchievement("INTO_THE_WILD");
                     }
                     
@@ -887,7 +889,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.updatePlayerCheckpoint();
                 
                     if(!self.player.isDead) {
-                        self.audioManager.updateMusic();
+                        //self.audioManager.updateMusic();
                     }
                 });
             
@@ -921,13 +923,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                             
                             if(item.kind === Types.Entities.FIREPOTION) {
                                 self.tryUnlockingAchievement("FOXY");
-                                self.audioManager.playSound("firefox");
+                                //self.audioManager.playSound("firefox");
                             }
                         
                             if(Types.isHealingItem(item.kind)) {
-                                self.audioManager.playSound("heal");
+                                //self.audioManager.playSound("heal");
                             } else {
-                                self.audioManager.playSound("loot");
+                                //self.audioManager.playSound("loot");
                             }
                             
                             if(item.wasDropped && !_(item.playersInvolved).include(self.playerId)) {
@@ -936,7 +938,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         } catch(e) {
                             if(e instanceof Exceptions.LootException) {
                                 self.showNotification(e.message);
-                                self.audioManager.playSound("noloot");
+                                //self.audioManager.playSound("noloot");
                             } else {
                                 throw e;
                             }
@@ -982,11 +984,11 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         }
                         
                         if(dest.portal) {
-                            self.audioManager.playSound("teleport");
+                            //self.audioManager.playSound("teleport");
                         }
                         
                         if(!self.player.isDead) {
-                            self.audioManager.updateMusic();
+                            //self.audioManager.updateMusic();
                         }
                     }
                 
@@ -994,7 +996,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         self.makeNpcTalk(self.player.target);
                     } else if(self.player.target instanceof Chest) {
                         self.client.sendOpen(self.player.target);
-                        self.audioManager.playSound("chest");
+                        //self.audioManager.playSound("chest");
                     }
                     
                     self.player.forEachAttacker(function(attacker) {
@@ -1040,8 +1042,8 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         attacker.idle();
                     });
                 
-                    self.audioManager.fadeOutCurrentMusic();
-                    self.audioManager.playSound("death");
+                    //self.audioManager.fadeOutCurrentMusic();
+                    //self.audioManager.playSound("death");
                 });
             
                 self.player.onHasMoved(function(player) {
@@ -1092,7 +1094,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             
                 self.client.onSpawnCharacter(function(entity, x, y, orientation, targetId) {
                     if(!self.entityIdExists(entity.id)) {
-                        try {
+                        try {
                             if(entity.id !== self.playerId) {
                                 entity.setSprite(self.sprites[entity.getSpriteName()]);
                                 entity.setGridPosition(x, y);
@@ -1204,7 +1206,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                         self.removeFromPathingGrid(entity.gridX, entity.gridY);
                                     
                                         if(self.camera.isVisible(entity)) {
-                                            self.audioManager.playSound("kill"+Math.floor(Math.random()*2+1));
+                                            //self.audioManager.playSound("kill"+Math.floor(Math.random()*2+1));
                                         }
                                     
                                         self.updateCursor();
@@ -1394,7 +1396,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         if(isHurt) {
                             player.hurt();
                             self.infoManager.addDamageInfo(diff, player.x, player.y - 15, "received");
-                            self.audioManager.playSound("hurt");
+                            //self.audioManager.playSound("hurt");
                             self.storage.addDamage(-diff);
                             self.tryUnlockingAchievement("MEATSHIELD");
                             if(self.playerhurt_callback) {
@@ -1461,7 +1463,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     var entity = self.getEntityById(entityId);
                     self.createBubble(entityId, message);
                     self.assignBubbleTo(entity);
-                    self.audioManager.playSound("chat");
+                    //self.audioManager.playSound("chat");
                 });
             
                 self.client.onPopulationChange(function(worldPlayers, totalPlayers) {
@@ -1617,10 +1619,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 if(msg) {
                     this.createBubble(npc.id, msg);
                     this.assignBubbleTo(npc);
-                    this.audioManager.playSound("npc");
+                    //this.audioManager.playSound("npc");
                 } else {
                     this.destroyBubble(npc.id);
-                    this.audioManager.playSound("npc-end");
+                    //this.audioManager.playSound("npc-end");
                 }
                 this.tryUnlockingAchievement("SMALL_TALK");
                 
@@ -2057,7 +2059,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         }
                         
                         if(character instanceof Player && this.camera.isVisible(character)) {
-                            this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
+                            //this.audioManager.playSound("hit"+Math.floor(Math.random()*2+1));
                         }
                         
                         if(character.hasTarget() && character.target.id === this.playerId && this.player && !this.player.invincible) {
@@ -2242,7 +2244,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         
             this.started = true;
             this.client.enable();
-            this.sendHello(this.player);
+            //this.sendHello(this.player);
         
             this.storage.incrementRevives();
             
@@ -2331,7 +2333,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 if(achievement.isCompleted() && this.storage.unlockAchievement(achievement.id)) {
                     if(this.unlock_callback) {
                         this.unlock_callback(achievement.id, achievement.name, achievement.desc);
-                        this.audioManager.playSound("achievement");
+                        //this.audioManager.playSound("achievement");
                     }
                 }
             }
@@ -2393,13 +2395,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         },
         
         checkUndergroundAchievement: function() {
-            var music = this.audioManager.getSurroundingMusic(this.player);
-
-            if(music) {
-                if(music.name === 'cave') {
-                    this.tryUnlockingAchievement("UNDERGROUND");
-                }
-            }
+//            var music = this.audioManager.getSurroundingMusic(this.player);
+//
+//            if(music) {
+//                if(music.name === 'cave') {
+//                    this.tryUnlockingAchievement("UNDERGROUND");
+//                }
+//            }
         },
         
         forEachEntityAround: function(x, y, r, callback) {

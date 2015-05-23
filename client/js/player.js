@@ -8,9 +8,10 @@ define(['character', 'exceptions'], function(Character, Exceptions) {
             this._super(id, kind);
         
             this.name = name;
-        
+            this.password = "";
+            
             // Renderer
-     		this.nameOffsetY = -10;
+            this.nameOffsetY = -10;
         
             // sprites
             this.spriteName = "clotharmor";

@@ -69,7 +69,7 @@ define(function() {
             }
         },
     
-        focusEntity: function(entity) {
+        focusEntity: function(entity) {
             var w = this.gridW - 2,
                 h = this.gridH - 2,
                 x = Math.floor((entity.gridX - 1) / w) * w,

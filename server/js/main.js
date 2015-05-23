@@ -1,13 +1,12 @@
 
 var fs = require('fs'),
-    Metrics = require('./metrics');
-
+    Metrics = require('./metrics'),
+    _ = require('underscore');
 
 function main(config) {
     var ws = require("./ws"),
         WorldServer = require("./worldserver"),
         Log = require('log'),
-        _ = require('underscore'),
         server = new ws.MultiVersionWebsocketServer(config.port),
         metrics = config.metrics_enabled ? new Metrics(config) : null;
         worlds = [],
@@ -33,14 +32,15 @@ function main(config) {
         case "info":
             log = new Log(Log.INFO); break;
     };
-    
+    var DB = require('./database'),
+        database = new DB();
     log.info("Starting BrowserQuest game server...");
     
     server.onConnect(function(connection) {
         var world, // the one in which the player will be spawned
             connect = function() {
                 if(world) {
-                    world.connect_callback(new Player(connection, world));
+                    world.connect_callback(new Player(connection, world, database));
                 }
             };
         
@@ -86,6 +86,10 @@ function main(config) {
     
     server.onRequestStatus(function() {
         return JSON.stringify(getWorldDistribution(worlds));
+    });
+    
+    server.onRequestRegister(function(obj, callback) {
+        database.tryRegisterUser(obj, callback);
     });
     
     if(config.metrics_enabled) {

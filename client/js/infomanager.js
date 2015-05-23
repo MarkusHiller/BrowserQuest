@@ -94,7 +94,7 @@ define(function() {
             }
         },
     
-        onDestroy: function(callback) {
+        onDestroy: function(callback) {
             this.destroy_callback = callback;
         },
     

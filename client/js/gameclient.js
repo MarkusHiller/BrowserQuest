@@ -318,7 +318,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             var id = data[1],
                 dmg = data[2];
         
-            if(this.dmg_callback) {
+            if(this.dmg_callback) {
                 this.dmg_callback(id, dmg);
             }
         },
@@ -327,7 +327,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             var worldPlayers = data[1],
                 totalPlayers = data[2];
         
-            if(this.population_callback) {
+            if(this.population_callback) {
                 this.population_callback(worldPlayers, totalPlayers);
             }
         },
@@ -467,6 +467,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         sendHello: function(player) {
             this.sendMessage([Types.Messages.HELLO,
                               player.name,
+                              player.password,
                               Types.getKindFromString(player.getSpriteName()),
                               Types.getKindFromString(player.getWeaponName())]);
         },

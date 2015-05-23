@@ -72,7 +72,7 @@ define(function() {
     	    return this.sprite;
     	},
 	
-    	getSpriteName: function() {
+    	getSpriteName: function() {
     	    return Types.getKindAsString(this.kind);
     	},
 	

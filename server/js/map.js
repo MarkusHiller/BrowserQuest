@@ -1,5 +1,5 @@
 
-var cls = require('./lib/class')
+var cls = require('./lib/class'),
     path = require('path'),
     fs = require('fs'),
     _ = require('underscore'),
@@ -12,7 +12,7 @@ module.exports = Map = cls.Class.extend({
     
     	this.isLoaded = false;
     
-    	path.exists(filepath, function(exists) {
+    	fs.exists(filepath, function(exists) {
             if(!exists) {
                 log.error(filepath + " doesn't exist.");
                 return;

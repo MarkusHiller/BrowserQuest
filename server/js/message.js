@@ -73,7 +73,6 @@ Messages.Health = Message.extend({
     serialize: function() {
         var health = [Types.Messages.HEALTH,
                       this.points];
-        
         if(this.isRegen) {
             health.push(1);
         }
