@@ -130,8 +130,6 @@ body.upscaled.game {background:#000;}
 
 #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, #tilt, .parchment-left, .parchment-middle, .parchment-right, .avatar, .facebook, .twitter, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background:url('../img/1/spritesheet.png');image-rendering:-moz-crisp-edges; image-rendering:-webkit-optimize-contrast;}
 
-#moztab {height:49px;width:118px;position:fixed;top:0;right:15%;background:url('../img/1/spritesheet.png') no-repeat -229px -204px;display:block;}
-
 #vignetting {height:100%;width:100%;position:absolute;top:0;left:0;pointer-events:none;}
 #logosparks {display:block;position:absolute;top:0;left:0;}
 #parchment, #parchment input {font-family:'GraphicPixel';}
@@ -215,7 +213,7 @@ body.upscaled.game {background:#000;}
 #create-new span span:hover {color:#b2af9b;}
 #playername {color:#fff;}
 
-#credits, #loadcharacter, #confirmation, #death, #error, #about, #legal {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel', sans-serif;z-index:1000;}
+#credits, #loadcharacter, #confirmation, #death, #error, #about, #legal, #privacy {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel', sans-serif;z-index:1000;}
 
 #playerimage {image-rendering: -moz-crisp-edges; image-rendering: -webkit-optimize-contrast;}
 
@@ -245,8 +243,7 @@ footer div  {display:inline-block;}
 #sharing .twitter:hover {background-position:-770px -224px;}
 #sharing .gplus {height:22px;width:22px;background:url('../img/common/gplus.png');margin:0 12px 0 0px;}
 #toggle-credits {display:inline-block;margin-left:12px;}
-#legal-link a {text-decoration:none;color:inherit;}
-#credits-link span:hover, #privacy-link span:hover, #legal-link a:hover {color:#fcda5c;cursor:pointer;}
+#credits-link span:hover, #privacy-link a:hover, #legal-link span:hover {color:#fcda5c;cursor:pointer;}
 
 #sharing a:hover {-moz-transform:scale(1.2);-webkit-transform:scale(1.2);-o-transform:scale(1.2);transform:scale(1.2);}
 #sharing a:active {-moz-transform:scale(1);-webkit-transform:scale(1);-o-transform:scale(1);transform:scale(1);}
@@ -273,7 +270,13 @@ footer div  {display:inline-block;}
 #legal p {width:75%;font-size:25px;line-height:35px;}
 #legal p a {color:#2e7fdd;text-decoration:none;}
 #close-legal {font-size:20px;margin-top:30px;}
-#toggle-legal, #legal-link a {padding:0 10px;}
+#toggle-legal {padding:0 10px;}
+
+#privacy p {width:75%;font-size:25px;line-height:35px;}
+#privacy p a {color:#2e7fdd;text-decoration:none;}
+#privacy-link a {color: #c6c0a3;text-decoration:none;}
+#close-privacy {font-size:20px;margin-top:30px;}
+#toggle-privacy {padding:0 10px;}
 
 .invalid {
     border-color: rgb(166, 0, 0) !important;
@@ -306,8 +309,8 @@ footer div  {display:inline-block;}
 .animate .parchment-left {-moz-animation:parchleft 1s ease 1;-webkit-animation:parchleft 1s ease 1;-o-animation:parchleft 1s ease 1;-ms-animation:parchleft 1s ease 1;animation:parchleft 1s ease 1;}
 .animate .parchment-right {-moz-animation:parchright 1s ease 1;-webkit-animation:parchright 1s ease 1;-o-animation:parchright 1s ease 1;-ms-animation:parchright 1s ease 1;animation:parchright 1s ease 1;}
 
-#credits, #createcharacter, #register_1, #register_2, #register_success, #register_fail, #loadcharacter, #confirmation, #death, #error, #about, #legal {opacity:0;pointer-events:none;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
-.credits #credits, .createcharacter #createcharacter, .register_1 #register_1, .register_2 #register_2, .register_success #register_success, .register_fail #register_fail, .loadcharacter #loadcharacter, .confirmation #confirmation, .death #death, .error #error, .about #about, .legal #legal {opacity:1;pointer-events:auto;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;}
+#credits, #createcharacter, #register_1, #register_2, #register_success, #register_fail, #loadcharacter, #confirmation, #death, #error, #about, #legal, #privacy {opacity:0;pointer-events:none;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
+.credits #credits, .createcharacter #createcharacter, .register_1 #register_1, .register_2 #register_2, .register_success #register_success, .register_fail #register_fail, .loadcharacter #loadcharacter, .confirmation #confirmation, .death #death, .error #error, .about #about, .legal #legal, .privacy #privacy {opacity:1;pointer-events:auto;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;}
 
 /* States & Transitions */
 
@@ -319,13 +322,13 @@ footer div  {display:inline-block;}
 
 .game #parchment {z-index:0;-moz-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-webkit-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-o-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-ms-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;top:50%;}
 .game #credits, .game #death, .game #about {opacity:0;-moz-transition:0s opacity linear 0s;-webkit-transition:0s opacity linear 0s;-o-transition:0s opacity linear 0s;-ms-transition:0s opacity linear 0s;transition:0s opacity linear 0s;}
-.game.credits #credits, .game.death #death, .game.about #about, .game.legal #legal {opacity:1;-moz-transition:0.5s opacity linear 0.5s;-webkit-transition:0.5s opacity linear 0.5s;-o-transition:0.5s opacity linear 0.5s;-ms-transition:0.5s opacity linear 0.5s;transition:0.5s opacity linear 0.5s;}
-.game.credits #parchment, .game.death #parchment, .game.about #parchment, .game.legal #parchment {opacity:1;-moz-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-webkit-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-o-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-ms-transition:0.5s opacity linear 0s, 0s z-index linear 0s;transition:0.5s opacity linear 0s, 0s z-index linear 0s;z-index:200;}
+.game.credits #credits, .game.death #death, .game.about #about, .game.legal #legal, .game.privacy #privacy {opacity:1;-moz-transition:0.5s opacity linear 0.5s;-webkit-transition:0.5s opacity linear 0.5s;-o-transition:0.5s opacity linear 0.5s;-ms-transition:0.5s opacity linear 0.5s;transition:0.5s opacity linear 0.5s;}
+.game.credits #parchment, .game.death #parchment, .game.about #parchment, .game.legal #parchment, .game.privacy #parchment {opacity:1;-moz-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-webkit-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-o-transition:0.5s opacity linear 0s, 0s z-index linear 0s;-ms-transition:0.5s opacity linear 0s, 0s z-index linear 0s;transition:0.5s opacity linear 0s, 0s z-index linear 0s;z-index:200;}
 .game .parchment-left {-moz-transition:0.5s left ease;-webkit-transition:0.5s left ease;-o-transition:0.5s left ease;-ms-transition:0.5s left ease;transition:0.5s left ease;left:41%;}
 .game .parchment-right {-moz-transition:0.5s right ease;-webkit-transition:0.5s right ease;-o-transition:0.5s right ease;-ms-transition:0.5s right ease;transition:0.5s right ease;right:41%;}
 .game .parchment-middle {-moz-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-webkit-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-o-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;-ms-transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;transition:0.5s width ease, 0.5s margin-left ease, 0.5s background-position ease;width:0px;margin-left:0px;}
-.game.credits .parchment-left, .game.death .parchment-left, .game.about .parchment-left, .game.legal .parchment-left {left:0%;}
-.game.credits .parchment-right, .game.death .parchment-right, .game.about .parchment-right, .game.legal .parchment-right {right:0%;}
+.game.credits .parchment-left, .game.death .parchment-left, .game.about .parchment-left, .game.legal .parchment-left, .game.privacy .parchment-left {left:0%;}
+.game.credits .parchment-right, .game.death .parchment-right, .game.about .parchment-right, .game.legal .parchment-right, .game.privacy .parchment-right {right:0%;}
 
 #container {z-index:100;background:rgba(0,0,0,0.2);-moz-transition:1s opacity linear 0.5s;-webkit-transition:1s opacity linear 0.5s;-o-transition:1s opacity linear 0.5s;-ms-transition:1s opacity linear 0.5s;transition:1s opacity linear 0.5s;}
 .intro #container {opacity:0;pointer-events:none;}
@@ -473,7 +476,7 @@ footer div  {display:inline-block;}
     #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:1266px auto;}
     #logo {height:126px;width:687px;position:absolute;top:10%;left:50%;margin-left:-344px;z-index:3;}
     #logosparks {width:687px;height:126px;z-index:4;-moz-animation:logo3 .8s steps(6, end) infinite;-webkit-animation:logo3 .8s steps(6, end) infinite;-o-animation:logo3 .8s steps(6, end) infinite;-ms-animation:logo3 .8s steps(6, end) infinite;}
-    #parchment, #loadcharacter, #confirmation, #error, #legal {width:1266px;height:546px;position:absolute;top:55%;left:50%;margin-left:-633px;margin-top:-273px;font-size:30px;text-align:center;z-index:2;}
+    #parchment, #loadcharacter, #confirmation, #error, #legal, #privacy {width:1266px;height:546px;position:absolute;top:55%;left:50%;margin-left:-633px;margin-top:-273px;font-size:30px;text-align:center;z-index:2;}
     #parchment h1 {margin-top:60px;font-weight:normal;}
     .left-ornament, .right-ornament {height:36px;width:93px;display:inline-block;margin:0 20px;position:relative;top:12px;}
     .left-ornament {background-position:-1062px 0;}
@@ -490,11 +493,12 @@ footer div  {display:inline-block;}
     .play.loading img {margin-top:-16px;margin-left:-16px;height:32px;width:32px;}
     .stroke, .achievement-name {text-shadow:3px 3px 0 #373737, 3px -3px 0 #373737, 0 3px 0 #373737, 3px 0 0 #373737, -3px 3px 0 #373737, -3px -3px 0 #373737, 0 -3px 0 #373737, 0 3px 0 #373737, -3px 0 0 #373737;}
 
-    #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {margin-top:30px;}
+    #loadcharacter h1, #confirmation h1, #error h1, #legal h1, #privacy h1 {margin-top:30px;}
     #playername {margin-top:15px;}
     .loadcharacter .play, .confirmation .delete {margin:15px auto 15px auto;}
     #confirmation p, #error p {font-size:30px;margin-top:60px;line-height:40px;}
-    #legal p {margin:50px auto 0;}
+    #legal p {margin:0 auto 0; text-align: left;}
+    #privacy p {margin:50px auto 0;}
     #error p {width:70%;margin:60px auto 0;}
     .button.delete {background-position:-687px -153px;}
     .button.delete:active {background-position:0 -2178px;}
@@ -622,7 +626,7 @@ footer div  {display:inline-block;}
     .animate .parchment-middle {-moz-animation:parchmiddle3 1s ease 1;-webkit-animation:parchmiddle3 1s ease 1;-o-animation:parchmiddle3 1s ease 1;-ms-animation:parchmiddle3 1s ease 1;}
 
     .game .parchment-middle {background-position: -633px -882px;}
-    .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:1038px;margin-left:-519px;background-position: -114px -882px;}
+    .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle, .game.privacy .parchment-middle {width:1038px;margin-left:-519px;background-position: -114px -882px;}
 
     footer {font-size:20px;}
     #resize-check {height:3px;}
@@ -639,7 +643,7 @@ footer div  {display:inline-block;}
     #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:844px auto;}
     #logo {height:84px;width:458px;position:absolute;top:10%;left:50%;margin-left:-229px;z-index:3;}
     #logosparks {width:458px;height:84px;z-index:4;-moz-animation:logo2 .8s steps(6, end) infinite;-webkit-animation:logo2 .8s steps(6, end) infinite;-o-animation:logo2 .8s steps(6, end) infinite;-ms-animation:logo2 .8s steps(6, end) infinite;}
-    #parchment, #loadcharacter, #confirmation, #error, #legal {width:844px;height:364px;position:absolute;top:55%;left:50%;margin-left:-422px;margin-top:-182px;font-size:20px;text-align:center; z-index:2;}
+    #parchment, #loadcharacter, #confirmation, #error, #legal, #privacy {width:844px;height:364px;position:absolute;top:55%;left:50%;margin-left:-422px;margin-top:-182px;font-size:20px;text-align:center; z-index:2;}
     #parchment h1 {margin-top:40px;font-weight:normal;}
     .left-ornament, .right-ornament {height:24px;width:62px;display:inline-block;margin:0 15px;position:relative;top:7px;}
     .left-ornament {background-position:-708px 0;}
@@ -660,11 +664,12 @@ footer div  {display:inline-block;}
     .button.loading img {margin-top:-12px;margin-left:-12px;height:24px;width:24px;}
     .stroke, .achievement-name {text-shadow:2px 2px 0 #373737, 2px -2px 0 #373737, 0 2px 0 #373737, 2px 0 0 #373737, -2px 2px 0 #373737, -2px -2px 0 #373737, 0 -2px 0 #373737, 0 2px 0 #373737, -2px 0 0 #373737;}
 
-    #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {margin-top:20px;}
+    #loadcharacter h1, #confirmation h1, #error h1, #legal h1, #privacy h1 {margin-top:20px;}
     #playername {margin-top:10px;}
     .loadcharacter .play, .confirmation .delete {margin:10px auto 10px auto;}
     #confirmation p, #error p {font-size:20px;margin-top:40px;line-height:30px;}
-    #legal p {margin:30px auto 0;font-size:16px;line-height:24px;}
+    #legal p {margin:0 auto 0;font-size:16px;line-height:24px; text-align: left;} 
+    #privacy p {margin:30px auto 0;font-size:16px;line-height:24px;}
     #error p {width:70%;margin:40px auto 0;}
     .button.delete {background-position:-458px -102px;}
     .button.delete:active {background-position:0 -1452px;}
@@ -700,7 +705,7 @@ footer div  {display:inline-block;}
     }
     #loadcharacter .ribbon {right:99px;top:-8px;}
 
-    #close-legal {font-size:14px;margin-top:30px;}
+    #close-legal, #close-privacy {font-size:14px;margin-top:30px;}
 
     /*Death & Respawn*/
     #death p {font-size:20px;margin-top:90px;}
@@ -800,12 +805,13 @@ footer div  {display:inline-block;}
     .animate .parchment-middle {-moz-animation:parchmiddle2 1s ease 1;-webkit-animation:parchmiddle2 1s ease 1;-o-animation:parchmiddle2 1s ease 1;-ms-animation:parchmiddle2 1s ease 1;}
 
     .game .parchment-middle {background-position: -422px -588px;}
-    .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
+    .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle., .game.privacy .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
 
     footer {font-size:16px;}
     #resize-check {height:2px;}
 
-    #toggle-legal, #legal-link a {padding:0 8px;}
+    #toggle-legal {padding:0 8px;}
+    #toggle-privacy {padding:0 8px;}
 
     #name-tooltip {font-size:14px;width:280px;margin-left:-140px;height:20px;line-height:18px;top:-30px;}
     #name-tooltip:after {bottom:-8px;}
@@ -819,7 +825,7 @@ footer div  {display:inline-block;}
     #logo, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon, .avatar, .close, #note, .ribbon .top, .ribbon .bottom, #about .img, .ext-link {background-size:422px auto;}
     #logo {height:42px;width:229px;position:absolute;top:10%;left:50%;margin-left:-114px;z-index:3;}
     #logosparks {width:229px;height:42px;z-index:4;-moz-animation:logo1 .8s steps(6, end) infinite;-webkit-animation:logo1 .8s steps(6, end) infinite;-o-animation:logo1 .8s steps(6, end) infinite;-ms-animation:logo1 .8s steps(6, end) infinite;}
-    #parchment, #loadcharacter, #confirmation, #error, #legal {width:422px;height:182px;position:absolute;top:50%;left:50%;margin-left:-211px;margin-top:-91px;font-size:10px;text-align:center;z-index:2;}
+    #parchment, #loadcharacter, #confirmation, #error, #legal, #privacy {width:422px;height:182px;position:absolute;top:50%;left:50%;margin-left:-211px;margin-top:-91px;font-size:10px;text-align:center;z-index:2;}
     #parchment h1, #instructions h1 {margin-top:20px;font-weight:normal;}
     .left-ornament, .right-ornament {height:12px;width:31px;display:inline-block;margin:0 10px;position:relative;top:3px;}
     .left-ornament {background-position:-354px 0;}
@@ -836,11 +842,12 @@ footer div  {display:inline-block;}
     .play.loading img {margin-top:-8px;margin-left:-8px;height:16px;width:16px;}
     .stroke, .achievement-name {text-shadow:1px 1px 0 #373737, 1px -1px 0 #373737, 0 1px 0 #373737, 1px 0 0 #373737, -1px 1px 0 #373737, -1px -1px 0 #373737, 0 -1px 0 #373737, 0 1px 0 #373737, -1px 0 0 #373737;}
 
-    #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {margin-top:20px;}
+    #loadcharacter h1, #confirmation h1, #error h1, #legal h1, #privacy h1 {margin-top:20px;}
     #playername {margin-top:5px;}
     .loadcharacter .play, .confirmation .delete {margin:5px auto 5px auto;}
-    #confirmation p, #error p, #legal p {font-size:10px;margin-top:20px;line-height:20px;}
-    #legal p {margin:20px auto 0;line-height:12px;}
+    #confirmation p, #error p, #legal p, #privacy p {font-size:10px;margin-top:20px;line-height:20px;}
+    #legal p {margin:0 auto 0;line-height:12px; text-align: left;}
+    #privacy p {margin:20px auto 0;line-height:12px;}
     #error p {width:70%;margin:40px auto 0;}
     .button.delete {background-position:-229px -51px;}
     .button.delete:active {background-position:0 -726px;}
@@ -878,7 +885,7 @@ footer div  {display:inline-block;}
     }
     #loadcharacter .ribbon {right:50px;top:4px;}
 
-    #close-legal {font-size:10px;margin-top:10px;}
+    #close-legal, #close-privacy {font-size:10px;margin-top:10px;}
 
     /*Death & Respawn*/
     #death p {font-size:10px;margin-top:45px;}
@@ -977,7 +984,7 @@ footer div  {display:inline-block;}
     .animate .parchment-middle {-moz-animation:parchmiddle1 1s ease 1;-webkit-animation:parchmiddle1 1s ease 1;-o-animation:parchmiddle1 1s ease 1;-ms-animation:parchmiddle1 1s ease 1;}
 
     .game .parchment-middle {background-position: -211px -294px;}
-    .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle {width:346px;margin-left:-173px;background-position: -38px -294px;}
+    .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle, .game.privacy .parchment-middle {width:346px;margin-left:-173px;background-position: -38px -294px;}
 
     #resize-check {height:1px;}
 
@@ -1006,14 +1013,13 @@ footer div  {display:inline-block;}
     .game .loadcharacter #loadcharacter,
     .game .confirmation #confirmation,
     .game .error #error,
-    .game .legal #legal {
+    .game .legal #legal, .game .privacy #privacy {
         display:none;
     }
 
     .ribbon {display:none;}
 
     canvas {image-rendering:optimizeSpeed;}
-    #moztab {display:none;}
     body.intro {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
     body.intro {background:-webkit-gradient(radial, center center, 120, center center, 400, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
     body {background:#000;}
@@ -1053,14 +1059,14 @@ footer div  {display:inline-block;}
 
     #parchment.animate {-moz-animation:none;-webkit-animation:none;-o-animation:none;-webkit-animation:none;}
 
-    #loadcharacter, #confirmation, #createcharacter, #register_1, #register_2, #register_success, #register_fail, #error, #legal {display:none;margin-top:0;margin-left:0;left:0;width:auto;}
-    .loadcharacter #loadcharacter, .confirmation #confirmation, .createcharacter #createcharacter, .error #error, .legal #legal, .register_1 #register_1, .register_2 #register_2, .register_success #register_success, .register_fail #register_fail {display:block;width:100%;}
+    #loadcharacter, #confirmation, #createcharacter, #register_1, #register_2, #register_success, #register_fail, #error, #legal, #privacy {display:none;margin-top:0;margin-left:0;left:0;width:auto;}
+    .loadcharacter #loadcharacter, .confirmation #confirmation, .createcharacter #createcharacter, .error #error, .legal #legal, .privacy #privacy, .register_1 #register_1, .register_2 #register_2, .register_success #register_success, .register_fail #register_fail {display:block;width:100%;}
 
-    #loadcharacter h1, #confirmation h1, #error h1, #legal h1 {font-size:12px;font-weight:normal;}
+    #loadcharacter h1, #confirmation h1, #error h1, #legal h1, #privacy h1 {font-size:12px;font-weight:normal;}
 
-    #loadcharacter, #confirmation, #error, #legal {height:auto;}
+    #loadcharacter, #confirmation, #error, #legal, #privacy {height:auto;}
 
-    #loadcharacter h1, #confirmation h1, #createcharacter h1, #error h1, #legal h1 {font-size:12px;}
+    #loadcharacter h1, #confirmation h1, #createcharacter h1, #error h1, #legal h1, #privacy h1 {font-size:12px;}
     #createcharacter {padding-bottom:20px;}
     #playername {font-size:20px;margin:10px 0px;}
     #create-new {margin:20px 0px;font-size:16px;}
@@ -1131,16 +1137,16 @@ footer div  {display:inline-block;}
     #respawn:active {background-position:-408px -1398px;}
 
     #sharing, #credits-link, .dash {display:none;}
-    #legal-link .dash {display:inline;}
+    #legal-link .dash, #privacy-link .dash {display:inline;}
     #bubbles {overflow:hidden;}
 
     .intro footer, .intro footer {display:block;}
     footer {display:none;position:absolute;top:260px;left:0;z-index:9000;height:30px;width:100%;bottom:auto;}
     .returning footer, .returning footer {top:300px;}
-    #close-legal {display:none;}
+    #close-legal, #close-privacy {display:none;}
 
-    #privacy-link span:hover, #legal-link span:hover {color:#C6C0A3;}
-    #legal p {font-size:12px;width:80%;line-height:14px;}
+    #privacy-link a:hover, #legal-link span:hover {color:#C6C0A3;}
+    #legal p, #privacy p {font-size:12px;width:80%;line-height:14px;}
 
     #name-tooltip {display:none;}
 }
@@ -1155,7 +1161,8 @@ footer div  {display:inline-block;}
 
     #tilt {height:120px;width:132px;background-position:-710px -82px;background-size:844px;margin:25px auto 0 auto;}
 
-    .intro #toggle-legal, #toggle-legal, .intro #legal-link, #legal-link {display:none;}
+    .intro #toggle-legal, #toggle-legal, .intro privatcy, #legal-link {display:none;}
+    .intro #toggle-privacy, #toggle-privacy, .intro #privacy-link, #privacy-link {display:none;}
 }
 
 @media screen and (max-width: 640px) and (orientation: portrait) {
@@ -1177,15 +1184,15 @@ footer div  {display:inline-block;}
 /* Workarounds for chrome windows bugs */
 
 .windows #parchment, .windows #parchment input, .windows #notifications, .windows #instructions, .windows #achievements, .windows #achievement-notification, 
-.windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, .windows #legal, 
+.windows #playercount, .windows #credits, .windows #loadcharacter, .windows #confirmation, .windows #death, .windows #error, .windows #about, .windows #legal, .windows #privacy, 
 .windows #parchment p, .windows #portrait p, .windows .alert, .windows footer, .windows .bubble p, .windows #population, .windows #chatinput {font-family:'AdvoCut';}
 
 /* Workarounds for opera's lack of pointer-events support */
 
 .opera.intro #bubbles, .opera.intro #canvas, .opera.intro #container { z-index: -30000;}
 .opera .credits #credits, .opera .createcharacter #createcharacter, .opera .register_1 #register_1, .opera .register_2 #register_2, .opera .register_success #register_success, .opera .register_fail #register_fail, .opera .loadcharacter #loadcharacter, .opera .confirmation #confirmation, .opera .death #death, 
-.opera .error #error, .opera .about #about, .opera .legal #legal { z-index: 30000; }
+.opera .error #error, .opera .about #about, .opera .legal #legal, .opera .privacy #privacy { z-index: 30000; }
 .opera #instructions, .opera #achievements { z-index: -30000;}
 .opera #achievements.active, .opera #instructions.active { z-index: 30000;}
 .opera #coinsparks {display:none;}
-.opera #death, .opera #about, .opera #credits, .opera #error, .opera #confirmation, .opera #loadcharacter, .opera #legal { z-index: -30000; }
+.opera #death, .opera #about, .opera #credits, .opera #error, .opera #confirmation, .opera #loadcharacter, .opera #legal, .opera #privacy { z-index: -30000; }

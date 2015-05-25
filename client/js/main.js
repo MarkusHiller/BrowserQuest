@@ -27,6 +27,10 @@ define(['jquery', 'app'], function ($, App) {
                     app.toggleScrollContent('credits');
                 }
 
+                if ($('#parchment').hasClass('privacy')) {
+                    app.toggleScrollContent('privacy');
+                }
+                
                 if ($('#parchment').hasClass('legal')) {
                     app.toggleScrollContent('legal');
                 }
@@ -85,13 +89,25 @@ define(['jquery', 'app'], function ($, App) {
                 app.toggleScrollContent('credits');
             });
 
+            $('#toggle-privacy').click(function () {
+                app.toggleScrollContent('privacy');
+                if (game.renderer.mobile) {
+                    if ($('#parchment').hasClass('privacy')) {
+                        $(this).text('close');
+                    } else {
+                        $(this).text('Privacy');
+                    }
+                }
+                ;
+            });
+            
             $('#toggle-legal').click(function () {
                 app.toggleScrollContent('legal');
                 if (game.renderer.mobile) {
                     if ($('#parchment').hasClass('legal')) {
                         $(this).text('close');
                     } else {
-                        $(this).text('Privacy');
+                        $(this).text('Legal notices');
                     }
                 }
                 ;
@@ -340,6 +356,15 @@ define(['jquery', 'app'], function ($, App) {
                     }
                 }
 
+                if ($('#parchment').hasClass('privacy')) {
+                    if (game.started) {
+                        app.closeInGameScroll('privacy');
+                        hasClosedParchment = true;
+                    } else {
+                        app.toggleScrollContent('privacy');
+                    }
+                }
+                
                 if ($('#parchment').hasClass('legal')) {
                     if (game.started) {
                         app.closeInGameScroll('legal');
