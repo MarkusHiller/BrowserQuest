@@ -31,6 +31,16 @@ module.exports = Character = Entity.extend({
         this.hitPoints = this.maxHitPoints;
     },
     
+    resetManaPoints: function(currentMana) {
+        this.maxManaPoints = 1;
+        this.manaPoints = currentMana;
+    },
+    
+    resetExpPoints: function(currentExp) {
+        this.maxExpPoints = 45;
+        this.expPoints = currentExp;
+    },
+    
     regenHealthBy: function(value) {
         var hp = this.hitPoints,
             max = this.maxHitPoints;

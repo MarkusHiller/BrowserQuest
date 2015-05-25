@@ -40,7 +40,15 @@ var DB = exports = module.exports = cls.Class.extend({
     },
     
     savePlayerData: function(player) {
-        var values = {pos_x: player.x, pos_y: player.y, armor: player.armor, weapon: player.weapon, hp: player.hitPoints};
+        var values = {
+            pos_x: player.x,
+            pos_y: player.y,
+            armor: player.armor,
+            weapon: player.weapon,
+            hp: player.hitPoints,
+            mp: player.manaPoints,
+            exp: player.expPoints
+        };
         this.connection.query('UPDATE users SET ? WHERE username = "' + player.name + '"', values, function (err, result) {
             if (!err) {
                 log.debug("Player " + player.name + " saved.");

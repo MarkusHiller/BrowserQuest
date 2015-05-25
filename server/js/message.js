@@ -172,7 +172,8 @@ Messages.Kill = Message.extend({
     },
     serialize: function() {
         return [Types.Messages.KILL,
-                this.mob.kind];
+                this.mob.kind,
+                this.mob.expReward];
     }
 });
 

@@ -25,9 +25,10 @@ Types = {
         ZONE: 21,
         DESTROY: 22,
         HP: 23,
-        BLINK: 24,
-        OPEN: 25,
-        CHECK: 26
+        LEVEL: 24,
+        BLINK: 25,
+        OPEN: 26,
+        CHECK: 27
     },
     
     Entities: {

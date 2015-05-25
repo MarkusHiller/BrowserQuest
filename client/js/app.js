@@ -86,7 +86,7 @@ define([
                 },
                 start: function (loginData) {
                     var self = this;
-                            //firstTimePlaying = !self.storage.hasAlreadyPlayed();
+                    //firstTimePlaying = !self.storage.hasAlreadyPlayed();
 
                     if (loginData.username && loginData.password && !this.game.started) {
                         var optionsSet = false,
@@ -170,7 +170,7 @@ define([
                 },
                 initHealthBar: function () {
                     var scale = this.game.renderer.getScaleFactor(),
-                            healthMaxWidth = $("#healthbar").width() - (12 * scale);
+                        healthMaxWidth = $("#healthbar").width() - (12 * scale);
 
                     this.game.onPlayerHealthChange(function (hp, maxHp) {
                         var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));
@@ -179,13 +179,22 @@ define([
 
                     this.game.onPlayerHurt(this.blinkHealthBar.bind(this));
                 },
+                initExpBar: function () {
+                    var scale = this.game.renderer.getScaleFactor(),
+                        expMaxWidth = $("#expbar").width() - (12 * scale);
+
+                    this.game.onPlayerExpChange(function (exp, maxExp) {
+                        var expbarWidth = Math.round((expMaxWidth / maxExp) * (exp > 0 ? exp : 0));
+                        $("#exp").css('width', expbarWidth + "px");
+                    });
+                },
                 blinkHealthBar: function () {
                     var $hitpoints = $('#hitpoints');
 
                     $hitpoints.addClass('white');
                     setTimeout(function () {
                         $hitpoints.removeClass('white');
-                    }, 500)
+                    }, 500);
                 },
                 toggleButton: function (id) {
                     var $button = $('#' + id + ' .button'),
@@ -496,6 +505,7 @@ define([
                         if (this.game.started) {
                             this.game.resize();
                             this.initHealthBar();
+                            this.initExpBar();
                             this.game.updateBars();
                         } else {
                             var newScale = this.game.renderer.getScaleFactor();

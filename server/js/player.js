@@ -61,12 +61,14 @@ module.exports = Player = Character.extend({
                         self.equipWeapon(result.weapon);
                         self.orientation = Utils.randomOrientation();
                         self.updateHitPoints();
+                        self.updateManaPoints(result.mp);
+                        self.updateExpPoints(result.exp);
                         self.updatePosition();
 
                         self.server.addPlayer(self);
                         self.server.enter_callback(self);
 
-                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.armor, self.weapon]);
+                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.expPoints, self.maxExpPoints, self.armor, self.weapon]);
                         self.hasEnteredGame = true;
                         self.isDead = false;
                     } else {
@@ -351,6 +353,12 @@ module.exports = Player = Character.extend({
     },
     updateHitPoints: function () {
         this.resetHitPoints(Formulas.hp(this.armorLevel));
+    },
+    updateManaPoints: function (currentMana) {
+        this.resetManaPoints(currentMana);
+    },
+    updateExpPoints: function (currentExp) {
+        this.resetExpPoints(currentExp);
     },
     updatePosition: function () {
         if (this.requestpos_callback) {

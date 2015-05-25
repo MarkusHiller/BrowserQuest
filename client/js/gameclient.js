@@ -30,6 +30,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.DESTROY] = this.receiveDestroy;
             this.handlers[Types.Messages.KILL] = this.receiveKill;
             this.handlers[Types.Messages.HP] = this.receiveHitPoints;
+            this.handlers[Types.Messages.LEVEL] = this.receiveLevel;
             this.handlers[Types.Messages.BLINK] = this.receiveBlink;
         
             this.useBison = false;
@@ -162,16 +163,23 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
     
         receiveWelcome: function(data) {
-            var id = data[1],
-                name = data[2],
-                x = data[3],
-                y = data[4],
-                hp = data[5],
-                armor = data[6],
-                weapon = data[7];
+            var dataObj = {
+                id: data[1],
+                name: data[2],
+                x: data[3],
+                y: data[4],
+                hp: data[5],
+                maxHp: data[6],
+                mp: data[7],
+                maxMp: data[8],
+                exp: data[9],
+                maxExp: data[10],
+                armor: data[11],
+                weapon: data[12]
+            };
         
             if(this.welcome_callback) {
-                this.welcome_callback(id, name, x, y, hp, armor, weapon);
+                this.welcome_callback(dataObj);
             }
         },
     
@@ -335,10 +343,15 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         },
     
         receiveKill: function(data) {
-            var mobKind = data[1];
+            var mobKind = data[1],
+                expReward = data[2];
         
             if(this.kill_callback) {
                 this.kill_callback(mobKind);
+            }
+            
+            if(this.exp_callback) {
+                this.exp_callback(expReward);
             }
         },
     
@@ -363,6 +376,15 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         
             if(this.hp_callback) {
                 this.hp_callback(maxHp);
+            }
+        },
+    
+        receiveLevel: function(data) {
+            var exp = data[1],
+                maxExp = data[2];
+        
+            if(this.level_callback) {
+                this.level_callback(exp, maxExp);
             }
         },
     
@@ -417,6 +439,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onPlayerChangeHealth: function(callback) {
             this.health_callback = callback;
         },
+        
+        onPlayerChangeExp: function(callback) {
+            this.exp_callback = callback;
+        },
     
         onPlayerEquipItem: function(callback) {
             this.equip_callback = callback;
@@ -460,6 +486,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
     
         onPlayerChangeMaxHitPoints: function(callback) {
             this.hp_callback = callback;
+        },
+    
+        onPlayerLevelChange: function(callback) {
+            this.level_callback = callback;
         },
     
         onItemBlink: function(callback) {

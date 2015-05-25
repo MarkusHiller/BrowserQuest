@@ -8,11 +8,11 @@ define(function() {
             this.destroyQueue = [];
         },
     
-        addDamageInfo: function(value, x, y, type) {
+        addInfo: function(value, x, y, type) {
             var time = this.game.currentTime,
                 id = time+""+Math.abs(value)+""+x+""+y,
                 self = this,
-                info = new DamageInfo(id, value, x, y, DamageInfo.DURATION, type);
+                info = new Info(id, value, x, y, Info.DURATION, type);
         
             info.onDestroy(function(id) {
                 self.destroyQueue.push(id);
@@ -43,7 +43,7 @@ define(function() {
     });
 
 
-    var damageInfoColors = {
+    var infoColors = {
         "received": {
             fill: "rgb(255, 50, 50)",
             stroke: "rgb(255, 180, 180)"
@@ -55,11 +55,15 @@ define(function() {
         "healed": {
             fill: "rgb(80, 255, 80)",
             stroke: "rgb(50, 120, 50)"
+        },
+        "expReward": {
+            fill: "rgb(0, 174, 255)",
+            stroke: "rgb(0, 99, 146)"
         }
     };
 
 
-    var DamageInfo = Class.extend({
+    var Info = Class.extend({
         DURATION: 1000,
     
         init: function(id, value, x, y, duration, type) {
@@ -71,8 +75,8 @@ define(function() {
             this.opacity = 1.0;
             this.lastTime = 0;
             this.speed = 100;
-            this.fillColor = damageInfoColors[type].fill;
-            this.strokeColor = damageInfoColors[type].stroke;
+            this.fillColor = infoColors[type].fill;
+            this.strokeColor = infoColors[type].stroke;
         },
     
         isTimeToAnimate: function(time) {

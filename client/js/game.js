@@ -767,20 +767,23 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 }
             });
         
-            this.client.onWelcome(function(id, name, x, y, hp, armor, weapon) {
-                log.info("Received player ID from server : "+ id);
-                self.player.id = id;
-                self.playerId = id;
+            this.client.onWelcome(function(dataObj) {
+                log.info("Received player ID from server : "+ dataObj.id);
+                self.player.id = dataObj.id;
+                self.playerId = dataObj.id;
                 // Always accept name received from the server which will
                 // sanitize and shorten names exceeding the allowed length.
-                self.player.name = name;
-                self.player.setGridPosition(x, y);
-                self.player.setMaxHitPoints(hp);
-                self.player.setWeaponName(Types.getKindAsString(weapon));
-                self.player.setSpriteName(Types.getKindAsString(armor));
+                self.player.name = dataObj.name;
+                self.player.setGridPosition(dataObj.x, dataObj.y);
+                self.player.setHitPoints(dataObj.maxHp, dataObj.hp);
+                self.player.setManaPoints(dataObj.maxMp, dataObj.mp);
+                self.player.setExpPoints(dataObj.maxExp, dataObj.exp);
+                self.player.setWeaponName(Types.getKindAsString(dataObj.weapon));
+                self.player.setSpriteName(Types.getKindAsString(dataObj.armor));
                 self.player.setSprite(self.sprites[self.player.getSpriteName()]);
             
                 self.updateBars();
+                self.updateExpBar();
                 self.resetCamera();
                 self.updatePlateauMode();
                 //self.audioManager.updateMusic();
@@ -1336,7 +1339,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 self.client.onPlayerDamageMob(function(mobId, points) {
                     var mob = self.getEntityById(mobId);
                     if(mob && points) {
-                        self.infoManager.addDamageInfo(points, mob.x, mob.y - 15, "inflicted");
+                        self.infoManager.addInfo(points, mob.x, mob.y - 15, "inflicted");
                     }
                 });
             
@@ -1398,7 +1401,7 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                         }
                         if(isHurt) {
                             player.hurt();
-                            self.infoManager.addDamageInfo(diff, player.x, player.y - 15, "received");
+                            self.infoManager.addInfo(diff, player.x, player.y - 15, "received");
                             //self.audioManager.playSound("hurt");
                             //self.storage.addDamage(-diff);
                             self.tryUnlockingAchievement("MEATSHIELD");
@@ -1406,9 +1409,19 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                                 self.playerhurt_callback();
                             }
                         } else if(!isRegen){
-                            self.infoManager.addDamageInfo("+"+diff, player.x, player.y - 15, "healed");
+                            self.infoManager.addInfo("+"+diff, player.x, player.y - 15, "healed");
                         }
                         self.updateBars();
+                    }
+                });
+                
+                self.client.onPlayerChangeExp(function(points) {
+                    var player = self.player;
+                
+                    if(player) {
+                        player.exp = player.exp + points;
+                        self.infoManager.addInfo("+"+points, player.x, player.y - 15, "expReward");  
+                        self.updateExpBar();
                     }
                 });
             
@@ -1416,6 +1429,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.player.maxHitPoints = hp;
                     self.player.hitPoints = hp;
                     self.updateBars();
+                });
+            
+                self.client.onPlayerLevelChange(function(exp, maxExp) {
+                    self.player.maxExpPoints = maxExp;
+                    self.player.expPoints = exp;
+                    self.updateExpBar();
                 });
             
                 self.client.onPlayerEquipItem(function(playerId, itemKind) {
@@ -2274,6 +2293,10 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
             this.playerhp_callback = callback;
         },
     
+        onPlayerExpChange: function(callback) {
+            this.playerexp_callback = callback;
+        },
+    
         onPlayerHurt: function(callback) {
             this.playerhurt_callback = callback;
         },
@@ -2310,6 +2333,12 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
         updateBars: function() {
             if(this.player && this.playerhp_callback) {
                 this.playerhp_callback(this.player.hitPoints, this.player.maxHitPoints);
+            }
+        },
+    
+        updateExpBar: function() {
+            if(this.player && this.playerexp_callback) {
+                this.playerexp_callback(this.player.exp, this.player.maxExp);
             }
         },
     

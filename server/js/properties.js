@@ -128,7 +128,8 @@ var Properties = {
         },
         hp: 80,
         armor: 2,
-        weapon: 1
+        weapon: 1,
+        expReward: 0
     },
     
     wizard: {
@@ -178,6 +179,10 @@ Properties.getWeaponLevel = function(kind) {
 
 Properties.getHitPoints = function(kind) {
     return Properties[Types.getKindAsString(kind)].hp;
+};
+
+Properties.getExpReward = function(kind) {
+    return Properties[Types.getKindAsString(kind)].expReward || 0;
 };
 
 module.exports = Properties;

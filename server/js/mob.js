@@ -14,6 +14,7 @@ module.exports = Mob = Character.extend({
         this.spawningY = y;
         this.armorLevel = Properties.getArmorLevel(this.kind);
         this.weaponLevel = Properties.getWeaponLevel(this.kind);
+        this.expReward = Properties.getExpReward(this.kind);
         this.hatelist = [];
         this.respawnTimeout = null;
         this.returnTimeout = null;

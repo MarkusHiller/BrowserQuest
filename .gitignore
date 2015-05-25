@@ -6,3 +6,7 @@ config_local*
 client/audio/music
 .DS_Store
 *.swp
+/client/img/2/barsheet.xcf
+/client/img/1/barsheet.xcf
+/Configurationen.xlsx
+/~$Configurationen.xlsx
