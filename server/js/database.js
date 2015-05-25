@@ -4,16 +4,35 @@ var cls = require("./lib/class"),
 
 var DB = exports = module.exports = cls.Class.extend({
     init: function () {
+        var host = 'localhost',
+                user = 'root',
+                password = '',
+                database = 'browserquest';
+
         this.connection = mysql.createConnection({
-            host: 'localhost',
-            user: 'root',
-            password: '',
-            database: 'browserquest'
+            host: host,
+            user: user,
+            password: password,
+            database: database
         });
+        
         this.connection.connect();
         log.info("Database connected ...");
+        
+        this.connection.on('error', function (err) {
+            if (err.code === 'PROTOCOL_CONNECTION_LOST') {
+                log.info("Database connection lost. Try to restrat ...");
+                this.connection = mysql.createConnection({
+                    host: host,
+                    user: user,
+                    password: password,
+                    database: database
+                });
+                this.connection.connect();
+                log.info("Database connected ...");
+            };
+        });
     },
-    
     canPlay: function (name, password, callback) {
         var pwHash = md5(password);
 
@@ -25,7 +44,6 @@ var DB = exports = module.exports = cls.Class.extend({
             }
         });
     },
-    
     tryRegisterUser: function (obj, callback) {
         var pwHash = md5(obj.password);
         var values = {username: obj.username, password: pwHash, email: obj.email};
@@ -38,8 +56,7 @@ var DB = exports = module.exports = cls.Class.extend({
             }
         });
     },
-    
-    savePlayerData: function(player) {
+    savePlayerData: function (player) {
         var values = {
             pos_x: player.x,
             pos_y: player.y,
