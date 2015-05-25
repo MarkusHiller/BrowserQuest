@@ -37,8 +37,8 @@ module.exports = Character = Entity.extend({
     },
     
     resetExpPoints: function(currentExp) {
-        this.maxExpPoints = 45;
-        this.expPoints = currentExp;
+        this.maxExp = 45;
+        this.exp = currentExp;
     },
     
     regenHealthBy: function(value) {

@@ -68,7 +68,7 @@ module.exports = Player = Character.extend({
                         self.server.addPlayer(self);
                         self.server.enter_callback(self);
 
-                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.expPoints, self.maxExpPoints, self.armor, self.weapon]);
+                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.exp, self.maxExp, self.armor, self.weapon]);
                         self.hasEnteredGame = true;
                         self.isDead = false;
                     } else {
