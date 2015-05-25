@@ -805,7 +805,7 @@ footer div  {display:inline-block;}
     .animate .parchment-middle {-moz-animation:parchmiddle2 1s ease 1;-webkit-animation:parchmiddle2 1s ease 1;-o-animation:parchmiddle2 1s ease 1;-ms-animation:parchmiddle2 1s ease 1;}
 
     .game .parchment-middle {background-position: -422px -588px;}
-    .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle., .game.privacy .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
+    .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle, .game.privacy .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
 
     footer {font-size:16px;}
     #resize-check {height:2px;}
