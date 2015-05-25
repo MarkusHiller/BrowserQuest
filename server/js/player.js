@@ -62,13 +62,13 @@ module.exports = Player = Character.extend({
                         self.orientation = Utils.randomOrientation();
                         self.updateHitPoints();
                         self.updateManaPoints(result.mp);
-                        self.updateExpPoints(result.exp);
+                        self.updateExpPoints(result.exp, result.level);
                         self.updatePosition();
 
                         self.server.addPlayer(self);
                         self.server.enter_callback(self);
 
-                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.exp, self.maxExp, self.armor, self.weapon]);
+                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.exp, self.maxExp, self.level, self.armor, self.weapon]);
                         self.hasEnteredGame = true;
                         self.isDead = false;
                     } else {
@@ -351,14 +351,21 @@ module.exports = Player = Character.extend({
             }
         }
     },
+    tryLevelUp: function(points) {
+        this.exp += points;
+        if(this.maxExp <= this.exp) {
+            this.updateExpPoints((this.exp - this.maxExp), (this.level + 1));
+            this.server.pushToPlayer(this, new Messages.Level(this.exp, this.maxExp, this.level));
+        }
+    },
     updateHitPoints: function () {
         this.resetHitPoints(Formulas.hp(this.armorLevel));
     },
     updateManaPoints: function (currentMana) {
         this.resetManaPoints(currentMana);
     },
-    updateExpPoints: function (currentExp) {
-        this.resetExpPoints(currentExp);
+    updateExpPoints: function (currentExp, level) {
+        this.resetExpPoints(currentExp, level);
     },
     updatePosition: function () {
         if (this.requestpos_callback) {

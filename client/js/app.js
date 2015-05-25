@@ -181,7 +181,7 @@ define([
                 },
                 initExpBar: function () {
                     var scale = this.game.renderer.getScaleFactor(),
-                        expMaxWidth = $("#expbar").width() - (12 * scale);
+                        expMaxWidth = $("#expbar").width();
 
                     this.game.onPlayerExpChange(function (exp, maxExp) {
                         var expbarWidth = Math.round((expMaxWidth / maxExp) * (exp > 0 ? exp : 0));

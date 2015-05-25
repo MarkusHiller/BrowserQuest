@@ -36,9 +36,14 @@ module.exports = Character = Entity.extend({
         this.manaPoints = currentMana;
     },
     
-    resetExpPoints: function(currentExp) {
-        this.maxExp = 45;
-        this.exp = currentExp;
+    resetExpPoints: function(currentExp, level) { // TODO:: Level berechnung
+        if(Properties.canLevelUp(level)) {
+            this.maxExp = Properties.getMaxExpFromLevel(level);
+            this.exp = currentExp;
+            this.level = level;
+        } else {
+            this.exp = this.maxExp;
+        }
     },
     
     regenHealthBy: function(value) {

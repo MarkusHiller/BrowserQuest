@@ -559,6 +559,7 @@ module.exports = World = cls.Class.extend({
                     this.pushToAdjacentGroups(mob.group, mob.drop(item));
                     this.handleItemDespawn(item);
                 }
+                attacker.tryLevelUp(mob.expReward);
             }
     
             if(entity.type === "player") {

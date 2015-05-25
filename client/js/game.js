@@ -1416,13 +1416,13 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                 });
                 
                 self.client.onPlayerChangeExp(function(points) {
-                    var player = self.player;
-                
-                    if(player) {
-                        player.exp = player.exp + points;
-                        self.infoManager.addInfo("+"+points, player.x, player.y - 15, "expReward");  
-                        self.updateExpBar();
+                    self.player.exp += points;
+                    if(self.player.exp > self.player.maxExp) {
+                        self.player.exp = self.player.maxExp;
+                    } else {
+                        self.infoManager.addInfo("+"+points, self.player.x, self.player.y - 15, "expReward");
                     }
+                    self.updateExpBar();
                 });
             
                 self.client.onPlayerChangeMaxHitPoints(function(hp) {
@@ -1431,9 +1431,9 @@ function(InfoManager, BubbleManager, Renderer, Map, Animation, Sprite, AnimatedT
                     self.updateBars();
                 });
             
-                self.client.onPlayerLevelChange(function(exp, maxExp) {
-                    self.player.maxExpPoints = maxExp;
-                    self.player.expPoints = exp;
+                self.client.onPlayerLevelChange(function(exp, maxExp, level) {
+                    self.player.maxExp = maxExp;
+                    self.player.exp = exp;
                     self.updateExpBar();
                 });
             

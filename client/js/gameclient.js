@@ -174,8 +174,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 maxMp: data[8],
                 exp: data[9],
                 maxExp: data[10],
-                armor: data[11],
-                weapon: data[12]
+                level: data[11],
+                armor: data[12],
+                weapon: data[13]
             };
         
             if(this.welcome_callback) {
@@ -381,10 +382,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
     
         receiveLevel: function(data) {
             var exp = data[1],
-                maxExp = data[2];
+                maxExp = data[2],
+                level = data[3];
         
             if(this.level_callback) {
-                this.level_callback(exp, maxExp);
+                this.level_callback(exp, maxExp, level);
             }
         },
     

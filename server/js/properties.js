@@ -129,7 +129,7 @@ var Properties = {
         hp: 80,
         armor: 2,
         weapon: 1,
-        expReward: 0
+        expReward: 10
     },
     
     wizard: {
@@ -150,7 +150,13 @@ var Properties = {
         hp: 700,
         armor: 6,
         weapon: 7
-    }
+    },
+    
+    level: [
+        10,
+        20,
+        30
+    ]
 };
 
 Properties.getArmorLevel = function(kind) {
@@ -184,5 +190,13 @@ Properties.getHitPoints = function(kind) {
 Properties.getExpReward = function(kind) {
     return Properties[Types.getKindAsString(kind)].expReward || 0;
 };
+
+Properties.getMaxExpFromLevel = function(level) {
+    return Properties.level[(level - 1)];
+};
+
+Properties.canLevelUp = function(level) {
+    return Properties.level.length >= level;
+}
 
 module.exports = Properties;

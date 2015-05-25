@@ -64,7 +64,8 @@ var DB = exports = module.exports = cls.Class.extend({
             weapon: player.weapon,
             hp: player.hitPoints,
             mp: player.manaPoints,
-            exp: player.exp
+            exp: player.exp,
+            level: player.level
         };
         this.connection.query('UPDATE users SET ? WHERE username = "' + player.name + '"', values, function (err, result) {
             if (!err) {

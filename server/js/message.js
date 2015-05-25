@@ -208,3 +208,18 @@ Messages.Blink = Message.extend({
                 this.item.id];
     }
 });
+
+Messages.Level = Message.extend({
+    init: function(exp, maxExp, level) {
+        this.exp = exp;
+        this.maxExp = maxExp;
+        this.level = level;
+    },
+    serialize: function() {
+        return [Types.Messages.LEVEL,
+                this.exp,
+                this.maxExp,
+                this.level
+            ];
+    }
+});
