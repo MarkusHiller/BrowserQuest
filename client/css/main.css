@@ -278,6 +278,8 @@ footer div  {display:inline-block;}
 #close-privacy {font-size:20px;margin-top:30px;}
 #toggle-privacy {padding:0 10px;}
 
+#moveRegister {position: absolute;}
+
 .invalid {
     border-color: rgb(166, 0, 0) !important;
 }
@@ -653,7 +655,7 @@ footer div  {display:inline-block;}
     #character.disabled div {opacity:0;pointer-events:none;}
     #parchment input {margin-top:20px; padding:0 10px; border:2px dashed #b2af9b; font-size:20px;border-radius:6px;height:41px;}
     .button {height:102px;width:250px;background-position:-458px -204px;margin:20px auto 0 auto;position:relative;}
-    .button span {line-height: 110px;}
+    .button span {line-height: 115px;}
     .button div {height:102px;width:250px;background-position:-458px 0px;}
     /*.play div {height:102px;width:250px;background-position:-458px 0px;}
     .play div:active {background-position:-209px -306px;}*/
@@ -719,16 +721,16 @@ footer div  {display:inline-block;}
     .bubble p {font-family:"GraphicPixel"; font-size:14px;}
 
     /*GUI Bar*/
-    #bar-container {height:39px;top:-7px;background-size:960px;}
+    #bar-container {height:40px;top:-8px;background-size:960px;}
 
-    #healthbar {height:26px;background-position:0 -44px;width:204px;top:6px;background-size:960px;z-index:20;}
+    #healthbar {height:26px;background-position:0 -46px;width:204px;top:6px;background-size:960px;z-index:20;}
     #hitpoints {width:0px;height:22px;top:8px;left:22px;z-index:10;position:absolute;}
     
-    #manabar {height:26px;background-position:-756px -44px;width:204px;top:6px;left:208px;background-size:960px;z-index:20;}
+    #manabar {height:26px;background-position:-756px -46px;width:204px;top:6px;left:208px;background-size:960px;z-index:20;}
     #manapoints {width:0px;height:22px;top:8px;left:230px;z-index:10;position:absolute;}
     
-    #expbar {height:5px;background-position:0 -39px;width:960px;top:34px;background-size:960px;z-index:20;}
-    #exp {width:0px;height:5px;top:34px;left:0;z-index:10;position:absolute;}
+    #expbar {height:6px;background-position:0 -40px;width:960px;top:34px;background-size:960px;z-index:20;}
+    #exp {width:0px;height:6px;top:34px;left:0;z-index:10;position:absolute;}
 
     #armor, #weapon {width:32px;height:32px;position:absolute;background-size:192px;background-position:-64px;}
     #weapon {left:208px;top:2px;}
@@ -745,21 +747,21 @@ footer div  {display:inline-block;}
     #instance-population {padding-top:12px;}
 
     .barbutton {background-size:960px;height:30px;width:28px;}
-    #chatbutton {background-position:-204px -44px;top:2px;left:840px;}
-    #chatbutton:hover {background-position:-232px -44px;}
-    #chatbutton.active {background-position:-260px -44px;}
-    #achievementsbutton {background-position:-288px -44px;top:2px;left:870px;}
-    #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-316px -44px;}
-    #achievementsbutton.blink {background-position:-576px -44px;}
-    #achievementsbutton.active {background-position:-344px -44px;}
-    #helpbutton {background-position:-372px -44px;top:2px;left:900px;}
-    #helpbutton:hover {background-position:-400px -44px;}
-    #helpbutton.active {background-position:-428px -44px;}
-    #mutebutton {background-position:-456px -44px;top:2px;left:930px;}
-    #mutebutton:hover {background-position:-484px -44px;}
-    #mutebutton.active {background-position:-512px -44px;}
+    #chatbutton {background-position:-204px -46px;top:2px;left:840px;}
+    #chatbutton:hover {background-position:-232px -46px;}
+    #chatbutton.active {background-position:-260px -46px;}
+    #achievementsbutton {background-position:-288px -46px;top:2px;left:870px;}
+    #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-316px -46px;}
+    #achievementsbutton.blink {background-position:-576px -46px;}
+    #achievementsbutton.active {background-position:-344px -46px;}
+    #helpbutton {background-position:-372px -46px;top:2px;left:900px;}
+    #helpbutton:hover {background-position:-400px -46px;}
+    #helpbutton.active {background-position:-428px -46px;}
+    #mutebutton {background-position:-456px -46px;top:2px;left:930px;}
+    #mutebutton:hover {background-position:-484px -46px;}
+    #mutebutton.active {background-position:-512px -46px;}
 
-    #chatbox {height:32px;width:788px;background-size:960px;background-position:0 -74px;margin-left:-394px;bottom:17px;}
+    #chatbox {height:32px;width:788px;background-size:960px;background-position:0 -76px;margin-left:-394px;bottom:18px;}
     #chatbox.active {bottom:49px;}
     #chatbox input {font-size:14px;background:none;width:90%;border:0;margin-left:2%;padding:8px 0;}
 
@@ -815,6 +817,9 @@ footer div  {display:inline-block;}
 
     #name-tooltip {font-size:14px;width:280px;margin-left:-140px;height:20px;line-height:18px;top:-30px;}
     #name-tooltip:after {bottom:-8px;}
+    
+    #moveRegister {bottom: 50px;right: 50px;}
+    #moveRegister p {font-size: 20px;}
 }
 
 @media screen and (max-width: 1000px) {
@@ -1041,7 +1046,7 @@ footer div  {display:inline-block;}
     #character.disabled div {opacity:0;pointer-events:none;}
     #parchment input {margin-top:10px; padding-bottom:5px; border-bottom:1px dashed #b2af9b; font-size:20px;-moz-animation:none;-webkit-animation:none;-o-animation:none;-ms-animation:none;color:#eee;}
     .button {height:54px;width:204px;background-position:-500px -952px;margin:20px auto 0 auto;position:relative;background-size:844px;}
-    .button span {line-height: 60px;}
+    .button span {line-height: 50px;font-size:20px;}
     .play div {height:54px;width:204px;background-position:-458px -512px; background-size:844px;}
     .play div:active {background-position:0px -1398px;}
     .stroke {text-shadow:1px 1px 0 #373737, 1px -1px 0 #373737, 0 1px 0 #373737, 1px 0 0 #373737, -1px 1px 0 #373737, -1px -1px 0 #373737, 0 -1px 0 #373737, 0 1px 0 #373737, -1px 0 0 #373737;}
@@ -1079,16 +1084,16 @@ footer div  {display:inline-block;}
     #playerimage {display:none;}
 
     /*GUI Bar*/
-    #bar-container {height:39px;top:-7px;background-size:960px;background-position:0 -106px;}
+    #bar-container {height:40px;top:-8px;background-size:960px;background-position:0 -108px;}
 
-    #healthbar {height:26px;background-position:0 -150px;width:92px;top:6px;background-size:960px;z-index:20;}
-    #hitpoints {width:0px;height:22px;top:8px;left:22px;z-index:10;position:absolute;}
+    #healthbar {height:26px;background-position:0 -154px;width:86px;top:6px;left:3px;background-size:960px;z-index:20;}
+    #hitpoints {width:0px;height:22px;top:8px;left:25px;z-index:10;position:absolute;}
 
-    #manabar {height:26px;background-position:-92px -150px;width:92px;top:6px;left:94px;background-size:960px;z-index:20;}
-    #manapoints {width:0px;height:22px;top:8px;left:116px;z-index:10;position:absolute;}
+    #manabar {height:26px;background-position:-96px -154px;width:86px;top:6px;left:97px;background-size:960px;z-index:20;}
+    #manapoints {width:0px;height:22px;top:8px;left:120px;z-index:10;position:absolute;}
     
-    #expbar {height:5px;background-position:0 -145px;width:480px;top:34px;background-size:960px;z-index:20;}
-    #exp {width:0px;height:5px;top:34px;left:0;z-index:10;position:absolute;}
+    #expbar {height:6px;background-position:0 -148px;width:480px;top:34px;background-size:960px;z-index:20;}
+    #exp {width:0px;height:6px;top:34px;left:0;z-index:10;position:absolute;}
     
     #armor, #weapon {width:32px;height:32px;position:absolute;background-size:192px;background-position:-64px;}
     #weapon {left:208px;top:2px;}
@@ -1101,20 +1106,20 @@ footer div  {display:inline-block;}
     #playercount span.count {display:inline;}
 
     .barbutton {background-size:960px;height:30px;width:28px;}
-    #chatbutton {background-position:-204px -44px;top:2px;left:360px;}
-    #chatbutton:hover {background-position:-232px -44px;}
-    #chatbutton.active {background-position:-260px -44px;}
-    #achievementsbutton {background-position:-288px -44px;top:2px;left:390px;}
-    #achievementsbutton:hover, #achievementsbutton.blink {background-position:-316px -44px;}
-    #achievementsbutton.active {background-position:-344px -44px;}
-    #helpbutton {background-position:-372px -44px;top:2px;left:420px;}
-    #helpbutton:hover {background-position:-400px -44px;}
-    #helpbutton.active {background-position:-428px -44px;}
-    #mutebutton {background-position:-456px -44px;top:2px;left:450px;}
-    #mutebutton:hover {background-position:-484px -44px;}
-    #mutebutton.active {background-position:-512px -44px;}
+    #chatbutton {background-position:-204px -46px;top:2px;left:360px;}
+    #chatbutton:hover {background-position:-232px -46px;}
+    #chatbutton.active {background-position:-260px -46px;}
+    #achievementsbutton {background-position:-288px -46px;top:2px;left:390px;}
+    #achievementsbutton:hover, #achievementsbutton.blink {background-position:-316px -46px;}
+    #achievementsbutton.active {background-position:-344px -46px;}
+    #helpbutton {background-position:-372px -46px;top:2px;left:420px;}
+    #helpbutton:hover {background-position:-400px -46px;}
+    #helpbutton.active {background-position:-428px -46px;}
+    #mutebutton {background-position:-456px -46px;top:2px;left:450px;}
+    #mutebutton:hover {background-position:-484px -46px;}
+    #mutebutton.active {background-position:-512px -46px;}
 
-    #chatbox {height:32px;width:480px;background-size:960px;background-position:0 -64px;margin-left:-240px;bottom:2px;}
+    #chatbox {height:32px;width:480px;background-size:960px;background-position:0 -76px;margin-left:-240px;bottom:3px;}
     #chatbox.active {bottom:34px;}
     #chatbox input {font-size:14px;background:none;width:90%;border:0;margin-left:2%;padding:4px 0;}
 
@@ -1141,7 +1146,7 @@ footer div  {display:inline-block;}
     #bubbles {overflow:hidden;}
 
     .intro footer, .intro footer {display:block;}
-    footer {display:none;position:absolute;top:260px;left:0;z-index:9000;height:30px;width:100%;bottom:auto;}
+    footer {display:none;position:absolute;left:0;z-index:9000;height:30px;width:100%;bottom:0;}
     .returning footer, .returning footer {top:300px;}
     #close-legal, #close-privacy {display:none;}
 
@@ -1149,6 +1154,9 @@ footer div  {display:inline-block;}
     #legal p, #privacy p {font-size:12px;width:80%;line-height:14px;}
 
     #name-tooltip {display:none;}
+    
+    #moveRegister {bottom: 30px;right: 50px;}
+    #moveRegister p {font-size: 20px;}
 }
 
 @media screen and (max-width: 800px) and (orientation: portrait) {
