@@ -1,6 +1,7 @@
 
 var Utils = require('./utils'),
-    Types = require("../../shared/js/gametypes");
+    Types = require("../../shared/js/gametypes"),
+    _ = require("underscore");
 
 module.exports = Chest = Item.extend({
     init: function(id, x, y) {
