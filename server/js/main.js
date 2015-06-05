@@ -92,6 +92,10 @@ function main(config) {
         database.tryRegisterUser(obj, callback);
     });
     
+    server.onRequestNews(function(callback) {
+        database.getNews(callback);
+    });
+    
     if(config.metrics_enabled) {
         metrics.ready(function() {
             onPopulationChange(); // initialize all counters to 0 when the server starts

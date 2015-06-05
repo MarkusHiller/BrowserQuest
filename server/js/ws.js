@@ -112,6 +112,13 @@ WS.MultiVersionWebsocketServer = Server.extend({
                 res.end();
             });
         });
+        
+        this.app.get('/news', function (req, res) {
+            self.news_function(function(result) {
+                res.jsonp(result);
+                res.end();
+            });
+        });
 
         this._httpServer = http.createServer(this.app, function (request, response) {
             var path = url.parse(request.url).pathname;
@@ -189,6 +196,9 @@ WS.MultiVersionWebsocketServer = Server.extend({
     },
     onRequestRegister: function (register_function) {
         this.register_function = register_function;
+    },
+    onRequestNews: function (news_function) {
+        this.news_function = news_function;
     }
 });
 

@@ -61,10 +61,10 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                 </p>
                 <div id="tilt"></div>
             </article>
-            <section id="parchment" class="createcharacter">
+            <section id="parchment" class="login">
                 <div class="parchment-left"></div>
                 <div class="parchment-middle">
-                    <article id="createcharacter">
+                    <article id="login">
                         <h1>
                             <span class="left-ornament"></span>
                             Login
@@ -83,7 +83,7 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                             <span style="color: #5b5b5b; text-transform: uppercase; letter-spacing: 0.1em;">Login</span>
                             <img src="img/common/spinner.gif" alt="">
                         </div>
-                        <div id="moveRegister">
+                        <div class="moveRegister">
                             <p>or register</p>
                         </div>
                         <div class="ribbon">
@@ -110,8 +110,8 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                             <div class="bottom"></div>
                         </div>
                         <!-- CSS auslagern -->
-                        <div class="moveLogin" style="position: absolute; bottom: 50px; right: 100px;">
-                            <p style="font-size: 20px;">or login</p>
+                        <div class="moveLogin">
+                            <p>or login</p>
                         </div>
                     </article>
                     <article id="register_2" class="middleContainer">
@@ -165,6 +165,17 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                             <div class="top"></div>
                             <div class="bottom"></div>
                         </div>
+                    </article>
+                    <article id="news" class="middleContainer">
+                        <h1>
+                            <span class="left-ornament"></span>
+                            <span class="title">
+                                News
+                            </span>
+                            <span class="right-ornament"></span>
+                        </h1>
+                        <p id="news_title">a</p>
+                        <p id="news_body">a</p>
                     </article>
                     <article id="credits">
                         <h1>
@@ -361,6 +372,9 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                 Share this on 
                 <a href="http://twitter.com/share?url=http%3A%2F%2Fbrowserquest.mozilla.org&amp;text=Mozilla%27s%20BrowserQuest%3A%20HTML5%20massively%20multiplayer%20adventure%20game%20%23demo%20%23websockets&amp;related=glecollinet:Creators%20of%20BrowserQuest%2Cwhatthefranck" class="twitter"></a>
                 <a href="http://www.facebook.com/share.php?u=http://browserquest.mozilla.org/" class="facebook"></a>
+            </div>
+            <div id="news-link" class="clickable">
+                <span class="dash">&ndash;</span> <span id="toggle-news">News</span>
             </div>
             <div id="privacy-link" class="clickable">
                 <span class="dash">&ndash;</span> <a href="privatcy.html">Datenschutz</a> <!--<span id="toggle-privacy">Privacy</span>-->

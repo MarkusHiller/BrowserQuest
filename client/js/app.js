@@ -16,8 +16,8 @@ define([
                     this.$registerButton = $('.register');
                     this.$playDiv = $('.play div');
                     this.$registerDiv = $('.register div');
-                    this.frontPage = 'createcharacter';
-
+                    this.frontPage = 'login';
+                    
 //                    if (localStorage && localStorage.data) {
 //                        this.frontPage = 'loadcharacter';
 //                    }
@@ -144,6 +144,23 @@ define([
                             self.toggleScrollContent(data.result);
                             log.debug("register suc: " + data);
                         }
+                    }
+                },
+                getNews: function(step) {
+                    var newsId;
+                    
+                    $.ajax({
+                        url: "http://localhost:8000/news?callback=?", //TODO:: use config route
+                        jsonp: 'callback',
+                        dataType: 'jsonp',
+                        success: success
+                    });
+
+                    function success(data) {
+                       this.news = data;
+                       this.currentNews = _.last(this.news).ID;
+                       $('#news_title').text(_.last(this.news).date + ' - ' + _.last(this.news).title);
+                       $('#news_body').text(_.last(this.news).body);
                     }
                 },
                 setMouseCoordinates: function (event) {

@@ -59,6 +59,17 @@ var DB = exports = module.exports = cls.Class.extend({
         });
         connection.end();
     },
+    getNews: function (callback) {
+        var connection = mysql.createConnection(this.connectionOptions);
+        connection.query('SELECT * from news', function (err, rows, fields) {
+            if (!err) {
+                callback(rows);
+            } else {
+                log.debug('Error while performing Query. ' + err);
+            }
+        });
+        connection.end();
+    },
     savePlayerData: function (player) {
         var values = {
             pos_x: player.x,

@@ -215,6 +215,8 @@ body.upscaled.game {background:#000;}
 
 #credits, #loadcharacter, #confirmation, #death, #error, #about, #legal, #privacy {position:absolute;left:50%;text-align:center;font-family:'GraphicPixel', sans-serif;z-index:1000;}
 
+#news p {text-align: left;margin: 0 5px;}
+
 #playerimage {image-rendering: -moz-crisp-edges; image-rendering: -webkit-optimize-contrast;}
 
 #parchment p {font-family:'GraphicPixel';}
@@ -278,13 +280,13 @@ footer div  {display:inline-block;}
 #close-privacy {font-size:20px;margin-top:30px;}
 #toggle-privacy {padding:0 10px;}
 
-#moveRegister {position: absolute;}
+.moveRegister, .moveLogin {position: absolute;}
 
 .invalid {
     border-color: rgb(166, 0, 0) !important;
 }
 
-#createcharacter form {
+#login form, #register_1 form, #register_2 form {
     position:relative;
 }
 
@@ -311,8 +313,8 @@ footer div  {display:inline-block;}
 .animate .parchment-left {-moz-animation:parchleft 1s ease 1;-webkit-animation:parchleft 1s ease 1;-o-animation:parchleft 1s ease 1;-ms-animation:parchleft 1s ease 1;animation:parchleft 1s ease 1;}
 .animate .parchment-right {-moz-animation:parchright 1s ease 1;-webkit-animation:parchright 1s ease 1;-o-animation:parchright 1s ease 1;-ms-animation:parchright 1s ease 1;animation:parchright 1s ease 1;}
 
-#credits, #createcharacter, #register_1, #register_2, #register_success, #register_fail, #loadcharacter, #confirmation, #death, #error, #about, #legal, #privacy {opacity:0;pointer-events:none;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
-.credits #credits, .createcharacter #createcharacter, .register_1 #register_1, .register_2 #register_2, .register_success #register_success, .register_fail #register_fail, .loadcharacter #loadcharacter, .confirmation #confirmation, .death #death, .error #error, .about #about, .legal #legal, .privacy #privacy {opacity:1;pointer-events:auto;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;}
+#parchment article {opacity:0;pointer-events:none;-moz-transition:none;-webkit-transition:none;-o-transition:none;-ms-transition:none;transition:none;}
+.credits #credits, .login #login, .register_1 #register_1, .register_2 #register_2, .register_success #register_success, .register_fail #register_fail, .loadcharacter #loadcharacter, .confirmation #confirmation, .death #death, .error #error, .about #about, .legal #legal, .privacy #privacy, .news #news {opacity:1;pointer-events:auto;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;}
 
 /* States & Transitions */
 
@@ -320,7 +322,7 @@ footer div  {display:inline-block;}
 #mask, #logo, #parchment {opacity:0;}
 .intro #logo, .intro #parchment {opacity:1;}
 
-.game #confirmation, .game #loadcharacter, .game #createcharacter, .game #register_1, .game #register_2, .game #register_success, .game #register_fail, .game #error {display:none;}
+.game #confirmation, .game #loadcharacter, .game #login, .game #register_1, .game #register_2, .game #register_success, .game #register_fail, .game #error {display:none;}
 
 .game #parchment {z-index:0;-moz-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-webkit-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-o-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;-ms-transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;transition:0.5s opacity linear 0.5s, 0s z-index linear 1s;top:50%;}
 .game #credits, .game #death, .game #about {opacity:0;-moz-transition:0s opacity linear 0s;-webkit-transition:0s opacity linear 0s;-o-transition:0s opacity linear 0s;-ms-transition:0s opacity linear 0s;transition:0s opacity linear 0s;}
@@ -530,7 +532,7 @@ footer div  {display:inline-block;}
     .ribbon .bottom {width:100%;height:66px;background-position:-1143px -555px;}
     .ribbon:hover .top {height:30px;}
     .ribbon:hover .bottom {background-position:-1197px -555px;}
-    #createcharacter .ribbon {
+    #login .ribbon {
         right:30px;
         top:12px;
     }
@@ -638,6 +640,12 @@ footer div  {display:inline-block;}
 
     footer {font-size:20px;}
     #resize-check {height:3px;}
+    
+    .moveRegister {bottom: 100px;right: 50px;}
+    .moveRegister p {font-size: 30px;}
+    
+    .moveLogin {bottom: 100px;right: 50px;}
+    .moveLogin p {font-size: 30px;}
 }
 
 @media screen and (max-width: 1500px), screen and (max-height: 870px) {
@@ -707,7 +715,7 @@ footer div  {display:inline-block;}
     .ribbon .bottom {width:100%;height:44px;background-position:-762px -370px;}
     .ribbon:hover .top {height:20px;}
     .ribbon:hover .bottom {background-position:-798px -370px;}
-    #createcharacter .ribbon {
+    #login .ribbon {
         right:20px;
         top:8px;
     }
@@ -824,8 +832,11 @@ footer div  {display:inline-block;}
     #name-tooltip {font-size:14px;width:280px;margin-left:-140px;height:20px;line-height:18px;top:-30px;}
     #name-tooltip:after {bottom:-8px;}
     
-    #moveRegister {bottom: 50px;right: 50px;}
-    #moveRegister p {font-size: 20px;}
+    .moveRegister {bottom: 30px;right: 50px;}
+    .moveRegister p {font-size: 20px;}
+    
+    .moveLogin {bottom: -150px;right: 50px;}
+    .moveLogin p {font-size: 20px;}
 }
 
 @media screen and (max-width: 1000px) {
@@ -890,7 +901,7 @@ footer div  {display:inline-block;}
     .ribbon .bottom {width:100%;height:22px;background-position:-381px -185px;}
     .ribbon:hover .top {height:10px;}
     .ribbon:hover .bottom {background-position:-399px -185px;}
-    #createcharacter .ribbon {
+    #login .ribbon {
         right:10px;
         top:4px;
     }
@@ -1016,7 +1027,7 @@ footer div  {display:inline-block;}
     #mask, #fade {display:none;}
     .game.death #parchment {display:block;}
 
-    .game .createcharacter #createcharacter,
+    .game .login #login,
     .game .register_1 #register_1,
     .game .register_2 #register_2,
     .game .register_success #register_success,
@@ -1070,15 +1081,15 @@ footer div  {display:inline-block;}
 
     #parchment.animate {-moz-animation:none;-webkit-animation:none;-o-animation:none;-webkit-animation:none;}
 
-    #loadcharacter, #confirmation, #createcharacter, #register_1, #register_2, #register_success, #register_fail, #error, #legal, #privacy {display:none;margin-top:0;margin-left:0;left:0;width:auto;}
-    .loadcharacter #loadcharacter, .confirmation #confirmation, .createcharacter #createcharacter, .error #error, .legal #legal, .privacy #privacy, .register_1 #register_1, .register_2 #register_2, .register_success #register_success, .register_fail #register_fail {display:block;width:100%;}
+    #loadcharacter, #confirmation, #login, #register_1, #register_2, #register_success, #register_fail, #error, #legal, #privacy {display:none;margin-top:0;margin-left:0;left:0;width:auto;}
+    .loadcharacter #loadcharacter, .confirmation #confirmation, .login #login, .error #error, .legal #legal, .privacy #privacy, .register_1 #register_1, .register_2 #register_2, .register_success #register_success, .register_fail #register_fail {display:block;width:100%;}
 
     #loadcharacter h1, #confirmation h1, #error h1, #legal h1, #privacy h1 {font-size:12px;font-weight:normal;}
 
     #loadcharacter, #confirmation, #error, #legal, #privacy {height:auto;}
 
-    #loadcharacter h1, #confirmation h1, #createcharacter h1, #error h1, #legal h1, #privacy h1 {font-size:12px;}
-    #createcharacter {padding-bottom:20px;}
+    #loadcharacter h1, #confirmation h1, #login h1, #error h1, #legal h1, #privacy h1 {font-size:12px;}
+    #login {padding-bottom:20px;}
     #playername {font-size:20px;margin:10px 0px;}
     #create-new {margin:20px 0px;font-size:16px;}
     .button.delete {background-position:-612px -1398px;}
@@ -1204,7 +1215,7 @@ footer div  {display:inline-block;}
 /* Workarounds for opera's lack of pointer-events support */
 
 .opera.intro #bubbles, .opera.intro #canvas, .opera.intro #container { z-index: -30000;}
-.opera .credits #credits, .opera .createcharacter #createcharacter, .opera .register_1 #register_1, .opera .register_2 #register_2, .opera .register_success #register_success, .opera .register_fail #register_fail, .opera .loadcharacter #loadcharacter, .opera .confirmation #confirmation, .opera .death #death, 
+.opera .credits #credits, .opera .login #login, .opera .register_1 #register_1, .opera .register_2 #register_2, .opera .register_success #register_success, .opera .register_fail #register_fail, .opera .loadcharacter #loadcharacter, .opera .confirmation #confirmation, .opera .death #death, 
 .opera .error #error, .opera .about #about, .opera .legal #legal, .opera .privacy #privacy { z-index: 30000; }
 .opera #instructions, .opera #achievements { z-index: -30000;}
 .opera #achievements.active, .opera #instructions.active { z-index: 30000;}

@@ -6,7 +6,9 @@ define(['jquery', 'app'], function ($, App) {
         $(document).ready(function () {
             app = new App();
             app.center();
-
+            
+            app.getNews();
+            
             if (Detect.isWindows()) {
                 // Workaround for graphical glitches on text
                 $('body').addClass('windows');
@@ -112,6 +114,18 @@ define(['jquery', 'app'], function ($, App) {
                 }
                 ;
             });
+            
+            $('#toggle-news').click(function () {
+                app.toggleScrollContent('news');
+                if (game.renderer.mobile) {
+                    if ($('#parchment').hasClass('news')) {
+                        $(this).text('close');
+                    } else {
+                        $(this).text('News');
+                    }
+                }
+                ;
+            });
 
             $('#create-new span').click(function () {
                 app.animateParchment('loadcharacter', 'confirmation');
@@ -119,7 +133,7 @@ define(['jquery', 'app'], function ($, App) {
 
             $('.delete').click(function () {
                 //app.storage.clear();
-                app.animateParchment('confirmation', 'createcharacter');
+                app.animateParchment('confirmation', 'login');
                 $('body').removeClass('returning');
             });
 
@@ -132,10 +146,10 @@ define(['jquery', 'app'], function ($, App) {
             });
 
             $('.moveLogin').click(function () {
-                app.toggleScrollContent('createcharacter');
+                app.toggleScrollContent('login');
             });
             
-            $('#moveRegister').click(function () {
+            $('.moveRegister').click(function () {
                 app.toggleScrollContent('register_1');
             });
             
@@ -143,8 +157,8 @@ define(['jquery', 'app'], function ($, App) {
                 app.toggleScrollContent('register_2');
             });
 
-            $('#createcharacter input').bind("keyup", function () {
-                app.toggleButton('createcharacter');
+            $('#login input').bind("keyup", function () {
+                app.toggleButton('login');
             });
             
             $('#register_1 input').bind("keyup", function() {
