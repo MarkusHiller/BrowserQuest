@@ -549,11 +549,17 @@ footer div  {display:inline-block;}
     .bubble p {font-family:"GraphicPixel"; font-size:18px;line-height:24px;}
 
     /*GUI Bar*/
-    #bar-container {height:51px;top:-3px;background-size:1440px;}
+    #bar-container {height:60px;top:-3px;background-size:1440px;}
 
-    #healthbar {height:39px;background-position:0 -51px;width:306px;top:9px;background-size:1440px;z-index:20;}
+    #healthbar {height:39px;background-position:0 -69px;width:306px;top:9px;background-size:1440px;z-index:20;}
     #hitpoints {width:0px;height:33px;top:12px;left:33px;z-index:10;position:absolute;}
 
+    #manabar {height:39px;background-position:-1134px -69px;width:306px;top:9px;left:311px;background-size:1440px;z-index:20;}
+    #manapoints {width:0px;height:33px;top:12px;left:344px;z-index:10;position:absolute;}
+    
+    #expbar {height:9px;background-position:0 -60px;width:1440px;top:51px;background-size:1440px;z-index:20;}
+    #exp {width:0px;height:9px;top:51px;left:0;z-index:10;position:absolute;}
+    
     #armor, #weapon {width:48px;height:48px;position:absolute;background-size:288px;background-position:-96px;}
     #weapon {left:312px;top:3px;background-size:288px;}
     #armor {left:363px;top:3px;}
@@ -569,21 +575,21 @@ footer div  {display:inline-block;}
 
 
     .barbutton {background-size:1440px;height:45px;width:42px;}
-    #chatbutton {background-position:-306px -51px;top:3px;left:1260px;}
-    #chatbutton:hover {background-position:-348px -51px;}
-    #chatbutton.active {background-position:-390px -51px;}
-    #achievementsbutton {background-position:-432px -51px;top:3px;left:1305px;}
-    #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-474px -51px;}
-    #achievementsbutton.blink {background-position:-864px -51px;}
-    #achievementsbutton.active {background-position:-516px -51px;}
-    #helpbutton {background-position:-558px -51px;top:3px;left:1350px;}
-    #helpbutton:hover {background-position:-600px -51px;}
-    #helpbutton.active {background-position:-642px -51px;}
-    #mutebutton {background-position:-684px -51px;top:3px;left:1395px;}
-    #mutebutton:hover {background-position:-726px -51px;}
-    #mutebutton.active {background-position:-768px -51px;}
+    #chatbutton {background-position:-306px -69px;top:3px;left:1260px;}
+    #chatbutton:hover {background-position:-348px -69px;}
+    #chatbutton.active {background-position:-390px -69px;}
+    #achievementsbutton {background-position:-432px -69px;top:3px;left:1305px;}
+    #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-474px -69px;}
+    #achievementsbutton.blink {background-position:-864px -69px;}
+    #achievementsbutton.active {background-position:-516px -69px;}
+    #helpbutton {background-position:-558px -69px;top:3px;left:1350px;}
+    #helpbutton:hover {background-position:-600px -69px;}
+    #helpbutton.active {background-position:-642px -69px;}
+    #mutebutton {background-position:-684px -69px;top:3px;left:1395px;}
+    #mutebutton:hover {background-position:-726px -69px;}
+    #mutebutton.active {background-position:-768px -69px;}
 
-    #chatbox {height:48px;width:1182px;background-size:1440px;background-position:0 -96px;margin-left:-591px;bottom:18px;}
+    #chatbox {height:48px;width:1182px;background-size:1440px;background-position:0 -114px;margin-left:-591px;bottom:18px;}
     #chatbox.active {bottom:66px;}
     #chatbox input {font-size:20px;background:none;width:90%;border:0;margin-left:2%;padding:16px 0;}
 
@@ -721,7 +727,7 @@ footer div  {display:inline-block;}
     .bubble p {font-family:"GraphicPixel"; font-size:14px;}
 
     /*GUI Bar*/
-    #bar-container {height:40px;top:-8px;background-size:960px;}
+    #bar-container {height:40px;top:-2px;background-size:960px;}
 
     #healthbar {height:26px;background-position:0 -46px;width:204px;top:6px;background-size:960px;z-index:20;}
     #hitpoints {width:0px;height:22px;top:8px;left:22px;z-index:10;position:absolute;}
@@ -1084,7 +1090,7 @@ footer div  {display:inline-block;}
     #playerimage {display:none;}
 
     /*GUI Bar*/
-    #bar-container {height:40px;top:-8px;background-size:960px;background-position:0 -108px;}
+    #bar-container {height:40px;top:-2px;background-size:960px;background-position:0 -108px;}
 
     #healthbar {height:26px;background-position:0 -154px;width:86px;top:6px;left:3px;background-size:960px;z-index:20;}
     #hitpoints {width:0px;height:22px;top:8px;left:25px;z-index:10;position:absolute;}
