@@ -1,10 +1,10 @@
 
-var _ = require('underscore'),
-    Types = require("../../shared/js/gametypes");
+var Types = require("../../shared/js/gametypes");
 
 (function() {
     FormatChecker = Class.extend({
         init: function() {
+            _ = require("underscore");
             this.formats = [];
             this.formats[Types.Messages.HELLO] = ['s', 's'],
             this.formats[Types.Messages.MOVE] = ['n', 'n'],
@@ -18,7 +18,10 @@ var _ = require('underscore'),
             this.formats[Types.Messages.TELEPORT] = ['n', 'n'],
             this.formats[Types.Messages.ZONE] = [],
             this.formats[Types.Messages.OPEN] = ['n'],
-            this.formats[Types.Messages.CHECK] = ['n']
+            this.formats[Types.Messages.CHECK] = ['n'],
+            this.formats[Types.Messages.USEITEM] = ['n'],
+            this.formats[Types.Messages.DELETEITEM] = ['n'];
+            this.formats[Types.Messages.EQUIPITEM] = ['n'];
         },
         
         check: function(msg) {
@@ -27,7 +30,7 @@ var _ = require('underscore'),
                 format = this.formats[type];
             
             message.shift();
-            
+           
             if(format) {    
                 if(message.length !== format.length) {
                     return false;

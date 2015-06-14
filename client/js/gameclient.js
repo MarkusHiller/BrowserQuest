@@ -32,6 +32,7 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             this.handlers[Types.Messages.HP] = this.receiveHitPoints;
             this.handlers[Types.Messages.LEVEL] = this.receiveLevel;
             this.handlers[Types.Messages.BLINK] = this.receiveBlink;
+            this.handlers[Types.Messages.INVENTORYUPDATE] = this.receiveInventoryUpdate;
         
             this.useBison = false;
             this.enable();
@@ -175,8 +176,8 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 exp: data[9],
                 maxExp: data[10],
                 level: data[11],
-                armor: data[12],
-                weapon: data[13]
+                weapon: data[12],
+                armor: data[13]
             };
         
             if(this.welcome_callback) {
@@ -397,6 +398,15 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 this.blink_callback(id);
             }
         },
+    
+        receiveInventoryUpdate: function(data) {
+            var slot = data[1],
+                    itemId = data[2];
+        
+            if(this.inventoryUpdate_callback) {
+                this.inventoryUpdate_callback(slot, itemId);
+            }
+        },
         
         onDispatched: function(callback) {
             this.dispatched_callback = callback;
@@ -497,6 +507,10 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         onItemBlink: function(callback) {
             this.blink_callback = callback;
         },
+    
+        onInventoryUpdate: function(callback) {
+            this.inventoryUpdate_callback = callback;
+        },
 
         sendHello: function(player) {
             this.sendMessage([Types.Messages.HELLO,
@@ -570,6 +584,21 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         sendCheck: function(id) {
             this.sendMessage([Types.Messages.CHECK,
                               id]);
+        },
+        
+        sendUseItem: function(slot) {
+            this.sendMessage([Types.Messages.USEITEM,
+                              parseInt(slot)]);
+        },
+        
+        sendDeleteItem: function(slot) {
+            this.sendMessage([Types.Messages.DELETEITEM,
+                              parseInt(slot)]);
+        },
+        
+        sendEquipItem: function(slot) {
+            this.sendMessage([Types.Messages.EQUIPITEM,
+                              parseInt(slot)]);
         }
     });
     

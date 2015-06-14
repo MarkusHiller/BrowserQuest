@@ -28,7 +28,11 @@ Types = {
         LEVEL: 24,
         BLINK: 25,
         OPEN: 26,
-        CHECK: 27
+        CHECK: 27,
+        INVENTORYUPDATE: 28,
+        USEITEM: 29,
+        DELETEITEM: 30,
+        EQUIPITEM: 31
     },
     
     Entities: {
@@ -227,6 +231,11 @@ Types.isItem = function(kind) {
         || (Types.isObject(kind) && !Types.isChest(kind));
 };
 
+Types.isEquipmentItem = function(kind) {
+    return Types.isWeapon(kind) 
+        || Types.isArmor(kind);
+};
+
 Types.isHealingItem = function(kind) {
     return kind === Types.Entities.FLASK 
         || kind === Types.Entities.BURGER;
@@ -236,6 +245,10 @@ Types.isExpendableItem = function(kind) {
     return Types.isHealingItem(kind)
         || kind === Types.Entities.FIREPOTION
         || kind === Types.Entities.CAKE;
+};
+
+Types.isUsableItem = function(itemId) {
+    return Types.isHealingItem(itemId);
 };
 
 Types.getKindFromString = function(kind) {

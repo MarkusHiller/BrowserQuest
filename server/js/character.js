@@ -31,6 +31,13 @@ module.exports = Character = Entity.extend({
         this.hitPoints = this.maxHitPoints;
     },
     
+    setMaxHitPoints: function(maxHitPoints) {
+        this.maxHitPoints = maxHitPoints;
+        if(this.maxHitPoints < this.hitPoints) {
+            this.hitPoints = this.maxHitPoints;
+        }
+    },
+    
     resetManaPoints: function(currentMana) {
         this.maxManaPoints = 1;
         this.manaPoints = currentMana;

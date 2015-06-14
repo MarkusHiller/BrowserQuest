@@ -223,3 +223,16 @@ Messages.Level = Message.extend({
             ];
     }
 });
+
+Messages.InventoryUpdate = Message.extend({
+    init: function(slot, itemId) {
+        this.slot = slot;
+        this.itemId = itemId;
+    },
+    serialize: function() {
+        return [Types.Messages.INVENTORYUPDATE,
+                this.slot,
+                this.itemId
+            ];
+    }
+});

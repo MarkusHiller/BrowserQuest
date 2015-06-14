@@ -6,9 +6,9 @@ define(['jquery', 'app'], function ($, App) {
         $(document).ready(function () {
             app = new App();
             app.center();
-            
+
             app.getNews();
-            
+
             if (Detect.isWindows()) {
                 // Workaround for graphical glitches on text
                 $('body').addClass('windows');
@@ -32,7 +32,7 @@ define(['jquery', 'app'], function ($, App) {
                 if ($('#parchment').hasClass('privacy')) {
                     app.toggleScrollContent('privacy');
                 }
-                
+
                 if ($('#parchment').hasClass('legal')) {
                     app.toggleScrollContent('legal');
                 }
@@ -44,6 +44,14 @@ define(['jquery', 'app'], function ($, App) {
 
             $('.barbutton').click(function () {
                 $(this).toggleClass('active');
+            });
+
+            $('#inventorybutton').click(function () {
+                if ($('#inventorybutton').hasClass('active')) {
+                    app.showInventory();
+                } else {
+                    app.hideInventory();
+                }
             });
 
             $('#chatbutton').click(function () {
@@ -84,6 +92,9 @@ define(['jquery', 'app'], function ($, App) {
             });
 
             $('.clickable').click(function (event) {
+                if (event.currentTarget.id !== "item_context" && event.currentTarget.id !== "inventory") {
+                    $('#item_context').hide();
+                }
                 event.stopPropagation();
             });
 
@@ -102,7 +113,7 @@ define(['jquery', 'app'], function ($, App) {
                 }
                 ;
             });
-            
+
             $('#toggle-legal').click(function () {
                 app.toggleScrollContent('legal');
                 if (game.renderer.mobile) {
@@ -114,7 +125,7 @@ define(['jquery', 'app'], function ($, App) {
                 }
                 ;
             });
-            
+
             $('#toggle-news').click(function () {
                 app.toggleScrollContent('news');
                 if (game.renderer.mobile) {
@@ -148,11 +159,11 @@ define(['jquery', 'app'], function ($, App) {
             $('.moveLogin').click(function () {
                 app.toggleScrollContent('login');
             });
-            
+
             $('.moveRegister').click(function () {
                 app.toggleScrollContent('register_1');
             });
-            
+
             $('#register_next div').click(function () {
                 app.toggleScrollContent('register_2');
             });
@@ -160,12 +171,12 @@ define(['jquery', 'app'], function ($, App) {
             $('#login input').bind("keyup", function () {
                 app.toggleButton('login');
             });
-            
-            $('#register_1 input').bind("keyup", function() {
+
+            $('#register_1 input').bind("keyup", function () {
                 app.toggleButton('register_1');
             });
-            
-            $('#register_2 input').bind("keyup", function() {
+
+            $('#register_2 input').bind("keyup", function () {
                 app.toggleButton('register_2');
             });
 
@@ -223,21 +234,21 @@ define(['jquery', 'app'], function ($, App) {
 
             $('.play div').click(function (event) {
                 var loginData = {
-                        username: $('#nameinput').attr('value'),
-                        password: $('#passwordinput').attr('value')
-                    };
+                    username: $('#nameinput').attr('value'),
+                    password: $('#passwordinput').attr('value')
+                };
 
                 app.tryStartingGame(loginData);
             });
-            
+
             $('.register div').click(function (event) {
                 var registerData = {
-                        username: $('#newusername').attr('value'),
-                        email: $('#newemail').attr('value'),
-                        password: $('#newpasswordinput').attr('value'),
-                        passwordconfirme: $('#confirmpasswordinput').attr('value')
-                    };
-                if(registerData.password !== registerData.passwordconfirme) {
+                    username: $('#newusername').attr('value'),
+                    email: $('#newemail').attr('value'),
+                    password: $('#newpasswordinput').attr('value'),
+                    passwordconfirme: $('#confirmpasswordinput').attr('value')
+                };
+                if (registerData.password !== registerData.passwordconfirme) {
                     $('#confirmpasswordinput').addClass("invalid");
                 } else {
                     $('#confirmpasswordinput').removeClass("invalid");
@@ -276,7 +287,7 @@ define(['jquery', 'app'], function ($, App) {
             }
 
             game.onGameStart(function () {
-                app.initEquipmentIcons();
+                app.initInventoryIcons();
             });
 
             game.onDisconnect(function (message) {
@@ -292,7 +303,7 @@ define(['jquery', 'app'], function ($, App) {
             });
 
             game.onPlayerEquipmentChange(function () {
-                app.initEquipmentIcons();
+                app.initEquipmentIcons(); //TODO:: wrong function
             });
 
             game.onPlayerInvincible(function () {
@@ -378,7 +389,7 @@ define(['jquery', 'app'], function ($, App) {
                         app.toggleScrollContent('privacy');
                     }
                 }
-                
+
                 if ($('#parchment').hasClass('legal')) {
                     if (game.started) {
                         app.closeInGameScroll('legal');
@@ -485,10 +496,10 @@ define(['jquery', 'app'], function ($, App) {
             $('#nameinput').keypress(function (event) {
                 var $name = $('#nameinput'),
                         name = $name.attr('value');
-                    loginData = {
-                        username: $('#nameinput').attr('value'),
-                        password: $('#passwordinput').attr('value')
-                    };
+                loginData = {
+                    username: $('#nameinput').attr('value'),
+                    password: $('#passwordinput').attr('value')
+                };
 
                 $('#name-tooltip').removeClass('visible');
 
@@ -506,6 +517,17 @@ define(['jquery', 'app'], function ($, App) {
 
             $('#mutebutton').click(function () {
                 //game.audioManager.toggle();
+            });
+
+            $('.slot').click(function (event) {
+                var slot = event.currentTarget.id.split('_');
+                var contextObj = game.buildItemContext(slot[(slot.length - 1)]);
+                if (contextObj !== "") {
+                    $('#item_context').html("");
+                    $('#item_context').append(contextObj);
+                    $('#item_context').css({left: (event.clientX - event.offsetX + event.currentTarget.clientWidth), top: (event.clientY - event.offsetY)});
+                    $('#item_context').show();
+                }
             });
 
             $(document).bind("keydown", function (e) {
@@ -542,6 +564,23 @@ define(['jquery', 'app'], function ($, App) {
                     if (key === 13 && game.ready) {
                         $chat.focus();
                         return false;
+                    }
+                }
+
+                if ($('body').hasClass('game')) {
+                    // Fast-Slots
+                    if (key >= 49 && key <= 53) {
+                        game.tryUseItem((key - 48));
+                    } else if (key === 87) { // W
+
+                    } else if (key === 65) { // A
+
+                    } else if (key === 83) { // S
+
+                    } else if (key === 68) { // D
+
+                    } else if (key === 69) { // E - Inventory
+                        $('#inventorybutton').click();
                     }
                 }
             });

@@ -6,7 +6,8 @@ var cls = require("./lib/class"),
         Properties = require("./properties"),
         Formulas = require("./formulas"),
         check = require("./format").check,
-        Types = require("../../shared/js/gametypes");
+        Types = require("../../shared/js/gametypes"),
+        inventory = require("./inventory");
 
 module.exports = Player = Character.extend({
     init: function (connection, worldServer, database) {
@@ -24,6 +25,7 @@ module.exports = Player = Character.extend({
         this.lastCheckpoint = null;
         this.formatChecker = new FormatChecker();
         this.disconnectTimeout = null;
+        this.inventory = new Inventory();
 
         this.connection.listen(function (message) {
             var action = parseInt(message[0]);
@@ -47,30 +49,35 @@ module.exports = Player = Character.extend({
 
             if (action === Types.Messages.HELLO) {
                 var name = Utils.sanitize(message[1]);
-                    password = Utils.sanitize(message[2]);
-                self.canPlay(name, password, function(result) {
-                    if (result !== undefined) {
-                        // If name was cleared by the sanitizer, give a default name.
-                        // Always ensure that the name is not longer than a maximum length.
-                        // (also enforced by the maxlength attribute of the name input element).
-                        self.name = result.username;
-                        self.x = result.pos_x;
-                        self.y = result.pos_y;
+                password = Utils.sanitize(message[2]);
+                self.canPlay(name, password, function (playerData, inventoryData) {
+                    if (playerData !== undefined) {
+                        self.name = playerData.username;
+                        self.x = playerData.pos_x;
+                        self.y = playerData.pos_y;
+                        self.hitPoints = playerData['hp'];
                         self.kind = Types.Entities.WARRIOR;
-                        self.equipArmor(result.armor);
-                        self.equipWeapon(result.weapon);
+                        self.equipWeapon(inventoryData["slot_15"]);
+                        self.equipArmor(inventoryData["slot_16"]);
                         self.orientation = Utils.randomOrientation();
-                        self.updateHitPoints();
-                        self.updateManaPoints(result.mp);
-                        self.updateExpPoints(result.exp, result.level);
+                        self.updateMaxHitPoints();
+                        self.updateManaPoints(playerData.mp);
+                        self.updateExpPoints(playerData.exp, playerData.level);
                         self.updatePosition();
 
                         self.server.addPlayer(self);
                         self.server.enter_callback(self);
 
-                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.exp, self.maxExp, self.level, self.armor, self.weapon]);
+                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.exp, self.maxExp, self.level, self.inventory.getSlot(15), self.inventory.getSlot(16)]);
                         self.hasEnteredGame = true;
                         self.isDead = false;
+
+                        // set and send Inventory
+                        for(var i = 1; i <= 14; i++) {
+                            if(inventoryData["slot_" + i] === "") continue;
+                            self.inventory.setSlot(i, inventoryData["slot_" + i]);
+                            self.server.pushToPlayer(self, new Messages.InventoryUpdate(i, inventoryData["slot_" + i]));
+                        }
                     } else {
                         self.connection.close("Invalid logindata message: " + message);
                     }
@@ -160,42 +167,50 @@ module.exports = Player = Character.extend({
             }
             else if (action === Types.Messages.LOOT) {
                 var item = self.server.getEntityById(message[1]);
-
+                
                 if (item) {
                     var kind = item.kind;
 
                     if (Types.isItem(kind)) {
-                        self.broadcast(item.despawn());
-                        self.server.removeEntity(item);
+                        //if(item.x === self.x && item.y === self.y) { // TODO:: include position check (Message to slow?)
+                            var freeSlot = self.inventory.getFreeSlot();
+                            if(freeSlot === undefined) return;
+                            self.broadcast(item.despawn(), false);
+                            self.server.removeEntity(item);
+                            self.inventory.setSlot(freeSlot, kind);
+                            self.server.pushToPlayer(self, new Messages.InventoryUpdate(freeSlot, kind));
+                        //}
+                        
+                        
 
-                        if (kind === Types.Entities.FIREPOTION) {
-                            self.updateHitPoints();
-                            self.broadcast(self.equip(Types.Entities.FIREFOX));
-                            self.firepotionTimeout = setTimeout(function () {
-                                self.broadcast(self.equip(self.armor)); // return to normal after 15 sec
-                                self.firepotionTimeout = null;
-                            }, 15000);
-                            self.send(new Messages.HitPoints(self.maxHitPoints).serialize());
-                        } else if (Types.isHealingItem(kind)) {
-                            var amount;
-
-                            switch (kind) {
-                                case Types.Entities.FLASK:
-                                    amount = 40;
-                                    break;
-                                case Types.Entities.BURGER:
-                                    amount = 100;
-                                    break;
-                            }
-
-                            if (!self.hasFullHealth()) {
-                                self.regenHealthBy(amount);
-                                self.server.pushToPlayer(self, self.health());
-                            }
-                        } else if (Types.isArmor(kind) || Types.isWeapon(kind)) {
-                            self.equipItem(item);
-                            self.broadcast(self.equip(kind));
-                        }
+//                        if (kind === Types.Entities.FIREPOTION) {
+//                            self.updateHitPoints();
+//                            self.broadcast(self.equip(Types.Entities.FIREFOX));
+//                            self.firepotionTimeout = setTimeout(function () {
+//                                self.broadcast(self.equip(self.armor)); // return to normal after 15 sec
+//                                self.firepotionTimeout = null;
+//                            }, 15000);
+//                            self.send(new Messages.HitPoints(self.maxHitPoints).serialize());
+//                        } else if (Types.isHealingItem(kind)) {
+//                            var amount;
+//
+//                            switch (kind) {
+//                                case Types.Entities.FLASK:
+//                                    amount = 40;
+//                                    break;
+//                                case Types.Entities.BURGER:
+//                                    amount = 100;
+//                                    break;
+//                            }
+//
+//                            if (!self.hasFullHealth()) {
+//                                self.regenHealthBy(amount);
+//                                self.server.pushToPlayer(self, self.health());
+//                            }
+//                        } else if (Types.isArmor(kind) || Types.isWeapon(kind)) {
+//                            self.equipItem(item);
+//                            self.broadcast(self.equip(kind));
+//                        }
                     }
                 }
             }
@@ -223,6 +238,51 @@ module.exports = Player = Character.extend({
                 var checkpoint = self.server.map.getCheckpoint(message[1]);
                 if (checkpoint) {
                     self.lastCheckpoint = checkpoint;
+                }
+            } 
+            else if (action === Types.Messages.USEITEM) {
+                var slot = message[1];
+                var itemId = self.inventory.getSlot(slot);
+                if(Types.isUsableItem(parseInt(itemId.split(':')[0]))) {
+                    var amount = 0;
+                    switch (parseInt(itemId.split(':')[0])) {
+                        case Types.Entities.FLASK:
+                            amount = 40;
+                            break;
+                        case Types.Entities.BURGER:
+                            amount = 100;
+                            break;
+                    }
+                    if (!self.hasFullHealth()) {
+                        self.inventory.setSlot(slot, "");
+                        self.regenHealthBy(amount);
+                        self.server.pushToPlayer(self, self.health());
+                        self.server.pushToPlayer(self, new Messages.InventoryUpdate(slot, ""));
+                    }
+                }
+            }
+            else if (action === Types.Messages.DELETEITEM) {
+                var slot = message[1];
+                self.inventory.setSlot(slot, "");
+                self.server.pushToPlayer(self, new Messages.InventoryUpdate(slot, ""));
+            }
+            else if (action === Types.Messages.EQUIPITEM) {
+                var slot = message[1];
+                var itemId = self.inventory.getSlot(slot);
+                if(Types.isEquipmentItem(parseInt(itemId.split(':')[0]))) {
+                    if(Types.isArmor(parseInt(itemId.split(':')[0]))) {
+                        self.armorLevel = Properties.getArmorLevel(parseInt(itemId.split(':')[0]));
+                        self.inventory.switchSlots(slot, 16);
+                        self.updateMaxHitPoints();
+                        self.server.pushToPlayer(self, new Messages.HitPoints(self.maxHitPoints));
+                        self.server.pushToPlayer(self, new Messages.InventoryUpdate(16, itemId));
+                    } else {
+                        self.weaponLevel = Properties.getWeaponLevel(parseInt(itemId.split(':')[0]));
+                        self.inventory.switchSlots(slot, 15);
+                        self.server.pushToPlayer(self, new Messages.InventoryUpdate(15, itemId));
+                    }
+                    self.server.pushToPlayer(self, new Messages.InventoryUpdate(slot, self.inventory.getSlot(slot)));
+                    self.server.pushToPlayer(self, self.equip(parseInt(itemId.split(':')[0]))); // TODO:: include in function InventoryUpdate on clients
                 }
             }
             else {
@@ -260,7 +320,7 @@ module.exports = Player = Character.extend({
     canPlay: function (username, password, callback) {
         return this.database.canPlay(username, password, callback);
     },
-    save: function() {
+    save: function () {
         this.database.savePlayerData(this);
     },
     getState: function () {
@@ -331,12 +391,12 @@ module.exports = Player = Character.extend({
         });
     },
     equipArmor: function (kind) {
-        this.armor = kind;
-        this.armorLevel = Properties.getArmorLevel(kind);
+        this.inventory.setSlot(16, kind);
+        this.armorLevel = Properties.getArmorLevel(parseInt(kind.split(':')[0]));
     },
     equipWeapon: function (kind) {
-        this.weapon = kind;
-        this.weaponLevel = Properties.getWeaponLevel(kind);
+        this.inventory.setSlot(15, kind);
+        this.weaponLevel = Properties.getWeaponLevel(parseInt(kind.split(':')[0]));
     },
     equipItem: function (item) {
         if (item) {
@@ -351,15 +411,18 @@ module.exports = Player = Character.extend({
             }
         }
     },
-    tryLevelUp: function(points) {
+    tryLevelUp: function (points) {
         this.exp += points;
-        if(this.maxExp <= this.exp) {
+        if (this.maxExp <= this.exp) {
             this.updateExpPoints((this.exp - this.maxExp), (this.level + 1));
             this.server.pushToPlayer(this, new Messages.Level(this.exp, this.maxExp, this.level));
         }
     },
     updateHitPoints: function () {
         this.resetHitPoints(Formulas.hp(this.armorLevel));
+    },
+    updateMaxHitPoints: function () {
+        this.setMaxHitPoints(Formulas.hp(this.armorLevel));
     },
     updateManaPoints: function (currentMana) {
         this.resetManaPoints(currentMana);

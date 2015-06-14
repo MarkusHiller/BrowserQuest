@@ -17,7 +17,7 @@ define([
                     this.$playDiv = $('.play div');
                     this.$registerDiv = $('.register div');
                     this.frontPage = 'login';
-                    
+
 //                    if (localStorage && localStorage.data) {
 //                        this.frontPage = 'loadcharacter';
 //                    }
@@ -146,9 +146,9 @@ define([
                         }
                     }
                 },
-                getNews: function(step) {
+                getNews: function (step) {
                     var newsId;
-                    
+
                     $.ajax({
                         url: "http://localhost:8000/news?callback=?", //TODO:: use config route
                         jsonp: 'callback',
@@ -157,10 +157,10 @@ define([
                     });
 
                     function success(data) {
-                       this.news = data;
-                       this.currentNews = _.last(this.news).ID;
-                       $('#news_title').text(_.last(this.news).date + ' - ' + _.last(this.news).title);
-                       $('#news_body').text(_.last(this.news).body);
+                        this.news = data;
+                        this.currentNews = _.last(this.news).ID;
+                        $('#news_title').text(_.last(this.news).date + ' - ' + _.last(this.news).title);
+                        $('#news_body').text(_.last(this.news).body);
                     }
                 },
                 setMouseCoordinates: function (event) {
@@ -187,7 +187,7 @@ define([
                 },
                 initHealthBar: function () {
                     var scale = this.game.renderer.getScaleFactor(),
-                        healthMaxWidth = $("#healthbar").width() - (12 * scale);
+                            healthMaxWidth = $("#healthbar").width() - (12 * scale);
 
                     this.game.onPlayerHealthChange(function (hp, maxHp) {
                         var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));
@@ -198,7 +198,7 @@ define([
                 },
                 initExpBar: function () {
                     var scale = this.game.renderer.getScaleFactor(),
-                        expMaxWidth = $("#expbar").width();
+                            expMaxWidth = $("#expbar").width();
 
                     this.game.onPlayerExpChange(function (exp, maxExp) {
                         var expbarWidth = Math.round((expMaxWidth / maxExp) * (exp > 0 ? exp : 0));
@@ -235,6 +235,16 @@ define([
                         $('body').addClass('game');
                         hidden_callback();
                     }, 1000);
+                },
+                showInventory: function () {
+                    if (this.game.started) {
+                        $('#inventory').addClass('active');
+                    }
+                },
+                hideInventory: function () {
+                    if (this.game.started) {
+                        $('#inventory').removeClass('active');
+                    }
                 },
                 showChat: function () {
                     if (this.game.started) {
@@ -277,19 +287,42 @@ define([
                         });
                     }
                 },
-                initEquipmentIcons: function () {
+                initInventoryIcons: function() {
                     var scale = this.game.renderer.getScaleFactor();
-                    var getIconPath = function (spriteName) {
-                        return 'img/' + scale + '/item-' + spriteName + '.png';
-                    },
-                            weapon = this.game.player.getWeaponName(),
-                            armor = this.game.player.getSpriteName(),
-                            weaponPath = getIconPath(weapon),
-                            armorPath = getIconPath(armor);
-
-                    $('#weapon').css('background-image', 'url("' + weaponPath + '")');
-                    if (armor !== 'firefox') {
-                        $('#armor').css('background-image', 'url("' + armorPath + '")');
+                    for(var i = 0; i <= 17; i++) {
+                        $('#slot_' + ( i + 1 )).css('background-image', 'url("")');
+                        if(i <= 4) {
+                            $('#fast_slot_' + (i + 1)).css('background-image', 'url("")');
+                        }
+                    }
+                    var weaponId = this.game.player.inventory.getSlot(15);
+                    var weaponString = Types.getKindAsString(parseInt(weaponId.split(":")[0]));
+                    var weaponPath = getIconPath(weaponString);
+                    var helmId = this.game.player.inventory.getSlot(16);
+                    var helmString = Types.getKindAsString(parseInt(helmId.split(":")[0]));
+                    var helmPath = getIconPath(helmString);
+                    
+                    $('#slot_15').css('background-image', 'url("' + weaponPath + '")');
+                    $('#slot_16').css('background-image', 'url("' + helmPath + '")');
+                    
+                    function getIconPath(spriteName) {
+                        return spriteName === undefined ? '' : 'img/' + scale + '/item-' + spriteName + '.png';
+                    }
+                },
+                updateInventorySlotIcon: function(slot) {
+                    var scale = this.game.renderer.getScaleFactor();
+                    var item,
+                        itemId;
+                    
+                    itemId = this.game.player.inventory.getSlot(slot);
+                    item = Types.getKindAsString(parseInt(itemId.split(":")[0]));
+                    $('#slot_' + slot).css('background-image', 'url("' + getIconPath(item) + '")');
+                    if(slot <= 5) {
+                        $('#fast_slot_' + slot).css('background-image', 'url("' + getIconPath(item) + '")');
+                    }
+                    
+                    function getIconPath(spriteName) {
+                        return spriteName === undefined ? '' : 'img/' + scale + '/item-' + spriteName + '.png';
                     }
                 },
                 hideWindows: function () {
