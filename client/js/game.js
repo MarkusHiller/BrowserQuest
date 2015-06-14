@@ -2242,6 +2242,9 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                         this.client.sendEquipItem(slot);
                     }
                 },
+                trySwitchItems: function(slotA, slotB) {
+                    this.client.sendSwitchItems(slotA, slotB);
+                },
                 buildItemContext: function (slot) {
                     var self = this;
                     var contextObj = "";

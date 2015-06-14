@@ -285,6 +285,13 @@ module.exports = Player = Character.extend({
                     self.server.pushToPlayer(self, self.equip(parseInt(itemId.split(':')[0]))); // TODO:: include in function InventoryUpdate on clients
                 }
             }
+            else if (action === Types.Messages.SWITCHITEM) {
+                var slotA = message[1];
+                var slotB = message[2];
+                self.inventory.switchSlots(slotA, slotB);
+                self.server.pushToPlayer(self, new Messages.InventoryUpdate(slotA, self.inventory.getSlot(slotA)));
+                self.server.pushToPlayer(self, new Messages.InventoryUpdate(slotB, self.inventory.getSlot(slotB)));
+            }
             else {
                 if (self.message_callback) {
                     self.message_callback(message);

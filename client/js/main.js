@@ -519,7 +519,9 @@ define(['jquery', 'app'], function ($, App) {
                 //game.audioManager.toggle();
             });
 
+            var contextIsOpen = false;
             $('.slot').click(function (event) {
+                contextIsOpen = true;
                 var slot = event.currentTarget.id.split('_');
                 var contextObj = game.buildItemContext(slot[(slot.length - 1)]);
                 if (contextObj !== "") {
@@ -528,6 +530,53 @@ define(['jquery', 'app'], function ($, App) {
                     $('#item_context').css({left: (event.clientX - event.offsetX + event.currentTarget.clientWidth), top: (event.clientY - event.offsetY)});
                     $('#item_context').show();
                 }
+            });
+            
+            var itemMove = false,
+            $slotMove,
+            oldSlotPos,
+            fromSlotId;
+            var mouseStartPos = [];
+            $('.slot').bind("mousedown", function(e) {
+                itemMove = true;
+                mouseStartPos.x = e.clientX - e.offsetX - 2;
+                mouseStartPos.y = e.clientY - e.offsetY - 2;
+                $slotMove = $(e.currentTarget);
+                oldSlotPos = $(e.currentTarget).position();
+                var slot = e.currentTarget.id.split('_');
+                fromSlotId = slot[(slot.length - 1)];
+            });
+            
+            $(window).bind("mousemove", function(e) {
+                if(itemMove) {
+                    var newLeft = oldSlotPos.left + (e.clientX - mouseStartPos.x);
+                    var newTop = oldSlotPos.top + (e.clientY - mouseStartPos.y);
+                    $slotMove.css({left: newLeft, top: newTop});
+                }
+            });
+            
+            $(window).bind("mouseup", function(e) {
+                if(contextIsOpen) {
+                    contextIsOpen = false;
+                    $('#item_context').hide();
+                }
+                
+                if(itemMove === false) return;
+                itemMove = false;
+                if(e.target.id.indexOf('slot') !== -1){
+                    var slot = e.target.id.split('_');
+                    var slotId = slot[(slot.length - 1)];
+                    if(fromSlotId !== slotId) {
+                        if(fromSlotId > 14) {
+                            game.tryEquipItem(slotId);
+                        } else if(slotId > 14) {
+                            game.tryEquipItem(fromSlotId);
+                        } else {
+                            game.trySwitchItems(fromSlotId, slotId);
+                        }
+                    }
+                }
+                $slotMove.css({left: oldSlotPos.left, top: oldSlotPos.top});
             });
 
             $(document).bind("keydown", function (e) {

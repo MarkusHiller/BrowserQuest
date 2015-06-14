@@ -32,7 +32,8 @@ Types = {
         INVENTORYUPDATE: 28,
         USEITEM: 29,
         DELETEITEM: 30,
-        EQUIPITEM: 31
+        EQUIPITEM: 31,
+        SWITCHITEM: 32
     },
     
     Entities: {

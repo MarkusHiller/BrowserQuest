@@ -195,6 +195,7 @@ body.upscaled.game {background:#000;}
 #instructions.active, #achievements.active {opacity:1;pointer-events:auto;}
 
 #weapon, #armor, .slot {image-rendering:-moz-crisp-edges;}
+.slot {cursor:pointer;}
 
 #achievements, #achievements li, .coin, #achievement-notification, #coinsparks, .achievement-sharing a, #previous, #next {background:url('../img/1/achievements.png');image-rendering:-moz-crisp-edges;}
 #achievements {font-family:'GraphicPixel'; position:absolute;top:50%;left:50%;z-index:1000;opacity:0;pointer-events:none;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}

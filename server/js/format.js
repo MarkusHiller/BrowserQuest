@@ -22,6 +22,7 @@ var Types = require("../../shared/js/gametypes");
             this.formats[Types.Messages.USEITEM] = ['n'],
             this.formats[Types.Messages.DELETEITEM] = ['n'];
             this.formats[Types.Messages.EQUIPITEM] = ['n'];
+            this.formats[Types.Messages.SWITCHITEM] = ['n', 'n'];
         },
         
         check: function(msg) {

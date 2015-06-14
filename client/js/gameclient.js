@@ -599,6 +599,11 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
         sendEquipItem: function(slot) {
             this.sendMessage([Types.Messages.EQUIPITEM,
                               parseInt(slot)]);
+        },
+        
+        sendSwitchItems: function(slotA, slotB) {
+            this.sendMessage([Types.Messages.SWITCHITEM,
+                              parseInt(slotA), parseInt(slotB)]);
         }
     });
     
