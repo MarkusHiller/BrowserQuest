@@ -22,7 +22,7 @@ Types = {
         KILL: 18,
         LIST: 19,
         WHO: 20,
-        ZONE: 21,
+        ZONE: 21, // maybe needed later
         DESTROY: 22,
         HP: 23,
         LEVEL: 24,

@@ -191,6 +191,9 @@ body.upscaled.game {background:#000;}
 #chatinput {color:#eee;}
 #chatinput.placeholder {color:#aaa;}
 .bubble p {-moz-user-select:none;-webkit-user-select:none;}
+#chat-input {position:absolute;bottom:0;margin:5px;width:90%;z-index:11;border:none;background-color:rgba(94,94,94,0.5);padding:5px;font-family:'GraphicPixel';color:#fff;font-size:18px;display:none;}
+#chat {position:absolute;bottom:50px;margin:0 5px;width:50%;height:50%;min-height: 200px;z-index:11;border:none;background-color:rgba(94,94,94,0.5);padding:5px;display:none;overflow:hidden;pointer-events:none;}
+#chat > p {font-family:'GraphicPixel';color:#fff;font-size:18px;line-height:20px;}
 
 #instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
 #instructions.active, #achievements.active {opacity:1;pointer-events:auto;}

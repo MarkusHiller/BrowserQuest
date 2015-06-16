@@ -92,11 +92,10 @@ module.exports = Player = Character.extend({
             }
             else if (action === Types.Messages.CHAT) {
                 var msg = Utils.sanitize(message[1]);
-
+                var chatMsg = Utils.createChatMsg(self.name, msg);
                 // Sanitized messages may become empty. No need to broadcast empty chat messages.
-                if (msg && msg !== "") {
-                    msg = msg.substr(0, 60); // Enforce maxlength of chat input
-                    self.broadcastToZone(new Messages.Chat(self, msg), false);
+                if (chatMsg && chatMsg !== "") {
+                    self.broadcast(new Messages.Chat(chatMsg), false);
                 }
             }
             else if (action === Types.Messages.MOVE) {
@@ -332,7 +331,7 @@ module.exports = Player = Character.extend({
     },
     getState: function () {
         var basestate = this._getBaseState(),
-                state = [this.name, this.orientation, this.armor, this.weapon];
+                state = [this.name, this.orientation, parseInt(this.inventory.getSlot(16).split(':')[0]), parseInt(this.inventory.getSlot(15).split(':')[0])];
 
         if (this.target) {
             state.push(this.target);

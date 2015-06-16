@@ -1447,10 +1447,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                             }
                         });
 
-                        self.client.onChatMessage(function (entityId, message) {
-                            var entity = self.getEntityById(entityId);
-                            self.createBubble(entityId, message);
-                            self.assignBubbleTo(entity);
+                        self.client.onChatMessage(function (msg) {
+                            var $chat = $('#chat');
+                            $chat.append(
+                                $(document.createElement('p'))
+                                .text(msg)
+                                );
                             //self.audioManager.playSound("chat");
                         });
 

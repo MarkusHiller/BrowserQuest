@@ -66,3 +66,9 @@ Utils.distanceTo = function(x, y, x2, y2) {
 
     return (distX > distY) ? distX : distY;
 };
+
+Utils.createChatMsg = function(playerName, msg) {
+    if(msg === "") return "";
+    var chatMsg = playerName + ": " + msg;
+    return chatMsg;
+};

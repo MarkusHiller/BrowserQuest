@@ -426,65 +426,6 @@ define(['jquery', 'app'], function ($, App) {
                 }
             });
 
-            $(document).keydown(function (e) {
-                var key = e.which,
-                        $chat = $('#chatinput');
-
-                if (key === 13) {
-                    if ($('#chatbox').hasClass('active')) {
-                        app.hideChat();
-                    } else {
-                        app.showChat();
-                    }
-                }
-            });
-
-            $('#chatinput').keydown(function (e) {
-                var key = e.which,
-                        $chat = $('#chatinput'),
-                        placeholder = $(this).attr("placeholder");
-
-                if (!(e.shiftKey && e.keyCode === 16) && e.keyCode !== 9) {
-                    if ($(this).val() === placeholder) {
-                        $(this).val('');
-                        $(this).removeAttr('placeholder');
-                        $(this).removeClass('placeholder');
-                    }
-                }
-
-                if (key === 13) {
-                    if ($chat.attr('value') !== '') {
-                        if (game.player) {
-                            game.say($chat.attr('value'));
-                        }
-                        $chat.attr('value', '');
-                        app.hideChat();
-                        $('#foreground').focus();
-                        return false;
-                    } else {
-                        app.hideChat();
-                        return false;
-                    }
-                }
-
-                if (key === 27) {
-                    app.hideChat();
-                    return false;
-                }
-            });
-
-            $('#chatinput').focus(function (e) {
-                var placeholder = $(this).attr("placeholder");
-
-                if (!Detect.isFirefoxAndroid()) {
-                    $(this).val(placeholder);
-                }
-
-                if ($(this).val() === placeholder) {
-                    this.setSelectionRange(0, 0);
-                }
-            });
-
             $('#nameinput').focusin(function () {
                 $('#name-tooltip').addClass('visible');
             });
@@ -531,13 +472,13 @@ define(['jquery', 'app'], function ($, App) {
                     $('#item_context').show();
                 }
             });
-            
+
             var itemMove = false,
-            $slotMove,
-            oldSlotPos,
-            fromSlotId;
+                    $slotMove,
+                    oldSlotPos,
+                    fromSlotId;
             var mouseStartPos = [];
-            $('.slot').bind("mousedown", function(e) {
+            $('.slot').bind("mousedown", function (e) {
                 itemMove = true;
                 mouseStartPos.x = e.clientX - e.offsetX - 2;
                 mouseStartPos.y = e.clientY - e.offsetY - 2;
@@ -546,30 +487,31 @@ define(['jquery', 'app'], function ($, App) {
                 var slot = e.currentTarget.id.split('_');
                 fromSlotId = slot[(slot.length - 1)];
             });
-            
-            $(window).bind("mousemove", function(e) {
-                if(itemMove) {
+
+            $(window).bind("mousemove", function (e) {
+                if (itemMove) {
                     var newLeft = oldSlotPos.left + (e.clientX - mouseStartPos.x);
                     var newTop = oldSlotPos.top + (e.clientY - mouseStartPos.y);
                     $slotMove.css({left: newLeft, top: newTop});
                 }
             });
-            
-            $(window).bind("mouseup", function(e) {
-                if(contextIsOpen) {
+
+            $(window).bind("mouseup", function (e) {
+                if (contextIsOpen) {
                     contextIsOpen = false;
                     $('#item_context').hide();
                 }
-                
-                if(itemMove === false) return;
+
+                if (itemMove === false)
+                    return;
                 itemMove = false;
-                if(e.target.id.indexOf('slot') !== -1){
+                if (e.target.id.indexOf('slot') !== -1) {
                     var slot = e.target.id.split('_');
                     var slotId = slot[(slot.length - 1)];
-                    if(fromSlotId !== slotId) {
-                        if(fromSlotId > 14) {
+                    if (fromSlotId !== slotId) {
+                        if (fromSlotId > 14) {
                             game.tryEquipItem(slotId);
-                        } else if(slotId > 14) {
+                        } else if (slotId > 14) {
                             game.tryEquipItem(fromSlotId);
                         } else {
                             game.trySwitchItems(fromSlotId, slotId);
@@ -581,55 +523,50 @@ define(['jquery', 'app'], function ($, App) {
 
             $(document).bind("keydown", function (e) {
                 var key = e.which,
-                        $chat = $('#chatinput');
+                        $chatInput = $('#chat-input'),
+                        $chat = $('#chat');
 // TODO:: Tastensteuerung implementieren
-                if ($('#chatinput:focus').size() === 0 && $('#nameinput:focus').size() === 0) {
-//                    if (key === 13) { // Enter
-//                        if (game.ready) {
-//                            $chat.focus();
-//                            return false;
-//                        }
-//                    }
-//                    if (key === 32) { // Space
-//                        // game.togglePathingGrid();
-//                        return false;
-//                    }
-//                    if (key === 70) { // F
-//                        // game.toggleDebugInfo();
-//                        return false;
-//                    }
-//                    if (key === 27) { // ESC
-//                        app.hideWindows();
-//                        _.each(game.player.attackers, function (attacker) {
-//                            attacker.stop();
-//                        });
-//                        return false;
-//                    }
-//                    if (key === 65) { // a
-//                        // game.player.hit();
-//                        return false;
-//                    }
-                } else {
-                    if (key === 13 && game.ready) {
-                        $chat.focus();
-                        return false;
-                    }
-                }
-
-                if ($('body').hasClass('game')) {
-                    // Fast-Slots
-                    if (key >= 49 && key <= 53) {
-                        game.tryUseItem((key - 48));
-                    } else if (key === 87) { // W
-
-                    } else if (key === 65) { // A
-
-                    } else if (key === 83) { // S
-
-                    } else if (key === 68) { // D
-
-                    } else if (key === 69) { // E - Inventory
-                        $('#inventorybutton').click();
+                if (game.ready && (!$chatInput.is(":focus") || $chatInput.is(":focus") && key === 13)) {
+                    switch (key) {
+                        case 13: // Enter
+                            if ($chatInput.is(":focus")) {
+                                game.say($chatInput.val());
+                                $chat.hide();
+                                $chatInput.hide();
+                                $chatInput.val("");
+                                return false;
+                            } else {
+                                $chat.show();
+                                $chat.scrollTop($chat.prop("scrollHeight"));
+                                $chatInput.show();
+                                $chatInput.focus();
+                                return false;
+                            }
+                            break;
+                        case 49, 50, 51, 52, 53: // 1-5
+                            game.tryUseItem((key - 48));
+                            return false;
+                            break;
+                        case 65: //A
+                            break;
+                        case 68: // D
+                            break;
+                        case 69: // E - Inventory
+                            if ($('#inventory').hasClass('active')) {
+                                app.hideInventory();
+                            } else {
+                                app.showInventory();
+                            }
+                            return false;
+                            break;
+                        case 70: // F
+                            game.toggleDebugInfo();
+                            return false;
+                            break;
+                        case 83: // S
+                            break;
+                        case 87: // W
+                            break;
                     }
                 }
             });
