@@ -816,7 +816,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                                 self.registerEntityDualPosition(self.player);
                             }
 
-                            if (self.isZoningTile(self.player.gridX, self.player.gridY)) {
+                            if (self.isZoningTile(self.player.gridX, self.player.gridY) && !self.isZoning()) {
                                 self.enqueueZoningFrom(self.player.gridX, self.player.gridY);
                             }
 
