@@ -524,7 +524,7 @@ define(['jquery', 'app'], function ($, App) {
             $(document).bind("keydown", function (e) {
                 var key = e.which,
                         $chatInput = $('#chat-input'),
-                        $chat = $('#chat');
+                        $chat = $('#chat > p');
 // TODO:: Tastensteuerung implementieren
                 if (game.ready && (!$chatInput.is(":focus") || $chatInput.is(":focus") && key === 13)) {
                     switch (key) {
@@ -536,7 +536,7 @@ define(['jquery', 'app'], function ($, App) {
                                 $chatInput.val("");
                                 return false;
                             } else {
-                                $chat.show();
+                                $chat.stop(true,true).show();
                                 $chat.scrollTop($chat.prop("scrollHeight"));
                                 $chatInput.show();
                                 $chatInput.focus();
@@ -548,8 +548,12 @@ define(['jquery', 'app'], function ($, App) {
                             return false;
                             break;
                         case 65: //A
+                            game.moveFromKeyboard(Types.Orientations.LEFT);
+                            return false;
                             break;
                         case 68: // D
+                            game.moveFromKeyboard(Types.Orientations.RIGHT);
+                            return false;
                             break;
                         case 69: // E - Inventory
                             if ($('#inventory').hasClass('active')) {
@@ -564,8 +568,12 @@ define(['jquery', 'app'], function ($, App) {
                             return false;
                             break;
                         case 83: // S
+                            game.moveFromKeyboard(Types.Orientations.DOWN);
+                            return false;
                             break;
                         case 87: // W
+                            game.moveFromKeyboard(Types.Orientations.UP);
+                            return false;
                             break;
                     }
                 }

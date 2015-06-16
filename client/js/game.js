@@ -971,7 +971,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
 
                             self.unregisterEntityPosition(self.player);
                             self.registerEntityPosition(self.player);
-                            
+
                         });
 
                         self.player.onRequestPath(function (x, y) {
@@ -1386,7 +1386,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
 
                         self.client.onPlayerChangeMaxHitPoints(function (maxHp) {
                             self.player.maxHitPoints = maxHp;
-                            if(maxHp < self.player.hitPoints) {
+                            if (maxHp < self.player.hitPoints) {
                                 self.player.hitPoints = maxHp;
                             }
                             self.updateBars();
@@ -1449,10 +1449,20 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
 
                         self.client.onChatMessage(function (msg) {
                             var $chat = $('#chat');
-                            $chat.append(
-                                $(document.createElement('p'))
-                                .text(msg)
-                                );
+                            var newChatMsg = $(document.createElement('p'))
+                                    .text(msg);
+                            $chat.append(newChatMsg);
+                            newChatMsg.show();
+
+                            setTimeout(function () {
+                                if ($('#chat-input').is(":visible")) {
+                                    return;
+                                }
+                                newChatMsg.fadeOut(2000, function () {
+                                    newChatMsg.hide();
+                                    newChatMsg.css({opacity: 1});
+                                });
+                            }, 2000);
                             //self.audioManager.playSound("chat");
                         });
 
@@ -1904,6 +1914,59 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                         }
                     }
                 },
+                moveFromKeyboard: function (oriantation) {
+                    var pos = [],
+                            entity;
+                    pos.x = this.player.gridX;
+                    pos.y = this.player.gridY;
+
+                    switch (oriantation) {
+                        case 1:
+                            pos.y -= 1;
+                            break;
+                        case 2:
+                            pos.y += 1;
+                            break;
+                        case 3:
+                            pos.x -= 1;
+                            break;
+                        case 4:
+                            pos.x += 1;
+                            break;
+                    }
+
+                    this.previousClickPosition = pos;
+
+                    if (this.started
+                            && this.player
+                            && !this.isZoning()
+                            && !this.isZoningTile(this.player.nextGridX, this.player.nextGridY)
+                            && !this.player.isDead
+                            && !this.hoveringCollidingTile
+                            && !this.hoveringPlateauTile) {
+                        entity = this.getEntityAt(pos.x, pos.y);
+
+                        if (entity instanceof Mob) {
+                            this.makePlayerAttack(entity);
+                        }
+                        else if (entity instanceof Item) {
+                            this.makePlayerGoToItem(entity);
+                        }
+                        else if (entity instanceof Npc) {
+                            if (this.player.isAdjacentNonDiagonal(entity) === false) {
+                                this.makePlayerTalkTo(entity);
+                            } else {
+                                this.makeNpcTalk(entity);
+                            }
+                        }
+                        else if (entity instanceof Chest) {
+                            this.makePlayerOpenChest(entity);
+                        }
+                        else {
+                            this.makePlayerGoTo(pos.x, pos.y);
+                        }
+                    }
+                },
                 isMobOnSameTile: function (mob, x, y) {
                     var X = x || mob.gridX,
                             Y = y || mob.gridY,
@@ -2240,12 +2303,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                         this.client.sendDeleteItem(slot);
                     }
                 },
-                tryEquipItem: function(slot) {
+                tryEquipItem: function (slot) {
                     if (this.player.inventory.isEquipmentItem(slot)) {
                         this.client.sendEquipItem(slot);
                     }
                 },
-                trySwitchItems: function(slotA, slotB) {
+                trySwitchItems: function (slotA, slotB) {
                     this.client.sendSwitchItems(slotA, slotB);
                 },
                 buildItemContext: function (slot) {
