@@ -95,9 +95,11 @@ define(['character', 'timer'], function(Character, Timer) {
                     endFunc = null;
             
                 if(orientation === Types.Orientations.LEFT || orientation === Types.Orientations.RIGHT) {
-                    offset = (c.gridW - 2) * ts;
+                    offset = (c.gridW / 2) * ts;
                     startValue = (orientation === Types.Orientations.LEFT) ? c.x - ts : c.x + ts;
                     endValue = (orientation === Types.Orientations.LEFT) ? c.x - offset : c.x + offset;
+                    endValue = (endValue / ts) + c.gridW <= 92 ? endValue : (92 - c.gridW) * ts;
+                    endValue = endValue < 0 ? 0 : endValue;
                     updateFunc = function(x) {
                         c.setPosition(x, c.y);
                         g.initAnimatedTiles();
@@ -108,9 +110,11 @@ define(['character', 'timer'], function(Character, Timer) {
                         g.endZoning();
                     }
                 } else if(orientation === Types.Orientations.UP || orientation === Types.Orientations.DOWN) {
-                    offset = (c.gridH - 2) * ts;
+                    offset = (c.gridH / 2) * ts;
                     startValue = (orientation === Types.Orientations.UP) ? c.y - ts : c.y + ts;
                     endValue = (orientation === Types.Orientations.UP) ? c.y - offset : c.y + offset;
+                    endValue = (endValue / ts) + c.gridH <= 311 ? endValue : (311 - c.gridH) * ts;
+                    endValue = endValue < 0 ? 0 : endValue;
                     updateFunc = function(y) { 
                         c.setPosition(c.x, y);
                         g.initAnimatedTiles();

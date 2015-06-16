@@ -971,6 +971,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
 
                             self.unregisterEntityPosition(self.player);
                             self.registerEntityPosition(self.player);
+                            
                         });
 
                         self.player.onRequestPath(function (x, y) {
@@ -2035,13 +2036,13 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                 /**
                  * 
                  */
-                isZoningTile: function (x, y) {
+                isZoningTile: function (x, y) { // TODO:: einstellung wann gescrollt wird?
                     var c = this.camera;
 
                     x = x - c.gridX;
                     y = y - c.gridY;
 
-                    if (x === 0 || y === 0 || x === c.gridW - 1 || y === c.gridH - 1) {
+                    if (x === 1 || y === 1 || x === c.gridW - 2 || y === c.gridH - 2) {
                         return true;
                     }
                     return false;
@@ -2056,16 +2057,16 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                     x = x - c.gridX;
                     y = y - c.gridY;
 
-                    if (x === 0) {
+                    if (x === 1) {
                         orientation = Types.Orientations.LEFT;
                     }
-                    else if (y === 0) {
+                    else if (y === 1) {
                         orientation = Types.Orientations.UP;
                     }
-                    else if (x === c.gridW - 1) {
+                    else if (x === c.gridW - 2) {
                         orientation = Types.Orientations.RIGHT;
                     }
-                    else if (y === c.gridH - 1) {
+                    else if (y === c.gridH - 2) {
                         orientation = Types.Orientations.DOWN;
                     }
 
@@ -2074,14 +2075,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                 startZoningFrom: function (x, y) {
                     this.zoningOrientation = this.getZoningOrientation(x, y);
 
-                    if (this.renderer.mobile || this.renderer.tablet) {
+                    if (this.renderer.mobile || this.renderer.tablet) { // TODO:: integrate map max L, R, T, B
                         var z = this.zoningOrientation,
                                 c = this.camera,
                                 ts = this.renderer.tilesize,
                                 x = c.x,
                                 y = c.y,
-                                xoffset = (c.gridW - 2) * ts,
-                                yoffset = (c.gridH - 2) * ts;
+                                xoffset = (c.gridW / 2) * ts,
+                                yoffset = (c.gridH / 2) * ts;
 
                         if (z === Types.Orientations.LEFT || z === Types.Orientations.RIGHT) {
                             x = (z === Types.Orientations.LEFT) ? c.x - xoffset : c.x + xoffset;

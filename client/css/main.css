@@ -150,6 +150,7 @@ body.upscaled.game {background:#000;}
 #mask {height:100%;width:100%;position:fixed;top:0;left:0;background:rgba(20,20,20,1);opacity:1;z-index:20;-moz-transition:0.5s opacity linear;-webkit-transition:0.5s opacity linear;-o-transition:0.5s opacity linear;-ms-transition:0.5s opacity linear;transition:0.5s opacity linear;pointer-events:none;}
 
 #bar-container {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:relative;width:100%;z-index:10;}
+#fast_inventory {background:url('../img/1/fast_inventory.png');image-rendering:-moz-crisp-edges;position:absolute;width:86px;left:50%;z-index:10;pointer-events:auto;}
 #inventory {background:url('../img/1/inventory.png');image-rendering:-moz-crisp-edges;position:absolute;width:167px;left:50%;z-index:10;pointer-events:none;opacity:0;}
 #inventory.active{opacity: 1;pointer-events:auto;}
 #healthbar {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;}
@@ -694,6 +695,7 @@ footer div  {display:inline-block;}
     .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/2/spritesheet.png');}
     .upscaled #bar-container, .upscaled #healthbar, .upscaled #expbar, .upscaled #manabar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('../img/2/barsheet.png');}
     .upscaled #inventory {background-image:url('../img/2/inventory.png');width:334px;}
+    .upscaled #fast_inventory {background-image:url('../img/2/fast_inventory.png');width:172px;}
     .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/2/achievements.png');}
 
     body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 256px;}        
@@ -732,9 +734,9 @@ footer div  {display:inline-block;}
     .button.delete {background-position:-458px -102px;}
     .button.delete:active {background-position:0 -1452px;}
 
-    #container {width:980px;margin:0 auto;position:absolute;top:50%;margin-top:-252px;left:50%;margin-left:-490px;}
+    #container {position:absolute;width:100%;height:100%;}
     #canvasborder {padding:10px;background:url('../img/2/border.png') no-repeat;}
-    #canvas {width:100%;height:448px;}
+    #canvas {width:100%;height:100%;}
     #fade {width:960px;height:448px;top:10px;left:10px;}
 
     #instructions {height:344px;width:834px;background-position:0 -1054px;margin-left:-416px;margin-top:-186px;color:#373737;}
@@ -778,6 +780,7 @@ footer div  {display:inline-block;}
 
     /*Inventory*/
     #inventory {height:186px;margin-left:-167px;bottom:61px;background-size:334px;}
+    #fast_inventory {height:40px;margin-left:-86px;background-size:172px;bottom:0;}
     
     .slot {width:32px;height:32px;position:absolute;background-size:192px;background-position:-64px;}
     #slot_1 {left:110px;top:140px;}
@@ -808,11 +811,11 @@ footer div  {display:inline-block;}
     #manabar {height:26px;background-position:-756px -46px;width:204px;top:6px;left:208px;background-size:960px;z-index:20;}
     #manapoints {width:0px;height:22px;top:8px;left:230px;z-index:10;position:absolute;}
     
-    #fast_slot_1 {left:420px;top:2px;}
-    #fast_slot_2 {left:454px;top:2px;}
-    #fast_slot_3 {left:488px;top:2px;}
-    #fast_slot_4 {left:522px;top:2px;}
-    #fast_slot_5 {left:556px;top:2px;}
+    #fast_slot_1 {left:2px;top:2px;}
+    #fast_slot_2 {left:36px;top:2px;}
+    #fast_slot_3 {left:70px;top:2px;}
+    #fast_slot_4 {left:104px;top:2px;}
+    #fast_slot_5 {left:138px;top:2px;}
     
     #expbar {height:6px;background-position:0 -40px;width:960px;top:34px;background-size:960px;z-index:20;}
     #exp {width:0px;height:6px;top:34px;left:0;z-index:10;position:absolute;}
@@ -898,6 +901,7 @@ footer div  {display:inline-block;}
     .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle, .game.privacy .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
 
     footer {font-size:16px;}
+    .game footer {display:none;}
     #resize-check {height:2px;}
 
     #toggle-legal {padding:0 8px;}
@@ -948,7 +952,7 @@ footer div  {display:inline-block;}
     .button.delete {background-position:-229px -51px;}
     .button.delete:active {background-position:0 -726px;}
 
-    #container {width:490px;margin:0 auto;position:absolute;top:50%;margin-top:-126px;left:50%;margin-left:-245px;}
+    #container {width:100%;height:100%;position:absolute;}
     #canvasborder {padding:5px;background:url('../img/1/border.png') no-repeat;}
     #canvas {width:100%;height:224px;}
     #fade {width:480px;height:224px;top:5px;left:5px;}
@@ -1026,11 +1030,11 @@ footer div  {display:inline-block;}
     #manabar {height:13px;background-position:-378px -22px;width:102px;top:3px;left:104px;background-size:480px;z-index:20;}
     #manapoints {width:0px;height:11px;top:4px;left:115px;z-index:10;position:absolute;}
     
-    #fast_slot_1 {left:210px;top:1px;}
-    #fast_slot_2 {left:227px;top:1px;}
-    #fast_slot_3 {left:244px;top:1px;}
-    #fast_slot_4 {left:261px;top:1px;}
-    #fast_slot_5 {left:278px;top:1px;}
+    #fast_slot_1 {left:2px;top:1px;}
+    #fast_slot_2 {left:19px;top:1px;}
+    #fast_slot_3 {left:36px;top:1px;}
+    #fast_slot_4 {left:53px;top:1px;}
+    #fast_slot_5 {left:70px;top:1px;}
     
     #expbar {height:3px;background-position:0 -19px;width:480px;top:17px;background-size:480px;z-index:20;}
     #exp {width:0px;height:3px;top:17px;left:0;z-index:10;position:absolute;}
@@ -1152,7 +1156,7 @@ footer div  {display:inline-block;}
     body.intro {background:-webkit-gradient(radial, center center, 120, center center, 400, from(rgba(0,0,0,0)), to(rgba(0,0,0,1))), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
     body {background:#000;}
     #logosparks {-moz-animation:none;-webkit-animation:none;-o-animation:none;-ms-animation:none;display:none;}
-    #container {height:258px;width:480px;position:relative;left:50%;top:50%;margin:-128px auto 0 -240px;}
+    #container {height:100%;width:100%;position:absolute;}
     #canvasborder {background:none;padding:0;}
 
     #parchment, #logosparks, .left-ornament, .right-ornament, #character, #character div, .button, .button div, #respawn, #scroll, #instructions, .icon {background-size:422px auto;}
@@ -1238,11 +1242,11 @@ footer div  {display:inline-block;}
     #manabar {height:26px;background-position:-96px -154px;width:86px;top:6px;left:97px;background-size:960px;z-index:20;}
     #manapoints {width:0px;height:22px;top:8px;left:120px;z-index:10;position:absolute;}
     
-    #fast_slot_1 {left:190px;top:2px;}
-    #fast_slot_2 {left:224px;top:2px;}
-    #fast_slot_3 {left:258px;top:2px;}
-    #fast_slot_4 {left:292px;top:2px;}
-    #fast_slot_5 {left:326px;top:2px;}
+    #fast_slot_1 {left:2px;top:2px;}
+    #fast_slot_2 {left:36px;top:2px;}
+    #fast_slot_3 {left:70px;top:2px;}
+    #fast_slot_4 {left:104px;top:2px;}
+    #fast_slot_5 {left:138px;top:2px;}
     
     #expbar {height:6px;background-position:0 -148px;width:480px;top:34px;background-size:960px;z-index:20;}
     #exp {width:0px;height:6px;top:34px;left:0;z-index:10;position:absolute;}

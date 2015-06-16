@@ -103,6 +103,10 @@ function(Camera, Item, Character, Player, Timer) {
             this.forecanvas.width = this.canvas.width;
             this.forecanvas.height = this.canvas.height;
             log.debug("#foreground set to "+this.forecanvas.width+" x "+this.forecanvas.height);
+            
+            $('#container').width(this.canvas.width);
+            $('#container').height(this.canvas.height);
+            log.debug("#container set to "+this.forecanvas.width+" x "+this.forecanvas.height);
         },
     
         initFPS: function() {

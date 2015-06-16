@@ -14,9 +14,10 @@ define(function() {
     
         rescale: function() {
             var factor = this.renderer.mobile ? 1 : 2;
-        
-            this.gridW = 15 * factor;
-            this.gridH = 7 * factor;
+            var cf = this.renderer.getScaleFactor();
+            
+            this.gridW = Math.floor(window.innerWidth / (16 * cf));//15 * factor;
+            this.gridH = Math.floor(window.innerHeight / (16 * cf));//7 * factor;
         
             log.debug("---------");
             log.debug("Factor:"+factor);
@@ -72,11 +73,14 @@ define(function() {
         focusEntity: function(entity) {
             var w = this.gridW - 2,
                 h = this.gridH - 2,
-                x = Math.floor((entity.gridX - 1) / w) * w,
-                y = Math.floor((entity.gridY - 1) / h) * h;
+                //x = Math.floor((entity.gridX - 1) / w) * w,
+                //y = Math.floor((entity.gridY - 1) / h) * h;
+                x = Math.floor(entity.gridX - (w / 2)),
+                y = Math.floor(entity.gridY - (h / 2));
 
-            this.setGridPosition(x, y);
+            this.setGridPosition(x < 0 ? 0 : x, y < 0 ? 0 : y);
         }
+        
     });
 
     return Camera;

@@ -277,120 +277,118 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
             </section>
         </div>
         <div id="container">
-            <div id="canvasborder">
-                <article id="instructions" class="clickable">
-                    <div class="close"></div>
-                    <h1>
-                        <span class="left-ornament"></span>
-                        How to play
-                        <span class="right-ornament"></span>
-                    </h1>
-                    <ul>
-                        <li><span class="icon"></span>Left click or tap to move, attack and pick up items.</li>
-                        <li><span class="icon"></span>Press ENTER to chat.</li>
-                        <li><span class="icon"></span>Your character is automatically saved as you play.</li>
-                    </ul>
-                    <p>- click anywhere to close -</p>
-                </article>
-                <article id="achievements" class="page1 clickable">
-                    <div class="close"></div>
-                    <div id="achievements-wrapper">
-                        <div id="lists">
-                        </div>
-                    </div>
-                    <div id="achievements-count" class="stroke">
-                        Completed
-                        <div>
-                            <span id="unlocked-achievements">0</span>
-                            /
-                            <span id="total-achievements"></span>
-                        </div> 
-                    </div>
-                    <nav class="clickable">
-                        <div id="previous"></div>
-                        <div id="next"></div>
-                    </nav>
-                </article>
-                <div id="canvas">
-                    <canvas id="background"></canvas>
-                    <canvas id="entities"></canvas>
-                    <canvas id="foreground" class="clickable"></canvas>
-                </div>
-                <div id="bubbles">				
-                </div>
-                <div id="achievement-notification">
-                    <div class="coin">
-                        <div id="coinsparks"></div>
-                    </div>
-                    <div id="achievement-info">
-                        <div class="title">New Achievement Unlocked!</div>
-                        <div class="name"></div>
+
+            <article id="instructions" class="clickable">
+                <div class="close"></div>
+                <h1>
+                    <span class="left-ornament"></span>
+                    How to play
+                    <span class="right-ornament"></span>
+                </h1>
+                <ul>
+                    <li><span class="icon"></span>Left click or tap to move, attack and pick up items.</li>
+                    <li><span class="icon"></span>Press ENTER to chat.</li>
+                    <li><span class="icon"></span>Your character is automatically saved as you play.</li>
+                </ul>
+                <p>- click anywhere to close -</p>
+            </article>
+            <article id="achievements" class="page1 clickable">
+                <div class="close"></div>
+                <div id="achievements-wrapper">
+                    <div id="lists">
                     </div>
                 </div>
-                <div id="inventory" class="clickable">
-                    <div id="slot_1" class="slot"></div>
-                    <div id="slot_2" class="slot"></div>
-                    <div id="slot_3" class="slot"></div>
-                    <div id="slot_4" class="slot"></div>
-                    <div id="slot_5" class="slot"></div>
-                    <div id="slot_6" class="slot"></div>
-                    <div id="slot_7" class="slot"></div>
-                    <div id="slot_8" class="slot"></div>
-                    <div id="slot_9" class="slot"></div>
-                    <div id="slot_10" class="slot"></div>
-                    <div id="slot_11" class="slot"></div>
-                    <div id="slot_12" class="slot"></div>
-                    <div id="slot_13" class="slot"></div>
-                    <div id="slot_14" class="slot"></div>
-                    <div id="slot_15" class="slot"></div>
-                    <div id="slot_16" class="slot"></div>
-                    <div id="slot_17" class="slot"></div>
-                    <div id="slot_18" class="slot"></div>
+                <div id="achievements-count" class="stroke">
+                    Completed
+                    <div>
+                        <span id="unlocked-achievements">0</span>
+                        /
+                        <span id="total-achievements"></span>
+                    </div> 
                 </div>
-                <div id="bar-container">
-                    <div id="healthbar"></div>
-                    <div id="hitpoints"></div>
-                    <div id="manabar"></div>
-                    <div id="manapoints"></div>
-                    <div id="fast_slot_1" class="slot clickable"></div>
-                    <div id="fast_slot_2" class="slot clickable"></div>
-                    <div id="fast_slot_3" class="slot clickable"></div>
-                    <div id="fast_slot_4" class="slot clickable"></div>
-                    <div id="fast_slot_5" class="slot clickable"></div>
-                    <!--<div id="notifications">
-                        <div>
-                            <span id="message1"></span>
-                            <span id="message2"></span>
-                        </div>
-                    </div>-->
-                    <!--<div id="playercount" class="clickable">
-                        <span class="count">0</span> <span>players</span>
-                    </div>-->
-                    <div id="barbuttons">
-                        <div id="inventorybutton" class="barbutton clickable"></div>
-                        <div id="chatbutton" class="barbutton clickable"></div>
-                        <div id="achievementsbutton" class="barbutton clickable"></div>
-                        <div id="helpbutton" class="barbutton clickable"></div>
-                        <div id="mutebutton" class="barbutton clickable active"></div>
-                    </div>
-                    <div id="expbar"></div>
-                    <div id="exp"></div>
+                <nav class="clickable">
+                    <div id="previous"></div>
+                    <div id="next"></div>
+                </nav>
+            </article>
+            <div id="canvas">
+                <canvas id="background"></canvas>
+                <canvas id="entities"></canvas>
+                <canvas id="foreground" class="clickable"></canvas>
+            </div>
+            <div id="bubbles">				
+            </div>
+            <div id="achievement-notification">
+                <div class="coin">
+                    <div id="coinsparks"></div>
                 </div>
-                <div id="item_context" class="clickable"></div>
-                <div id="chatbox">
-                    <form action="none" method="get" accept-charset="utf-8">
-                        <input id="chatinput" class="gp placeholder" type="text" maxlength="60" placeholder="What do you want to say? (Remember to protect your privacy!)">
-                    </form>
-                </div>
-                <div id="population">
-                    <div id="instance-population" class="">
-                        <span>0</span> <span>players</span> in your instance
-                    </div>
-                    <div id="world-population" class="">
-                        <span>0</span> <span>players</span> total
-                    </div>
+                <div id="achievement-info">
+                    <div class="title">New Achievement Unlocked!</div>
+                    <div class="name"></div>
                 </div>
             </div>
+            <div id="inventory" class="clickable">
+                <div id="slot_1" class="slot"></div>
+                <div id="slot_2" class="slot"></div>
+                <div id="slot_3" class="slot"></div>
+                <div id="slot_4" class="slot"></div>
+                <div id="slot_5" class="slot"></div>
+                <div id="slot_6" class="slot"></div>
+                <div id="slot_7" class="slot"></div>
+                <div id="slot_8" class="slot"></div>
+                <div id="slot_9" class="slot"></div>
+                <div id="slot_10" class="slot"></div>
+                <div id="slot_11" class="slot"></div>
+                <div id="slot_12" class="slot"></div>
+                <div id="slot_13" class="slot"></div>
+                <div id="slot_14" class="slot"></div>
+                <div id="slot_15" class="slot"></div>
+                <div id="slot_16" class="slot"></div>
+                <div id="slot_17" class="slot"></div>
+                <div id="slot_18" class="slot"></div>
+            </div>
+            <div id="fast_inventory" class="clickable">
+                <div id="fast_slot_1" class="slot clickable"></div>
+                <div id="fast_slot_2" class="slot clickable"></div>
+                <div id="fast_slot_3" class="slot clickable"></div>
+                <div id="fast_slot_4" class="slot clickable"></div>
+                <div id="fast_slot_5" class="slot clickable"></div>
+            </div>
+            <!--<div id="bar-container">
+                <div id="healthbar"></div>
+                <div id="hitpoints"></div>
+                <div id="manabar"></div>
+                <div id="manapoints"></div>
+                <div id="fast_slot_1" class="slot clickable"></div>
+                <div id="fast_slot_2" class="slot clickable"></div>
+                <div id="fast_slot_3" class="slot clickable"></div>
+                <div id="fast_slot_4" class="slot clickable"></div>
+                <div id="fast_slot_5" class="slot clickable"></div>-->
+            <!--<div id="notifications">
+                <div>
+                    <span id="message1"></span>
+                    <span id="message2"></span>
+                </div>
+            </div>-->
+            <!--<div id="playercount" class="clickable">
+                <span class="count">0</span> <span>players</span>
+            </div>-->
+            <!--<div id="barbuttons">
+                <div id="inventorybutton" class="barbutton clickable"></div>
+                <div id="chatbutton" class="barbutton clickable"></div>
+                <div id="achievementsbutton" class="barbutton clickable"></div>
+                <div id="helpbutton" class="barbutton clickable"></div>
+                <div id="mutebutton" class="barbutton clickable active"></div>
+            </div>
+            <div id="expbar"></div>
+            <div id="exp"></div>
+        </div>-->
+            <div id="item_context" class="clickable"></div>
+            <!--<div id="chatbox">
+                <form action="none" method="get" accept-charset="utf-8">
+                    <input id="chatinput" class="gp placeholder" type="text" maxlength="60" placeholder="What do you want to say? (Remember to protect your privacy!)">
+                </form>
+            </div>-->
         </div>
         <footer>
             <div id="sharing" class="clickable">
@@ -441,18 +439,18 @@ Mozilla presents an HTML5 mini-MMORPG by Little Workshop http://www.littleworksh
                 document.querySelector('body').className += ' upscaled';
             }
 
-//            if (!Modernizr.localstorage) {
-//                var alert = document.createElement("div");
-//                alert.className = 'alert';
-//                alertMsg = document.createTextNode("You need to enable cookies/localStorage to play BrowserQuest");
-//                alert.appendChild(alertMsg);
-//
-//                target = document.getElementById("intro");
-//                document.body.insertBefore(alert, target);
-//            } else if (localStorage && localStorage.data) {
-//                document.body.className += " returning";
-//                parchment.className = "loadcharacter";
-//            }
+            //            if (!Modernizr.localstorage) {
+            //                var alert = document.createElement("div");
+            //                alert.className = 'alert';
+            //                alertMsg = document.createTextNode("You need to enable cookies/localStorage to play BrowserQuest");
+            //                alert.appendChild(alertMsg);
+            //
+            //                target = document.getElementById("intro");
+            //                document.body.insertBefore(alert, target);
+            //            } else if (localStorage && localStorage.data) {
+            //                document.body.className += " returning";
+            //                parchment.className = "loadcharacter";
+            //            }
         </script>
 
         <script src="js/lib/log.js"></script>
