@@ -524,20 +524,20 @@ define(['jquery', 'app'], function ($, App) {
             $(document).bind("keydown", function (e) {
                 var key = e.which,
                         $chatInput = $('#chat-input'),
-                        $chat = $('#chat > p');
+                        $chatLines = $('#chat > p');
 // TODO:: Tastensteuerung implementieren
                 if (game.ready && (!$chatInput.is(":focus") || $chatInput.is(":focus") && key === 13)) {
                     switch (key) {
                         case 13: // Enter
                             if ($chatInput.is(":focus")) {
                                 game.say($chatInput.val());
-                                $chat.hide();
+                                $chatLines.hide();
                                 $chatInput.hide();
                                 $chatInput.val("");
                                 return false;
                             } else {
-                                $chat.stop(true,true).show();
-                                $chat.scrollTop($chat.prop("scrollHeight"));
+                                $chatLines.stop(true,true).show();
+                                $('#chat').scrollTop($('#chat').prop("scrollHeight"));
                                 $chatInput.show();
                                 $chatInput.focus();
                                 return false;
