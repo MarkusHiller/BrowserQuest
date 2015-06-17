@@ -728,6 +728,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                         // Always accept name received from the server which will
                         // sanitize and shorten names exceeding the allowed length.
                         self.player.name = dataObj.name;
+                        self.player.level = dataObj.level;
                         self.player.setGridPosition(dataObj.x, dataObj.y);
                         self.player.setHitPoints(dataObj.maxHp, dataObj.hp);
                         self.player.setManaPoints(dataObj.maxMp, dataObj.mp);

@@ -232,15 +232,16 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                     this.spawn_chest_callback(item, x, y);
                 }
             } else {
-                var name, orientation, target, weapon, armor;
+                var name, orientation, target, weapon, armor, level;
             
                 if(Types.isPlayer(kind)) {
                     name = data[5];
                     orientation = data[6];
                     armor = data[7];
                     weapon = data[8];
-                    if(data.length > 9) {
-                        target = data[9];
+                    level = data[9];
+                    if(data.length > 10) {
+                        target = data[10];
                     }
                 }
                 else if(Types.isMob(kind)) {
@@ -251,8 +252,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
                 }
 
                 var character = EntityFactory.createEntity(kind, id, name);
-            
+                
                 if(character instanceof Player) {
+                    character.level = level;
                     character.weaponName = Types.getKindAsString(weapon);
                     character.spriteName = Types.getKindAsString(armor);
                 }

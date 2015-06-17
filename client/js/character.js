@@ -41,6 +41,7 @@ define(['entity', 'transition', 'timer'], function (Entity, Transition, Timer) {
             // Exp
             this.exp = 0;
             this.maxExp = 0;
+            this.level = 0;
 
             // Modes
             this.isDead = false;

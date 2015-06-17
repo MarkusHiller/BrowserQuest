@@ -26,6 +26,7 @@ module.exports = Player = Character.extend({
         this.formatChecker = new FormatChecker();
         this.disconnectTimeout = null;
         this.inventory = new Inventory();
+        this.level = 0;
 
         this.connection.listen(function (message) {
             var action = parseInt(message[0]);
@@ -55,7 +56,8 @@ module.exports = Player = Character.extend({
                         self.name = playerData.username;
                         self.x = playerData.pos_x;
                         self.y = playerData.pos_y;
-                        self.hitPoints = playerData['hp'];
+                        self.level = playerData.level;
+                        self.hitPoints = playerData.hp;
                         self.kind = Types.Entities.WARRIOR;
                         self.equipWeapon(inventoryData["slot_15"]);
                         self.equipArmor(inventoryData["slot_16"]);
@@ -332,7 +334,7 @@ module.exports = Player = Character.extend({
     },
     getState: function () {
         var basestate = this._getBaseState(),
-                state = [this.name, this.orientation, parseInt(this.inventory.getSlot(16).split(':')[0]), parseInt(this.inventory.getSlot(15).split(':')[0])];
+                state = [this.name, this.orientation, parseInt(this.inventory.getSlot(16).split(':')[0]), parseInt(this.inventory.getSlot(15).split(':')[0]), this.level];
 
         if (this.target) {
             state.push(this.target);
