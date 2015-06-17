@@ -97,6 +97,7 @@ module.exports = Player = Character.extend({
                 if (chatMsg && chatMsg !== "") {
                     self.broadcast(new Messages.Chat(chatMsg), false);
                 }
+                self.database.logChatMsg({username: self.name, msg: msg})
             }
             else if (action === Types.Messages.MOVE) {
                 if (self.move_callback) {

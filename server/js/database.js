@@ -15,6 +15,19 @@ var DB = exports = module.exports = cls.Class.extend({
             password: password,
             database: database
         };
+        
+//        this.databaseSchema = {
+//            database: 'browserquest',
+//            tables: [
+//                {
+//                    name: 'users',
+//                    felds: [
+//                        {name: 'ID', type: 'INT'},
+//                        {name: 'username', type: 'VARCHAR(32)'}
+//                    ]
+//                }
+//            ]
+//        };
     },
     canPlay: function (name, password, callback) {
         var self = this;
@@ -123,6 +136,15 @@ var DB = exports = module.exports = cls.Class.extend({
                 log.debug("Inventory from " + player.name + " saved.");
             } else {
                 log.debug('Error while performing Query. ' + err);
+            }
+        });
+        connection.end();
+    },
+    logChatMsg: function(values) {
+        var connection = mysql.createConnection(this.connectionOptions);
+        connection.query('INSERT INTO chatlog SET ?', values, function (err, result) {
+            if (err) {
+                log.debug('Error while performing Query. ' + err);     
             }
         });
         connection.end();
