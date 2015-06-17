@@ -1917,8 +1917,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                 moveFromKeyboard: function (oriantation) {
                     var pos = [],
                             entity;
-                    pos.x = this.player.gridX;
-                    pos.y = this.player.gridY;
+                    pos.x = this.previousClickPosition.x !== undefined ? this.previousClickPosition.x : this.player.gridX;
+                    pos.y = this.previousClickPosition.y !== undefined ? this.previousClickPosition.y : this.player.gridY;
 
                     switch (oriantation) {
                         case 1:
