@@ -138,10 +138,6 @@ body.upscaled.game {background:#000;}
 
 #character div {-moz-transition:0.4s opacity linear;-webkit-transition:0.4s opacity linear;-o-transition:0.4s opacity linear;-ms-transition:0.4s opacity linear;transition:0.4s opacity linear;}
 
-/*.play div {position:absolute;top:0;left:0;opacity:1;-moz-transition:0.4s linear opacity;-webkit-transition:0.4s linear opacity;-o-transition:0.4s linear opacity;-ms-transition:0.4s linear opacity;transition:0.4s linear opacity}
-.play.disabled div {opacity:0;pointer-events:none;}
-.play img {display:none;}
-.play.loading img {display:block;position:absolute;top:54%;left:50%;}*/
 .button div {position:absolute;top:0;left:0;opacity:1;-moz-transition:0.4s linear opacity;-webkit-transition:0.4s linear opacity;-o-transition:0.4s linear opacity;-ms-transition:0.4s linear opacity;transition:0.4s linear opacity}
 .button.disabled div {opacity:0;pointer-events:none;}
 .button img {display:none;}
@@ -194,6 +190,8 @@ body.upscaled.game {background:#000;}
 #chat-input {position:absolute;bottom:0;margin:5px;width:90%;z-index:11;border:none;background-color:rgba(94,94,94,0.5);padding:5px;font-family:'GraphicPixel';color:#fff;font-size:18px;display:none;}
 #chat {position:absolute;bottom:50px;margin:0 5px;width:50%;max-height:50%;z-index:11;border:none;overflow:hidden;pointer-events:none;}
 #chat > p {font-family:'GraphicPixel';color:#fff;font-size:18px;line-height:20px;background-color:rgba(94,94,94,0.5);padding:1px 5px;display:none;}
+#chatbutton {position:absolute;left:0;bottom:0;margin: 0 0 10px 10px;display:none;font-size: 26px;border: 1px solid rgb(143,143,143);color:rgb(143,143,143);-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;}
+#chatbutton > i {padding:5px;}
 
 #instructions {position:absolute;top:50%;left:50%;z-index:1000;font-family:'GraphicPixel';pointer-events:none;opacity:0;-moz-transition:0.25s opacity linear;-webkit-transition:0.4s top ease, 0.4s opacity linear;-o-transition:0.4s top ease, 0.4s opacity linear;-ms-transition:0.4s top ease, 0.4s opacity linear;transition:0.4s top ease, 0.4s opacity linear;}
 #instructions.active, #achievements.active {opacity:1;pointer-events:auto;}
@@ -622,9 +620,7 @@ footer div  {display:inline-block;}
     #inventorybutton {background-position:-906px -69px;top:3px;left:882px;}
     #inventorybutton:hover {background-position:-948px -69px;}
     #inventorybutton.active {background-position:-990px -69px;}
-    #chatbutton {background-position:-306px -69px;top:3px;left:1260px;}
-    #chatbutton:hover {background-position:-348px -69px;}
-    #chatbutton.active {background-position:-390px -69px;}
+    
     #achievementsbutton {background-position:-432px -69px;top:3px;left:1305px;}
     #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-474px -69px;}
     #achievementsbutton.blink {background-position:-864px -69px;}
@@ -841,9 +837,7 @@ footer div  {display:inline-block;}
     #inventorybutton {background-position:-604px -46px;top:2px;left:588px;}
     #inventorybutton:hover {background-position:-632px -46px;}
     #inventorybutton.active {background-position:-660px -46px;}
-    #chatbutton {background-position:-204px -46px;top:2px;left:840px;}
-    #chatbutton:hover {background-position:-232px -46px;}
-    #chatbutton.active {background-position:-260px -46px;}
+    
     #achievementsbutton {background-position:-288px -46px;top:2px;left:870px;}
     #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-316px -46px;}
     #achievementsbutton.blink {background-position:-576px -46px;}
@@ -1059,9 +1053,7 @@ footer div  {display:inline-block;}
     #inventorybutton {background-position:-302px -22px;top:1px;left:294px;}
     #inventorybutton:hover {background-position:-316px -22px;}
     #inventorybutton.active {background-position:-330px -22px;}
-    #chatbutton {background-position:-102px -22px;top:1px;left:420px;}
-    #chatbutton:hover {background-position:-116px -22px;}
-    #chatbutton.active {background-position:-130px -22px;}
+    
     #achievementsbutton {background-position:-144px -22px;top:1px;left:435px;}
     #achievementsbutton:hover, #achievementsbutton.blink:hover {background-position:-158px -22px;}
     #achievementsbutton.blink {background-position:-288px -22px;}
@@ -1268,9 +1260,7 @@ footer div  {display:inline-block;}
     #inventorybutton {background-position:-604px -46px;top:2px;left:360px;}
     #inventorybutton:hover {background-position:-632px -46px;}
     #inventorybutton.active {background-position:-660px -46px;}
-    #chatbutton {background-position:-204px -46px;top:2px;left:360px;display: none;}
-    #chatbutton:hover {background-position:-232px -46px;display:none;}
-    #chatbutton.active {background-position:-260px -46px;display:none;}
+    
     #achievementsbutton {background-position:-288px -46px;top:2px;left:390px;}
     #achievementsbutton:hover, #achievementsbutton.blink {background-position:-316px -46px;}
     #achievementsbutton.active {background-position:-344px -46px;}
@@ -1284,7 +1274,9 @@ footer div  {display:inline-block;}
     #chatbox {height:32px;width:480px;background-size:960px;background-position:0 -76px;margin-left:-240px;bottom:3px;}
     #chatbox.active {bottom:34px;}
     #chatbox input {font-size:14px;background:none;width:90%;border:0;margin-left:2%;padding:4px 0;}
-
+    #chat-input {top:5px;bottom:initial;}
+    #chatbutton {display:block;}
+    
     /*Credits*/
     .parchment-left, .upscaled .parchment-left, .parchment-middle, .upscaled .parchment-middle, .parchment-right, .upscaled .parchment-right {background:none;}
     .parchment-left, .parchment-right {display:none;}

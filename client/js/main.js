@@ -460,6 +460,12 @@ define(['jquery', 'app'], function ($, App) {
                 //game.audioManager.toggle();
             });
 
+            $('#chatbutton').click(function () {
+                var e = $.Event("keydown");
+                e.which = 13;
+                $(document).trigger(e);
+            });
+
             var contextIsOpen = false;
             $('.slot').click(function (event) {
                 contextIsOpen = true;
@@ -536,7 +542,7 @@ define(['jquery', 'app'], function ($, App) {
                                 $chatInput.val("");
                                 return false;
                             } else {
-                                $chatLines.stop(true,true).show();
+                                $chatLines.stop(true, true).show();
                                 $('#chat').scrollTop($('#chat').prop("scrollHeight"));
                                 $chatInput.show();
                                 $chatInput.focus();
