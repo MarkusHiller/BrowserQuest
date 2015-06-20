@@ -588,7 +588,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                 },
                 run: function (started_callback) {
                     var self = this;
-
+                    
+                    this.app.drawLoadingInfo("Loading graphics ...");
                     this.loadSprites();
                     this.setUpdater(new Updater(this));
                     this.camera = this.renderer.camera;
@@ -597,6 +598,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
 
                     var wait = setInterval(function () {
                         if (self.map.isLoaded && self.spritesLoaded()) {
+                            self.app.drawLoadingInfo("Configure playfeld ...");
                             self.ready = true;
                             log.debug('All sprites loaded.');
 
@@ -622,6 +624,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
 
                             self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
 
+                            self.app.drawLoadingInfo("Init player ...");
                             self.initPlayer();
                             self.setCursor("hand");
 

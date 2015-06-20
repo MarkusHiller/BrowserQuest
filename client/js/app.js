@@ -17,7 +17,8 @@ define([
                     this.$playDiv = $('.play div');
                     this.$registerDiv = $('.register div');
                     this.frontPage = 'login';
-
+                    
+                    this.loadStep = "";
 //                    if (localStorage && localStorage.data) {
 //                        this.frontPage = 'loadcharacter';
 //                    }
@@ -44,7 +45,7 @@ define([
                     var self = this,
                             $play = this.$playButton;
 
-                    if (loginData.username !== '') {
+                    if (loginData.username !== "" && loginData.password !== "") {
                         if (!this.ready || !this.canStartGame()) {
                             if (!this.isMobile) {
                                 // on desktop and tablets, add a spinner to the play button
@@ -76,7 +77,9 @@ define([
                         starting_callback();
                     }
                     this.hideIntro(function () {
+                        self.drawLoadingInfo("Starting game ...");
                         if (!self.isDesktop) {
+                            self.drawLoadingInfo("Loading map ...");
                             // On mobile and tablet we load the map after the player has clicked
                             // on the PLAY button instead of loading it in a web worker.
                             self.game.loadMap();
@@ -247,18 +250,20 @@ define([
                     }
                 },
                 showChat: function () {
-                    if (this.game.started) {
-                        $('#chatbox').addClass('active');
-                        $('#chatinput').focus();
-                        $('#chatbutton').addClass('active');
-                    }
+                    var $chatInput = $('#chat-input'),
+                            $chatLines = $('#chat > p');
+                    $chatLines.stop(true, true).show();
+                    $('#chat').scrollTop($('#chat').prop("scrollHeight"));
+                    $chatInput.show();
+                    $chatInput.focus();
                 },
                 hideChat: function () {
-                    if (this.game.started) {
-                        $('#chatbox').removeClass('active');
-                        $('#chatinput').blur();
-                        $('#chatbutton').removeClass('active');
-                    }
+                    var $chatInput = $('#chat-input'),
+                            $chatLines = $('#chat > p');
+                    this.game.say($chatInput.val());
+                    $chatLines.hide();
+                    $chatInput.hide();
+                    $chatInput.val("");
                 },
                 toggleInstructions: function () {
                     if ($('#achievements').hasClass('active')) {
@@ -287,11 +292,11 @@ define([
                         });
                     }
                 },
-                initInventoryIcons: function() {
+                initInventoryIcons: function () {
                     var scale = this.game.renderer.getScaleFactor();
-                    for(var i = 0; i <= 17; i++) {
-                        $('#slot_' + ( i + 1 )).css('background-image', 'url("")');
-                        if(i <= 4) {
+                    for (var i = 0; i <= 17; i++) {
+                        $('#slot_' + (i + 1)).css('background-image', 'url("")');
+                        if (i <= 4) {
                             $('#fast_slot_' + (i + 1)).css('background-image', 'url("")');
                         }
                     }
@@ -301,26 +306,26 @@ define([
                     var helmId = this.game.player.inventory.getSlot(16);
                     var helmString = Types.getKindAsString(parseInt(helmId.split(":")[0]));
                     var helmPath = getIconPath(helmString);
-                    
+
                     $('#slot_15').css('background-image', 'url("' + weaponPath + '")');
                     $('#slot_16').css('background-image', 'url("' + helmPath + '")');
-                    
+
                     function getIconPath(spriteName) {
                         return spriteName === undefined ? '' : 'img/' + scale + '/item-' + spriteName + '.png';
                     }
                 },
-                updateInventorySlotIcon: function(slot) {
+                updateInventorySlotIcon: function (slot) {
                     var scale = this.game.renderer.getScaleFactor();
                     var item,
-                        itemId;
-                    
+                            itemId;
+
                     itemId = this.game.player.inventory.getSlot(slot);
                     item = Types.getKindAsString(parseInt(itemId.split(":")[0]));
                     $('#slot_' + slot).css('background-image', 'url("' + getIconPath(item) + '")');
-                    if(slot <= 5) {
+                    if (slot <= 5) {
                         $('#fast_slot_' + slot).css('background-image', 'url("' + getIconPath(item) + '")');
                     }
-                    
+
                     function getIconPath(spriteName) {
                         return spriteName === undefined ? '' : 'img/' + scale + '/item-' + spriteName + '.png';
                     }
@@ -562,6 +567,22 @@ define([
                             this.game.renderer.rescale(newScale);
                         }
                     }
+                },
+                drawLoadingInfo: function (text) {
+                    var $background = $('#background')[0];
+                    var context = $background.getContext("2d");
+                    var x = $background.width / 2;
+                    var y = $background.height / 2;
+                    this.loadStep += "#";
+                    
+                    context.clearRect(0, 0, $background.width, $background.height);
+                    context.font = "bold 20px GraphicPixel";
+                    context.textAlign = 'center';
+                    context.fillStyle = 'green';
+                    context.fillText(this.loadStep, x, y);
+                    context.font = "18px GraphicPixel";
+                    context.fillStyle = 'white';
+                    context.fillText(text, x, (y + 20));
                 }
             });
 

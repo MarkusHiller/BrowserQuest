@@ -461,9 +461,7 @@ define(['jquery', 'app'], function ($, App) {
             });
 
             $('#chatbutton').click(function () {
-                var e = $.Event("keydown");
-                e.which = 13;
-                $(document).trigger(e);
+                app.showChat();
             });
 
             var contextIsOpen = false;
@@ -529,23 +527,16 @@ define(['jquery', 'app'], function ($, App) {
 
             $(document).bind("keydown", function (e) {
                 var key = e.which,
-                        $chatInput = $('#chat-input'),
-                        $chatLines = $('#chat > p');
-// TODO:: Tastensteuerung implementieren
+                        $chatInput = $('#chat-input');
+
                 if (game.ready && (!$chatInput.is(":focus") || $chatInput.is(":focus") && key === 13)) {
                     switch (key) {
                         case 13: // Enter
                             if ($chatInput.is(":focus")) {
-                                game.say($chatInput.val());
-                                $chatLines.hide();
-                                $chatInput.hide();
-                                $chatInput.val("");
+                                app.hideChat();
                                 return false;
                             } else {
-                                $chatLines.stop(true, true).show();
-                                $('#chat').scrollTop($('#chat').prop("scrollHeight"));
-                                $chatInput.show();
-                                $chatInput.focus();
+                                app.showChat();
                                 return false;
                             }
                             break;

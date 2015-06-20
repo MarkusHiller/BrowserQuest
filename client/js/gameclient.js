@@ -96,6 +96,9 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
 
                 this.connection.onclose = function() {
                     log.debug("Connection closed");
+                    var $background = $('canvas')[0];
+                    var context = $background.getContext("2d");
+                    context.clearRect(($background.width / 2 - 200), ($background.height / 2 - 50), 400, 100);
                     $('#container').addClass('error');
                     
                     if(self.disconnected_callback) {
