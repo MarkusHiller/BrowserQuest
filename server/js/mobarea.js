@@ -4,8 +4,8 @@ var Area = require('./area'),
     Types = require("../../shared/js/gametypes");
 
 module.exports = MobArea = Area.extend({
-    init: function(id, nb, kind, x, y, width, height, world) {
-        this._super(id, x, y, width, height, world);
+    init: function(id, nb, kind, x, y, width, height, map) {
+        this._super(id, x, y, width, height, map);
         this.nb = nb;
         this.kind = kind;
         this.respawns = [];
@@ -25,7 +25,7 @@ module.exports = MobArea = Area.extend({
             pos = this._getRandomPositionInsideArea(),
             mob = new Mob('1' + this.id + ''+ k + ''+ this.entities.length, k, pos.x, pos.y);
         
-        mob.onMove(this.world.onMobMoveCallback.bind(this.world));
+        mob.onMove(this.map.onMobMoveCallback.bind(this.map));
 
         return mob;
     },
@@ -42,7 +42,7 @@ module.exports = MobArea = Area.extend({
             mob.y = pos.y;
             mob.isDead = false;
             self.addToArea(mob);
-            self.world.addMob(mob);
+            self.map.addMob(mob);
         }, delay);
     },
 

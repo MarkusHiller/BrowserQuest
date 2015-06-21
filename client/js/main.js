@@ -283,7 +283,7 @@ define(['jquery', 'app'], function ($, App) {
             app.setGame(game);
 
             if (app.isDesktop && app.supportsWorkers) {
-                game.loadMap();
+                //game.loadMaps();
             }
 
             game.onGameStart(function () {

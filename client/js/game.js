@@ -25,6 +25,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                     this.player = new Warrior("player", "");
 
                     // Game state
+                    this.map;
+                    this.maps = [];
                     this.entities = {};
                     this.deathpositions = {};
                     this.entityGrid = null;
@@ -93,15 +95,17 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                 setBubbleManager: function (bubbleManager) {
                     this.bubbleManager = bubbleManager;
                 },
-                loadMap: function () {
+                loadMap: function (name) {
                     var self = this;
+                    // TODO:: check if map already loaded
 
-                    this.map = new Map(!this.renderer.upscaledRendering, this);
+                    this.maps[name] = new Map(!this.renderer.upscaledRendering, this, name);
+                    this.map = this.maps[name];
 
-                    this.map.ready(function () {
+                    this.maps[name].ready(function () {
                         log.info("Map loaded.");
                         var tilesetIndex = self.renderer.upscaledRendering ? 0 : self.renderer.scale - 1;
-                        self.renderer.setTileset(self.map.tilesets[tilesetIndex]);
+                        self.renderer.setTileset(self.maps[name].tilesets[tilesetIndex]);
                     });
                 },
                 initPlayer: function () {
@@ -588,7 +592,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                 },
                 run: function (started_callback) {
                     var self = this;
-                    
+
                     this.app.drawLoadingInfo("Loading graphics ...");
                     this.loadSprites();
                     this.setUpdater(new Updater(this));
@@ -597,7 +601,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                     this.setSpriteScale(this.renderer.scale);
 
                     var wait = setInterval(function () {
-                        if (self.map.isLoaded && self.spritesLoaded()) {
+                        if (/*self.map.isLoaded && */self.spritesLoaded()) {
                             self.app.drawLoadingInfo("Configure playfeld ...");
                             self.ready = true;
                             log.debug('All sprites loaded.');
@@ -617,12 +621,12 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                                 self.initSilhouettes();
                             }
 
-                            self.initEntityGrid();
-                            self.initItemGrid();
-                            self.initPathingGrid();
-                            self.initRenderingGrid();
-
-                            self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
+//                            self.initEntityGrid();
+//                            self.initItemGrid();
+//                            self.initPathingGrid();
+//                            self.initRenderingGrid();
+//
+//                            self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
 
                             self.app.drawLoadingInfo("Init player ...");
                             self.initPlayer();
@@ -633,6 +637,15 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                             clearInterval(wait);
                         }
                     }, 100);
+
+                    function mapauslagerung() {
+                        self.initEntityGrid();
+                        self.initItemGrid();
+                        self.initPathingGrid();
+                        self.initRenderingGrid();
+
+                        self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
+                    }
                 },
                 tick: function () {
                     this.currentTime = new Date().getTime();
@@ -701,7 +714,7 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                         self.player.name = self.loginData.username;
                         self.player.password = self.loginData.password;
 
-                        self.started = true;
+                        //self.started = true;
 
                         self.sendHello(self.player);
                     });
@@ -720,7 +733,14 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
 
                         // Ask the server for spawn information about unknown entities
                         if (_.size(newIds) > 0) {
-                            self.client.sendWho(newIds);
+                            var wait = setInterval(function () {
+                                if (self.started) {
+                                    self.client.sendWho(newIds);
+
+                                    clearInterval(wait);
+                                }
+                            }, 100);
+
                         }
                     });
 
@@ -732,28 +752,45 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
                         // sanitize and shorten names exceeding the allowed length.
                         self.player.name = dataObj.name;
                         self.player.level = dataObj.level;
-                        self.player.setGridPosition(dataObj.x, dataObj.y);
-                        self.player.setHitPoints(dataObj.maxHp, dataObj.hp);
-                        self.player.setManaPoints(dataObj.maxMp, dataObj.mp);
-                        self.player.setExpPoints(dataObj.maxExp, dataObj.exp);
-                        self.player.inventory.updateSlot(15, dataObj.weapon);
-                        self.player.inventory.updateSlot(16, dataObj.armor);
-                        self.player.setWeaponName(Types.getKindAsString(parseInt(dataObj.weapon.split(':')[0])));
-                        self.player.setSpriteName(Types.getKindAsString(parseInt(dataObj.armor.split(':')[0])));
-                        self.player.setSprite(self.sprites[self.player.getSpriteName()]);
+                        self.player.map = dataObj.map;
+                        self.loadMap(self.player.map);
+                        var wait = setInterval(function () {
+                            if (self.map.isLoaded) {
+                                self.initEntityGrid();
+                                self.initItemGrid();
+                                self.initPathingGrid();
+                                self.initRenderingGrid();
 
-                        self.updateBars();
-                        self.updateExpBar();
-                        self.resetCamera();
-                        self.updatePlateauMode();
-                        //self.audioManager.updateMusic();
+                                self.started = true;
 
-                        self.addEntity(self.player);
-                        self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
+                                self.setPathfinder(new Pathfinder(self.map.width, self.map.height));
 
-                        setTimeout(function () {
-                            self.tryUnlockingAchievement("STILL_ALIVE");
-                        }, 1500);
+                                self.player.setGridPosition(dataObj.x, dataObj.y);
+                                self.player.setHitPoints(dataObj.maxHp, dataObj.hp);
+                                self.player.setManaPoints(dataObj.maxMp, dataObj.mp);
+                                self.player.setExpPoints(dataObj.maxExp, dataObj.exp);
+                                self.player.inventory.updateSlot(15, dataObj.weapon);
+                                self.player.inventory.updateSlot(16, dataObj.armor);
+                                self.player.setWeaponName(Types.getKindAsString(parseInt(dataObj.weapon.split(':')[0])));
+                                self.player.setSpriteName(Types.getKindAsString(parseInt(dataObj.armor.split(':')[0])));
+                                self.player.setSprite(self.sprites[self.player.getSpriteName()]);
+
+                                self.updateBars();
+                                self.updateExpBar();
+                                self.resetCamera();
+                                self.updatePlateauMode();
+                                //self.audioManager.updateMusic();
+
+                                self.addEntity(self.player);
+                                self.player.dirtyRect = self.renderer.getEntityBoundingRect(self.player);
+
+                                setTimeout(function () {
+                                    self.tryUnlockingAchievement("STILL_ALIVE");
+                                }, 1500);
+
+                                clearInterval(wait);
+                            }
+                        }, 100);
 
 //                if(!self.storage.hasAlreadyPlayed()) {
 //                    self.storage.initPlayer(self.player.name);

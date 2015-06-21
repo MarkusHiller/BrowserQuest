@@ -4,8 +4,8 @@ var Area = require('./area'),
     Types = require("../../shared/js/gametypes");
 
 module.exports = ChestArea = Area.extend({
-    init: function(id, x, y, width, height, cx, cy, items, world) {
-        this._super(id, x, y, width, height, world);
+    init: function(id, x, y, width, height, cx, cy, items, map) {
+        this._super(id, x, y, width, height, map);
         this.items = items;
         this.chestX = cx;
         this.chestY = cy;

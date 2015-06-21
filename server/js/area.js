@@ -5,13 +5,13 @@ var cls = require('./lib/class'),
     Types = require("../../shared/js/gametypes");
 
 module.exports = Area = cls.Class.extend({
-    init: function(id, x, y, width, height, world) {
+    init: function(id, x, y, width, height, map) {
         this.id = id;
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.world = world;
+        this.map = map;
         this.entities = [];
         this.hasCompletelyRespawned = true;
     },
@@ -23,7 +23,7 @@ module.exports = Area = cls.Class.extend({
         while(!valid) {
             pos.x = this.x + Utils.random(this.width + 1);
             pos.y = this.y + Utils.random(this.height + 1);
-            valid = this.world.isValidPosition(pos.x, pos.y);
+            valid = this.map.isValidPosition(pos.x, pos.y);
         }
         return pos;
     },
@@ -43,7 +43,7 @@ module.exports = Area = cls.Class.extend({
             this.entities.push(entity);
             entity.area = this;
             if(entity instanceof Mob) {
-                this.world.addMob(entity);
+                this.map.addMob(entity);
             }
         }
         

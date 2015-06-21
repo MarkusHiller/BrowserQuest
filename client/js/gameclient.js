@@ -170,17 +170,18 @@ define(['player', 'entityfactory', 'lib/bison'], function(Player, EntityFactory,
             var dataObj = {
                 id: data[1],
                 name: data[2],
-                x: data[3],
-                y: data[4],
-                hp: data[5],
-                maxHp: data[6],
-                mp: data[7],
-                maxMp: data[8],
-                exp: data[9],
-                maxExp: data[10],
-                level: data[11],
-                weapon: data[12],
-                armor: data[13]
+                map: data[3],
+                x: data[4],
+                y: data[5],
+                hp: data[6],
+                maxHp: data[7],
+                mp: data[8],
+                maxMp: data[9],
+                exp: data[10],
+                maxExp: data[11],
+                level: data[12],
+                weapon: data[13],
+                armor: data[14]
             };
         
             if(this.welcome_callback) {

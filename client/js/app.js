@@ -36,7 +36,7 @@ define([
                 },
                 canStartGame: function () {
                     if (this.isDesktop) {
-                        return (this.game && this.game.map && this.game.map.isLoaded);
+                        return (this.game/* && this.game.map && this.game.map.isLoaded*/);
                     } else {
                         return this.game;
                     }
@@ -82,7 +82,7 @@ define([
                             self.drawLoadingInfo("Loading map ...");
                             // On mobile and tablet we load the map after the player has clicked
                             // on the PLAY button instead of loading it in a web worker.
-                            self.game.loadMap();
+                            //self.game.loadMaps();
                         }
                         self.start(loginData);
                     });

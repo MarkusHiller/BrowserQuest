@@ -2,6 +2,7 @@
 importScripts('../maps/world_client.js', 'lib/underscore.min.js');
 
 onmessage = function (event) {
+    importScripts('../maps/' + event.data +'.js');
     generateCollisionGrid();
     generatePlateauGrid();
     

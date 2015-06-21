@@ -14,6 +14,7 @@ module.exports = Player = Character.extend({
         var self = this;
 
         this.server = worldServer;
+        this.mapServer;
         this.connection = connection;
         this.database = database;
 
@@ -54,6 +55,7 @@ module.exports = Player = Character.extend({
                 self.canPlay(name, password, function (playerData, inventoryData) {
                     if (playerData !== undefined) {
                         self.name = playerData.username;
+                        self.map = playerData.map;
                         self.x = playerData.pos_x;
                         self.y = playerData.pos_y;
                         self.level = playerData.level;
@@ -70,7 +72,7 @@ module.exports = Player = Character.extend({
                         self.server.addPlayer(self);
                         self.server.enter_callback(self);
 
-                        self.send([Types.Messages.WELCOME, self.id, self.name, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.exp, self.maxExp, self.level, self.inventory.getSlot(15), self.inventory.getSlot(16)]);
+                        self.send([Types.Messages.WELCOME, self.id, self.name, self.map, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.exp, self.maxExp, self.level, self.inventory.getSlot(15), self.inventory.getSlot(16)]);
                         self.hasEnteredGame = true;
                         self.isDead = false;
 
@@ -87,10 +89,10 @@ module.exports = Player = Character.extend({
             }
             else if (action === Types.Messages.WHO) {
                 message.shift();
-                self.server.pushSpawnsToPlayer(self, message);
+                self.mapServer.pushSpawnsToPlayer(self, message);
             }
             else if (action === Types.Messages.ZONE) {
-                self.zone_callback();
+                //self.zone_callback();
             }
             else if (action === Types.Messages.CHAT) {
                 var msg = Utils.sanitize(message[1]);
@@ -105,59 +107,60 @@ module.exports = Player = Character.extend({
                 if (self.move_callback) {
                     var x = message[1],
                             y = message[2];
-
-                    if (self.server.isValidPosition(x, y)) {
+                    
+                    if (self.mapServer.isValidPosition(x, y)) {
                         self.setPosition(x, y);
                         self.clearTarget();
-
-                        self.broadcast(new Messages.Move(self));
+                       
+                        self.mapServer.broadcast(new Messages.Move(self));
                         self.move_callback(self.x, self.y);
                     }
+                    
                 }
             }
             else if (action === Types.Messages.LOOTMOVE) {
                 if (self.lootmove_callback) {
                     self.setPosition(message[1], message[2]);
 
-                    var item = self.server.getEntityById(message[3]);
+                    var item = self.mapServer.getEntityById(message[3]);
                     if (item) {
                         self.clearTarget();
 
-                        self.broadcast(new Messages.LootMove(self, item));
+                        self.mapServer.broadcast(new Messages.LootMove(self, item));
                         self.lootmove_callback(self.x, self.y);
                     }
                 }
             }
             else if (action === Types.Messages.AGGRO) {
                 if (self.move_callback) {
-                    self.server.handleMobHate(message[1], self.id, 5);
+                    self.mapServer.handleMobHate(message[1], self.id, 5);
                 }
             }
             else if (action === Types.Messages.ATTACK) {
-                var mob = self.server.getEntityById(message[1]);
+                var mob = self.mapServer.getEntityById(message[1]);
 
                 if (mob) {
                     self.setTarget(mob);
-                    self.server.broadcastAttacker(self);
+                    self.mapServer.broadcastAttacker(self);
                 }
             }
             else if (action === Types.Messages.HIT) {
-                var mob = self.server.getEntityById(message[1]);
+                var mob = self.mapServer.getEntityById(message[1]);
                 if (mob) {
                     var dmg = Formulas.dmg(self.weaponLevel, mob.armorLevel);
 
                     if (dmg > 0) {
                         mob.receiveDamage(dmg, self.id);
-                        self.server.handleMobHate(mob.id, self.id, dmg);
-                        self.server.handleHurtEntity(mob, self, dmg);
+                        self.mapServer.handleMobHate(mob.id, self.id, dmg);
+                        self.mapServer.handleHurtEntity(mob, self, dmg);
                     }
                 }
             }
             else if (action === Types.Messages.HURT) {
-                var mob = self.server.getEntityById(message[1]);
+                var mob = self.mapServer.getEntityById(message[1]);
                 if (mob && self.hitPoints > 0) {
                     self.hitPoints -= Formulas.dmg(mob.weaponLevel, self.armorLevel);
-                    self.server.handleHurtEntity(self);
+                    self.mapServer.handleHurtEntity(self);
 
                     if (self.hitPoints <= 0) {
                         self.isDead = true;
@@ -168,7 +171,7 @@ module.exports = Player = Character.extend({
                 }
             }
             else if (action === Types.Messages.LOOT) {
-                var item = self.server.getEntityById(message[1]);
+                var item = self.mapServer.getEntityById(message[1]);
                 
                 if (item) {
                     var kind = item.kind;
@@ -177,8 +180,8 @@ module.exports = Player = Character.extend({
                         //if(item.x === self.x && item.y === self.y) { // TODO:: include position check (Message to slow?)
                             var freeSlot = self.inventory.getFreeSlot();
                             if(freeSlot === undefined) return;
-                            self.broadcast(item.despawn(), false);
-                            self.server.removeEntity(item);
+                            self.mapServer.broadcast(item.despawn());
+                            self.mapServer.removeEntity(item);
                             self.inventory.setSlot(freeSlot, kind);
                             self.server.pushToPlayer(self, new Messages.InventoryUpdate(freeSlot, kind));
                         //}
@@ -220,24 +223,24 @@ module.exports = Player = Character.extend({
                 var x = message[1],
                         y = message[2];
 
-                if (self.server.isValidPosition(x, y)) {
+                if (self.mapServer.isValidPosition(x, y)) {
                     self.setPosition(x, y);
                     self.clearTarget();
 
                     self.broadcast(new Messages.Teleport(self));
 
-                    self.server.handlePlayerVanish(self);
-                    self.server.pushRelevantEntityListTo(self);
+                    self.mapServer.handlePlayerVanish(self);
+                    self.mapServer.pushRelevantEntityListTo(self);
                 }
             }
             else if (action === Types.Messages.OPEN) {
-                var chest = self.server.getEntityById(message[1]);
+                var chest = self.mapServer.getEntityById(message[1]);
                 if (chest && chest instanceof Chest) {
-                    self.server.handleOpenedChest(chest, self);
+                    self.mapServer.handleOpenedChest(chest, self);
                 }
             }
             else if (action === Types.Messages.CHECK) {
-                var checkpoint = self.server.map.getCheckpoint(message[1]);
+                var checkpoint = self.mapServer.map.getCheckpoint(message[1]);
                 if (checkpoint) {
                     self.lastCheckpoint = checkpoint;
                 }
