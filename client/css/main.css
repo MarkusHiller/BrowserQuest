@@ -244,6 +244,8 @@ body.upscaled.game {background:#000;}
 footer {font-family:'GraphicPixel';position:absolute;bottom:5%;left:0;text-align:center;width:100%;color:#c6c0a3;-moz-transition:0.2s opacity linear;-webkit-transition:0.2s opacity linear;-o-transition:0.2s opacity linear;-ms-transition:0.2s opacity linear;transition:0.2s opacity linear;}
 .upscaled.game footer {color:#8a8a8a;}
 
+.game footer {display:none;}
+
 .intro footer {opacity:1;}
 footer:hover {opacity:1;}
 footer div  {display:inline-block;}
@@ -482,6 +484,7 @@ footer div  {display:inline-block;}
     .upscaled #logo, .upscaled #logosparks, .upscaled .left-ornament, .upscaled .right-ornament, .upscaled #character, .upscaled #character div, .upscaled .button, .upscaled .button div, .upscaled #respawn, .upscaled #scroll, .upscaled #instructions, .upscaled .icon, .upscaled #tilt, .upscaled .parchment-left, .upscaled .parchment-middle, .upscaled .parchment-right, .upscaled .avatar, .upscaled .facebook, .upscaled .twitter, .upscaled .close, .upscaled .ribbon .top, .upscaled .ribbon .bottom, .upscaled #about .img, .upscaled .ext-link {background-image:url('../img/3/spritesheet.png');}
     .upscaled #bar-container, .upscaled #healthbar, .upscaled .barbutton, .upscaled #chatbox, .upscaled #population {background-image:url('../img/3/barsheet.png');}
     .upscaled #inventory {background-image:url('../img/3/inventory.png');width:501px;}
+    .upscaled #fast_inventory {background-image:url('../img/3/fast_inventory.png');width:258px;}
     .upscaled #achievements, .upscaled #achievements li, .upscaled .coin, .upscaled #achievement-notification, .upscaled #coinsparks, .upscaled .achievement-sharing a, .upscaled #previous, .upscaled #next {background:url('../img/3/achievements.png');}
 
 
@@ -517,7 +520,7 @@ footer div  {display:inline-block;}
     .button.delete {background-position:-687px -153px;}
     .button.delete:active {background-position:0 -2178px;}
 
-    #container {width:1470px;margin:0 auto;position:absolute;top:50%;margin-top:-378px;left:50%;margin-left:-735px;}
+    #container {width:100%;position:absolute;height:100%;}
     #canvasborder {padding:15px;background:url('../img/3/border.png') no-repeat;}
     #canvas {width:100%;height:672px;}
     #fade {width:1440px;height:672px;top:15px;left:15px;}
@@ -562,6 +565,7 @@ footer div  {display:inline-block;}
 
     /*Inventory*/
     #inventory {height:279px;margin-left:-250px;bottom:81px;background-size:501px;}
+    #fast_inventory {height:60px;margin-left:-129px;background-size:258px;bottom:0;}
     
     .slot {width:48px;height:48px;position:absolute;background-size:288px;background-position:-96px;}
     #slot_1 {left:165px;top:210px;}
@@ -592,11 +596,11 @@ footer div  {display:inline-block;}
     #manabar {height:39px;background-position:-1134px -69px;width:306px;top:9px;left:311px;background-size:1440px;z-index:20;}
     #manapoints {width:0px;height:33px;top:12px;left:344px;z-index:10;position:absolute;}
     
-    #fast_slot_1 {left:630px;top:3px;}
-    #fast_slot_2 {left:681px;top:3px;}
-    #fast_slot_3 {left:732px;top:3px;}
-    #fast_slot_4 {left:783px;top:3px;}
-    #fast_slot_5 {left:834px;top:3px;}
+    #fast_slot_1 {left:3px;top:3px;}
+    #fast_slot_2 {left:54px;top:3px;}
+    #fast_slot_3 {left:105px;top:3px;}
+    #fast_slot_4 {left:156px;top:3px;}
+    #fast_slot_5 {left:207px;top:3px;}
     
     #expbar {height:9px;background-position:0 -60px;width:1440px;top:51px;background-size:1440px;z-index:20;}
     #exp {width:0px;height:9px;top:51px;left:0;z-index:10;position:absolute;}
@@ -897,7 +901,6 @@ footer div  {display:inline-block;}
     .game.credits .parchment-middle, .game.death .parchment-middle, .game.about .parchment-middle, .game.legal .parchment-middle, .game.privacy .parchment-middle {width:692px;margin-left:-346px;background-position: -76px -588px;}
 
     footer {font-size:16px;}
-    .game footer {display:none;}
     #resize-check {height:2px;}
 
     #toggle-legal {padding:0 8px;}
