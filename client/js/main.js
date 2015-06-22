@@ -287,7 +287,7 @@ define(['jquery', 'app'], function ($, App) {
             }
 
             game.onGameStart(function () {
-                app.initInventoryIcons();
+                //app.initInventoryIcons();
             });
 
             game.onDisconnect(function (message) {

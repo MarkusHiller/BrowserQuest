@@ -777,6 +777,8 @@ define(['infomanager', 'bubble', 'renderer', 'map', 'animation', 'sprite', 'tile
 
                                 self.updateBars();
                                 self.updateExpBar();
+                                self.app.updateInventorySlotIcon(15);
+                                self.app.updateInventorySlotIcon(16);
                                 self.resetCamera();
                                 self.updatePlateauMode();
                                 //self.audioManager.updateMusic();

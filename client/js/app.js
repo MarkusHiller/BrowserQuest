@@ -292,28 +292,28 @@ define([
                         });
                     }
                 },
-                initInventoryIcons: function () {
-                    var scale = this.game.renderer.getScaleFactor();
-                    for (var i = 0; i <= 17; i++) {
-                        $('#slot_' + (i + 1)).css('background-image', 'url("")');
-                        if (i <= 4) {
-                            $('#fast_slot_' + (i + 1)).css('background-image', 'url("")');
-                        }
-                    }
-                    var weaponId = this.game.player.inventory.getSlot(15);
-                    var weaponString = Types.getKindAsString(parseInt(weaponId.split(":")[0]));
-                    var weaponPath = getIconPath(weaponString);
-                    var helmId = this.game.player.inventory.getSlot(16);
-                    var helmString = Types.getKindAsString(parseInt(helmId.split(":")[0]));
-                    var helmPath = getIconPath(helmString);
-
-                    $('#slot_15').css('background-image', 'url("' + weaponPath + '")');
-                    $('#slot_16').css('background-image', 'url("' + helmPath + '")');
-
-                    function getIconPath(spriteName) {
-                        return spriteName === undefined ? '' : 'img/' + scale + '/item-' + spriteName + '.png';
-                    }
-                },
+//                initInventoryIcons: function () {
+//                    var scale = this.game.renderer.getScaleFactor();
+//                    for (var i = 0; i <= 17; i++) {
+//                        $('#slot_' + (i + 1)).css('background-image', 'url("")');
+//                        if (i <= 4) {
+//                            $('#fast_slot_' + (i + 1)).css('background-image', 'url("")');
+//                        }
+//                    }
+//                    var weaponId = this.game.player.inventory.getSlot(15);
+//                    var weaponString = Types.getKindAsString(parseInt(weaponId.split(":")[0]));
+//                    var weaponPath = getIconPath(weaponString);
+//                    var helmId = this.game.player.inventory.getSlot(16);
+//                    var helmString = Types.getKindAsString(parseInt(helmId.split(":")[0]));
+//                    var helmPath = getIconPath(helmString);
+//
+//                    $('#slot_15').css('background-image', 'url("' + weaponPath + '")');
+//                    $('#slot_16').css('background-image', 'url("' + helmPath + '")');
+//
+//                    function getIconPath(spriteName) {
+//                        return spriteName === undefined ? '' : 'img/' + scale + '/item-' + spriteName + '.png';
+//                    }
+//                },
                 updateInventorySlotIcon: function (slot) {
                     var scale = this.game.renderer.getScaleFactor();
                     var item,
