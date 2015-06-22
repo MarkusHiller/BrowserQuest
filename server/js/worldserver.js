@@ -247,7 +247,7 @@ module.exports = World = cls.Class.extend({
 //        });
 //        player.recentlyLeftGroups = [];
 //    },
-    pushBroadcast: function (message, ignoredPlayer) {
+    broadcast: function (message, ignoredPlayer) {
         for (var id in this.outgoingQueues) {
             if (id != ignoredPlayer) {
                 this.outgoingQueues[id].push(message.serialize());
@@ -761,6 +761,6 @@ module.exports = World = cls.Class.extend({
 //        });
 //    },
     updatePopulation: function (totalPlayers) {
-        this.pushBroadcast(new Messages.Population(this.playerCount, totalPlayers ? totalPlayers : this.playerCount));
+        this.broadcast(new Messages.Population(this.playerCount, totalPlayers ? totalPlayers : this.playerCount));
     }
 });

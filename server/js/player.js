@@ -104,7 +104,7 @@ module.exports = Player = Character.extend({
                 var chatMsg = Utils.createChatMsg(self.name, msg);
                 // Sanitized messages may become empty. No need to broadcast empty chat messages.
                 if (chatMsg && chatMsg !== "") {
-                    self.broadcast(new Messages.Chat(chatMsg), false);
+                    self.server.broadcast(new Messages.Chat(chatMsg), false);
                 }
                 self.database.logChatMsg({username: self.name, msg: msg})
             }
