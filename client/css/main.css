@@ -149,8 +149,8 @@ body.upscaled.game {background:#000;}
 #inventory {background:url('../img/1/inventory.png');image-rendering:-moz-crisp-edges;position:absolute;width:167px;left:50%;z-index:10;pointer-events:none;opacity:0;}
 #inventory.active{opacity: 1;pointer-events:auto;}
 /*#healthbar {background:url('../img/1/barsheet.png');image-rendering:-moz-crisp-edges;position:absolute;}*/
-#healthbar {position:absolute;background-color:black;border:2px solid black;opacity:0.7;}
-#hitpoints {position:absolute;padding:2px;background:#d83939;-moz-transition:.5s width ease;-webkit-transition:.5s width ease;-o-transition:.5s width ease;-ms-transition:.5s width ease;transition:.5s width ease;}
+#healthbar {position:absolute;background-color:black;border:2px solid black;opacity:0.7;pointer-events:none;}
+#hitpoints {position:absolute;border:2px solid;background:red;-moz-transition:.5s width ease;-webkit-transition:.5s width ease;-o-transition:.5s width ease;-ms-transition:.5s width ease;transition:.5s width ease;pointer-events:none;opacity:0.7;}
 /*#hitpoints {background:#d83939;-moz-transition:.5s width ease;-webkit-transition:.5s width ease;-o-transition:.5s width ease;-ms-transition:.5s width ease;transition:.5s width ease;}*/
 #hitpoints.white {-moz-animation:flash 0.5s linear 1;-webkit-animation:flash 0.5s linear 1;-o-animation:flash 0.5s linear 1;-ms-animation:flash 0.5s linear 1;animation:flash 0.5s linear 1;}
 #hitpoints.invincible {-moz-animation:invincible 0.3s steps(3, end) alternate infinite;-webkit-animation:invincible 0.3s steps(3, end) alternate infinite;-o-animation:invincible 0.3s steps(3, end) alternate infinite;-ms-animation:invincible 0.3s steps(3, end) alternate infinite;}
@@ -809,8 +809,8 @@ footer div  {display:inline-block;}
     /*GUI Bar*/
     #bar-container {height:40px;top:-2px;background-size:960px;}
 
-    #healthbar {width:204px;height:26px;top:6px;left:22px;z-index:10;}
-    #hitpoints {width:0px;height:22px;top:8px;left:22px;z-index:10;}
+    #healthbar {width:204px;height:12px;top:20px;left:40px;z-index:10;}
+    #hitpoints {width:0px;height:12px;top:20px;left:40px;z-index:10;}
     
     #manabar {height:26px;background-position:-756px -46px;width:204px;top:6px;left:208px;background-size:960px;z-index:20;}
     #manapoints {width:0px;height:22px;top:8px;left:230px;z-index:10;position:absolute;}
@@ -918,7 +918,7 @@ footer div  {display:inline-block;}
     .moveLogin p {font-size: 20px;}
 }
 
-@media screen and (max-width: 1000px) {
+/*@media screen and (max-width: 1000px) {
 
     canvas {image-rendering:optimizeSpeed;}
     body {background:-moz-radial-gradient(rgba(0,0,0,0) 40%,rgba(0,0,0,1) 125%), url('../img/1/wood.png') repeat, #000; background-size:auto, 128px;}
@@ -988,18 +988,18 @@ footer div  {display:inline-block;}
 
     #close-legal, #close-privacy {font-size:10px;margin-top:10px;}
 
-    /*Death & Respawn*/
+    Death & Respawn
     #death p {font-size:10px;margin-top:45px;}
     #death p em {margin-top:0px;}
     #respawn {width:125px;height:51px;margin:21px auto 0 auto;background-position: 0 -476px;}
     #respawn:active {background-position:-125px -476px;}
 
-    /*Bubbles*/
+    Bubbles
     #bubbles {width:480px;height:224px;margin-bottom:-224px;position:relative;top:-224px;pointer-events:none;}
     p {font-family:arial, sans-serif;font-size:12px;margin:0;padding:0;line-height:35px;}
     .bubble p {font-family:"GraphicPixel"; font-size:10px;}
 
-    /*Inventory*/
+    Inventory
     #inventory {height:93px;margin-left:-83px;bottom:25px;background-size:167px;}
     
     .slot {width:16px;height:16px;position:absolute;background-size:96px;background-position:-32px;}
@@ -1022,11 +1022,11 @@ footer div  {display:inline-block;}
     #slot_17 {left:29px;top:31px;}
     #slot_18 {left:29px;top:53px;}
     
-    /*GUI Bar*/
+    GUI Bar
     #bar-container {height:20px;top:-4px;background-size:480px;}
 
-    #healthbar {width:102px;height:13px;top:3px;left:22px;z-index:10;}
-    #hitpoints {width:0px;height:11px;top:4px;left:11px;z-index:10;}
+    #healthbar {width:150px;height:12px;top:10px;left:30px;z-index:10;}
+    #hitpoints {width:0px;height:12px;top:10px;left:30px;z-index:10;}
 
     #manabar {height:13px;background-position:-378px -22px;width:102px;top:3px;left:104px;background-size:480px;z-index:20;}
     #manapoints {width:0px;height:11px;top:4px;left:115px;z-index:10;position:absolute;}
@@ -1073,7 +1073,7 @@ footer div  {display:inline-block;}
     #chatbox.active {bottom:27px;}
     #chatbox input {font-size:10px;background:none;width:90%;border:0;margin-left:2%;padding:0;}
 
-    /*Credits*/
+    Credits
     #credits, #death, #about {width:422px;height:182px;top:50%;margin-left:-211px;margin-top:-91px;font-size:10px;}
     #credits h1 a {font-size:12px;}
     .parchment-left, .parchment-right, .parchment-middle {background-size:422px;}
@@ -1098,15 +1098,15 @@ footer div  {display:inline-block;}
     #close-credits {margin:12px auto 0 auto;text-align:center;clear:both;font-size:10px;}
     #sharing {width:202px;}
 
-    /*About*/
+    About
     #about h1 span.title {max-width:400px;display:inline-block;line-height:24px;margin-top:-30px;position:relative;margin-bottom:-10px;}
     #close-about {margin:77px auto 0 auto;text-align:center;clear:both;font-size:10px;color:#373737;}
     #about #game-desc {font-size:10px;text-align:center;max-width:70%;margin:10px auto;line-height:14px;}
     #about .left p, #about .right p {font-size:9px;text-align:left;line-height:10px;padding:0;margin-top:-6px;}
     #about .left {width:37%;float:left;margin-left:10%;}
     #about .right {width:37%;float:right;margin-right:12%;}
-    /*        #about .left .img {height:30px;width:27px;float:left;background-position:-354px -172px;margin-right:7px;}
-            #about .right .img {height:30px;width:56px;float:left;background-position:-354px -142px;margin-right:7px;}*/
+            #about .left .img {height:30px;width:27px;float:left;background-position:-354px -172px;margin-right:7px;}
+            #about .right .img {height:30px;width:56px;float:left;background-position:-354px -142px;margin-right:7px;}
     #about .img {display:none;}
     #about .link {clear:both;font-size:9px;margin:10px 0;display:block;text-align:left;line-height:5px;}
     #about .link a {color:#2e7fdd;text-decoration:none;}
@@ -1121,7 +1121,7 @@ footer div  {display:inline-block;}
 
     #name-tooltip {font-size:10px;width:180px;margin-left:-90px;height:10px;line-height:10px;top:-30px;border-radius:4px;}
     #name-tooltip:after {bottom:-8px;}
-}
+}*/
 
 @media screen and (max-width: 800px) {
 
@@ -1235,8 +1235,8 @@ footer div  {display:inline-block;}
     /*GUI Bar*/
     #bar-container {height:40px;top:-2px;background-size:960px;background-position:0 -108px;}
 
-    #healthbar {width:86px;height:26px;top:6px;left:3px;z-index:10;}
-    #hitpoints {width:0px;height:22px;top:8px;left:25px;z-index:10;}
+    #healthbar {width:100px;height:12px;top:10px;left:25px;z-index:10;}
+    #hitpoints {width:0px;height:12px;top:10px;left:25px;z-index:10;}
 
     #manabar {height:26px;background-position:-96px -154px;width:86px;top:6px;left:97px;background-size:960px;z-index:20;}
     #manapoints {width:0px;height:22px;top:8px;left:120px;z-index:10;position:absolute;}

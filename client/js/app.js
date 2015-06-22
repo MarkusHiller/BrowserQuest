@@ -190,7 +190,7 @@ define([
                 },
                 initHealthBar: function () {
                     var scale = this.game.renderer.getScaleFactor(),
-                            healthMaxWidth = $("#healthbar").width() - (12 * scale);
+                            healthMaxWidth = $("#healthbar").width();// - (12 * scale);
 
                     this.game.onPlayerHealthChange(function (hp, maxHp) {
                         var barWidth = Math.round((healthMaxWidth / maxHp) * (hp > 0 ? hp : 0));
