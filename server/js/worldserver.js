@@ -302,6 +302,15 @@ module.exports = World = cls.Class.extend({
         delete this.outgoingQueues[player.id];
         player.mapServer.removePlayer(player);
     },
+    hasPlayer: function(name) {
+        var hasPlayer = false;
+        this.forEachPlayer(function(player) {
+            if (player.name.toLowerCase() === name.toLowerCase()) {
+                hasPlayer = true;
+            }
+        });
+        return hasPlayer;
+    },
 //    addMob: function (mob) {
 //        this.addEntity(mob);
 //        this.mobs[mob.id] = mob;

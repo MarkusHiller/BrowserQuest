@@ -52,40 +52,45 @@ module.exports = Player = Character.extend({
             if (action === Types.Messages.HELLO) {
                 var name = Utils.sanitize(message[1]);
                 password = Utils.sanitize(message[2]);
-                self.canPlay(name, password, function (playerData, inventoryData) {
-                    if (playerData !== undefined) {
-                        self.name = playerData.username;
-                        self.map = playerData.map;
-                        self.x = playerData.pos_x;
-                        self.y = playerData.pos_y;
-                        self.level = playerData.level;
-                        self.hitPoints = playerData.hp;
-                        self.kind = Types.Entities.WARRIOR;
-                        self.equipWeapon(inventoryData["slot_15"]);
-                        self.equipArmor(inventoryData["slot_16"]);
-                        self.orientation = Utils.randomOrientation();
-                        self.updateMaxHitPoints();
-                        self.updateManaPoints(playerData.mp);
-                        self.updateExpPoints(playerData.exp, playerData.level);
-                        self.updatePosition();
+                if (!self.server.hasPlayer(name)) {
+                    self.canPlay(name, password, function (playerData, inventoryData) {
+                        if (playerData !== undefined) {
+                            self.name = playerData.username;
+                            self.map = playerData.map;
+                            self.x = playerData.pos_x;
+                            self.y = playerData.pos_y;
+                            self.level = playerData.level;
+                            self.hitPoints = playerData.hp;
+                            self.kind = Types.Entities.WARRIOR;
+                            self.equipWeapon(inventoryData["slot_15"]);
+                            self.equipArmor(inventoryData["slot_16"]);
+                            self.orientation = Utils.randomOrientation();
+                            self.updateMaxHitPoints();
+                            self.updateManaPoints(playerData.mp);
+                            self.updateExpPoints(playerData.exp, playerData.level);
+                            self.updatePosition();
 
-                        self.server.addPlayer(self);
-                        self.server.enter_callback(self);
+                            self.server.addPlayer(self);
+                            self.server.enter_callback(self);
 
-                        self.send([Types.Messages.WELCOME, self.id, self.name, self.map, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.exp, self.maxExp, self.level, self.inventory.getSlot(15), self.inventory.getSlot(16)]);
-                        self.hasEnteredGame = true;
-                        self.isDead = false;
+                            self.send([Types.Messages.WELCOME, self.id, self.name, self.map, self.x, self.y, self.hitPoints, self.maxHitPoints, self.manaPoints, self.maxManaPoints, self.exp, self.maxExp, self.level, self.inventory.getSlot(15), self.inventory.getSlot(16)]);
+                            self.hasEnteredGame = true;
+                            self.isDead = false;
 
-                        // set and send Inventory
-                        for(var i = 1; i <= 14; i++) {
-                            if(inventoryData["slot_" + i] === "") continue;
-                            self.inventory.setSlot(i, inventoryData["slot_" + i]);
-                            self.server.pushToPlayer(self, new Messages.InventoryUpdate(i, inventoryData["slot_" + i]));
+                            // set and send Inventory
+                            for (var i = 1; i <= 14; i++) {
+                                if (inventoryData["slot_" + i] === "")
+                                    continue;
+                                self.inventory.setSlot(i, inventoryData["slot_" + i]);
+                                self.server.pushToPlayer(self, new Messages.InventoryUpdate(i, inventoryData["slot_" + i]));
+                            }
+                        } else {
+                            self.connection.close("Invalid logindata message: " + message);
                         }
-                    } else {
-                        self.connection.close("Invalid logindata message: " + message);
-                    }
-                });
+                    });
+                } else {
+                    self.connection.close("User is already logged in.");
+                }
             }
             else if (action === Types.Messages.WHO) {
                 message.shift();
@@ -107,15 +112,15 @@ module.exports = Player = Character.extend({
                 if (self.move_callback) {
                     var x = message[1],
                             y = message[2];
-                    
+
                     if (self.mapServer.isValidPosition(x, y)) {
                         self.setPosition(x, y);
                         self.clearTarget();
-                       
+
                         self.mapServer.broadcast(new Messages.Move(self));
                         self.move_callback(self.x, self.y);
                     }
-                    
+
                 }
             }
             else if (action === Types.Messages.LOOTMOVE) {
@@ -172,21 +177,22 @@ module.exports = Player = Character.extend({
             }
             else if (action === Types.Messages.LOOT) {
                 var item = self.mapServer.getEntityById(message[1]);
-                
+
                 if (item) {
                     var kind = item.kind;
 
                     if (Types.isItem(kind)) {
                         //if(item.x === self.x && item.y === self.y) { // TODO:: include position check (Message to slow?)
-                            var freeSlot = self.inventory.getFreeSlot();
-                            if(freeSlot === undefined) return;
-                            self.mapServer.broadcast(item.despawn());
-                            self.mapServer.removeEntity(item);
-                            self.inventory.setSlot(freeSlot, kind);
-                            self.server.pushToPlayer(self, new Messages.InventoryUpdate(freeSlot, kind));
+                        var freeSlot = self.inventory.getFreeSlot();
+                        if (freeSlot === undefined)
+                            return;
+                        self.mapServer.broadcast(item.despawn());
+                        self.mapServer.removeEntity(item);
+                        self.inventory.setSlot(freeSlot, kind);
+                        self.server.pushToPlayer(self, new Messages.InventoryUpdate(freeSlot, kind));
                         //}
-                        
-                        
+
+
 
 //                        if (kind === Types.Entities.FIREPOTION) {
 //                            self.updateHitPoints();
@@ -244,11 +250,11 @@ module.exports = Player = Character.extend({
                 if (checkpoint) {
                     self.lastCheckpoint = checkpoint;
                 }
-            } 
+            }
             else if (action === Types.Messages.USEITEM) {
                 var slot = message[1];
                 var itemId = self.inventory.getSlot(slot);
-                if(Types.isUsableItem(parseInt(itemId.split(':')[0]))) {
+                if (Types.isUsableItem(parseInt(itemId.split(':')[0]))) {
                     var amount = 0;
                     switch (parseInt(itemId.split(':')[0])) {
                         case Types.Entities.FLASK:
@@ -274,8 +280,8 @@ module.exports = Player = Character.extend({
             else if (action === Types.Messages.EQUIPITEM) {
                 var slot = message[1];
                 var itemId = self.inventory.getSlot(slot);
-                if(Types.isEquipmentItem(parseInt(itemId.split(':')[0]))) {
-                    if(Types.isArmor(parseInt(itemId.split(':')[0]))) {
+                if (Types.isEquipmentItem(parseInt(itemId.split(':')[0]))) {
+                    if (Types.isArmor(parseInt(itemId.split(':')[0]))) {
                         self.armorLevel = Properties.getArmorLevel(parseInt(itemId.split(':')[0]));
                         self.inventory.switchSlots(slot, 16);
                         self.updateMaxHitPoints();
