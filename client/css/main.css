@@ -592,8 +592,8 @@ footer div  {display:inline-block;}
     /*GUI Bar*/
     #bar-container {height:60px;top:-3px;background-size:1440px;}
 
-    #healthbar {width:300px;height:20px;top:20px;left:40px;z-index:10;}
-    #hitpoints {width:0px;height:20px;top:20px;left:40px;z-index:10;}
+    #healthbar {width:306px;height:39px;top:9px;left:20px;z-index:10;}
+    #hitpoints {width:0px;height:39px;top:9px;left:20px;z-index:10;}
 
     #manabar {height:39px;background-position:-1134px -69px;width:306px;top:9px;left:311px;background-size:1440px;z-index:20;}
     #manapoints {width:0px;height:33px;top:12px;left:344px;z-index:10;position:absolute;}
